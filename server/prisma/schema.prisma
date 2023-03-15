@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String @unique
+  username String
+  hashPassword String
+
+  followers    User[]   @relation("UserFollows", fields: [followersIDs], references: [id])
+  followersIDs String[] @db.ObjectId
+
+  following     User[]   @relation("UserFollows", fields: [followingIDs], references: [id]) 
+  followingIDs  String[] @db.ObjectId
+
+  posts    Post[]
+  comments Comment[]
+
+  @@map("users")
+}
+
+model Post {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  likes Int @default(0)
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+
+  body      String[] // Array of URLs to post images
+  createdAt DateTime @default(now())
+
+  comments Comment[]
+
+  @@map("posts")
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  value     String
+
+  authorId String @db.ObjectId
+  author   User   @relation(fields: [authorId], references: [id])
+
+  postId String @db.ObjectId
+  post   Post   @relation(fields: [postId], references: [id])
+
+  @@map("comments")
+}
