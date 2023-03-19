@@ -1,0 +1,6 @@
+# Ignore files in Server-side 
+server/*.env
+server/vscode
+server/.idea
+server/dist
+server/node_modules

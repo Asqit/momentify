@@ -1,10 +1,10 @@
-import { initCluster } from './utils/initCluster';
-import dotenv from 'dotenv';
+import { initCluster } from '~/utils/initCluster'
+import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
-function main() {
-	initCluster();
+async function main() {
+	initCluster()
 }
 
-main();
+main()

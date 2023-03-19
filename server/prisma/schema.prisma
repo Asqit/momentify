@@ -23,6 +23,7 @@ model User {
   followingIDs  String[] @db.ObjectId
 
   posts    Post[]
+  postsIDs String[] @db.ObjectId
   comments Comment[]
 
   @@map("users")

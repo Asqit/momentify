@@ -1,28 +1,30 @@
-import { Request, Response, NextFunction } from 'express';
-import { ValidationError } from 'yup';
-import { AppError } from '../utils/AppError';
+import { Request, Response, NextFunction } from 'express'
+import { HttpException } from '~/utils/HttpException'
 
-export function errorHandler(err: AppError | Error | ValidationError, req: Request, res: Response, next: NextFunction) {
+export function errorHandler(
+	err: HttpException | Error,
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) {
 	try {
-		const { stack, message } = err;
-		const response: any = { message };
+		const { stack, message } = err
+		const response: any = { message }
 
-		if (err instanceof AppError) {
-			response.statusCode = err.statusCode;
-		} else if (err instanceof ValidationError) {
-			response.statusCode = 400;
+		if (err instanceof HttpException) {
+			response.statusCode = err.statusCode
 		} else {
-			response.statusCode = res.statusCode ?? 500;
+			response.statusCode = res.statusCode ?? 500
 		}
 
 		if (process.env.NODE_ENV === 'development') {
-			response.stack = stack;
+			response.stack = stack
 		}
 
-		res.status(response.statusCode).json(response);
+		res.status(response.statusCode).json(response)
 	} catch (error) {
 		res.status(500).json({
 			error,
-		});
+		})
 	}
 }
