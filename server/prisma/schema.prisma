@@ -26,6 +26,8 @@ model User {
   postsIDs String[] @db.ObjectId
   comments Comment[]
 
+  verified Boolean @default(false)
+
   @@map("users")
 }
 

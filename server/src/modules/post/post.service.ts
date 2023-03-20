@@ -23,8 +23,6 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 		files = images.map((image) => image.path);
 	}
 
-	console.log(files);
-
 	await prisma.post.create({
 		data: {
 			title,
@@ -69,7 +67,7 @@ export const deletePost = asyncHandler(async (req: Request, res: Response) => {
 	});
 
 	// Remove post's images (body)
-	post.body.forEach((imageUrl) => {
+	post.body.forEach((imageUrl: string) => {
 		unlink(`public/${imageUrl}`, (err) => {
 			if (err) {
 				throw new HttpException(500, "Cannot delete post's image");
