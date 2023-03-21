@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+  .btn {
+	  @apply py-3 px-6 rounded-xl bg-gray-500 text-white hover:bg-gray-600 active:bg-gray-700 transition-colors shadow-sm shadow-gray-700 font-semibold capitalize
+  }
+
+  .btn.primary {
+	@apply shadow-sky-700 bg-sky-500 hover:bg-sky-600 active:bg-sky-700
+  }
+
+  .btn.secondary {
+	  @apply shadow-emerald-700 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700
+  }
+
+  .btn.danger {
+	  @apply shadow-red-700 bg-red-500 hover:bg-red-600 active:bg-red-700
+  }
+
+  .link {
+	  @apply text-sky-400 hover:underline
+  }
+}

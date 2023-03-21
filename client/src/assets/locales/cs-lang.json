@@ -1,4 +1,15 @@
 {
   "native_name": "Čeština",
-  "alt_name": "Czech"
+  "alt_name": "Czech",
+  "form": {
+    "username": "Uživatelské Jméno",
+    "email": "Emailová Adresa",
+    "password": "Heslo",
+    "username_placeholder": "Jak ti máme říkat?",
+    "email_placeholder": "např. jannovak@email.cz",
+    "password_placeholder": "silné heslo",
+    "register": "Vytvořit Účet",
+    "login": "Přihlásit"
+  },
+  "validation": {}
 }

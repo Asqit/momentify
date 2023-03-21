@@ -1,4 +1,15 @@
 {
   "native_name": "English",
-  "alt_name": "Angličtina"
+  "alt_name": "Angličtina",
+  "form": {
+    "username": "Username",
+    "email": "Email Address",
+    "password": "Password",
+    "username_placeholder": "How should we call you?",
+    "email_placeholder": "e.g. joedoe@email.com",
+    "password_placeholder": "A strong password",
+    "register": "Create Account",
+    "login": "Log In"
+  },
+  "validation": {}
 }
