@@ -5,7 +5,7 @@
 
 @layer components {
   .btn {
-	  @apply py-3 px-6 rounded-xl bg-gray-500 text-white hover:bg-gray-600 active:bg-gray-700 transition-colors shadow-sm shadow-gray-700 font-semibold capitalize
+	  @apply disabled:opacity-50 py-3 px-6 rounded-xl bg-gray-500 text-white hover:bg-gray-600 active:bg-gray-700 transition-colors shadow-sm shadow-gray-700 font-semibold capitalize
   }
 
   .btn.primary {
@@ -22,5 +22,9 @@
 
   .link {
 	  @apply text-sky-400 hover:underline
+  }
+
+  .link.secondary {
+	  @apply text-black hover:underline hover:text-sky-500
   }
 }

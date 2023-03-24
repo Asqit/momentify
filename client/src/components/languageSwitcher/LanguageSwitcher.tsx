@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Emoji } from '../emoji/Emoji';
 
 const langs = [
   { emoji: '🇬🇧', id: 0, shortCut: 'en', name: 'English' },
@@ -9,19 +10,20 @@ export function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
   return (
-    <div className='flex items-center justify-center gap-x-6'>
+    <select className='flex items-center justify-center gap-x-2 bg-transparent'>
       {langs.map((lang) => {
         return (
-          <button
-            type='submit'
+          <option
             key={lang.id}
+            className='disabled:opacity-50'
             disabled={i18n.resolvedLanguage === lang.shortCut}
             onClick={() => i18n.changeLanguage(lang.shortCut)}
           >
-            {lang.name}
-          </button>
+            <Emoji symbol={lang.emoji} label={`language:${lang.name}`} />
+            <span>{lang.name}</span>
+          </option>
         );
       })}
-    </div>
+    </select>
   );
 }

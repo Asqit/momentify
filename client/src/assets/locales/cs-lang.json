@@ -11,5 +11,15 @@
     "register": "Vytvořit Účet",
     "login": "Přihlásit"
   },
+  "register_section": {
+    "title": "Vytvořit nový účet",
+    "subtitle": "Již máš účet?",
+    "subtitle_link": "Přihlášení"
+  },
+  "auth_nav": {
+    "home": "Domů",
+    "login": "Přihlášení",
+    "register": "Registrace"
+  },
   "validation": {}
 }

@@ -57,6 +57,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 
 	res.status(200).json({
 		accessToken: ACCESS_TOKEN,
+		user,
 	});
 });
 
