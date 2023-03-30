@@ -35,3 +35,22 @@ export interface IAuthState {
 	user: IUser | null;
 	accessToken: string;
 }
+
+export interface IAuthErrorResponse {
+	message: string;
+	statusCode: number;
+	stack?: string;
+}
+
+export interface IRegisterResponse {
+	message: string;
+}
+
+export function isAuthErrorResponse(test: unknown): test is IAuthErrorResponse {
+	return (
+		(test as IAuthErrorResponse).message !== undefined &&
+		typeof (test as IAuthErrorResponse).message === 'string' &&
+		(test as IAuthErrorResponse).statusCode !== undefined &&
+		typeof (test as IAuthErrorResponse).statusCode === 'number'
+	);
+}

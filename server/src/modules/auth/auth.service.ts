@@ -1,14 +1,16 @@
-import asyncHandler from 'express-async-handler';
+import { LoginSchema, RegisterSchema } from './auth.validation';
 import { Request, Response } from 'express';
-import * as argon2 from 'argon2';
 import { dbConnector } from '~/utils/dbConnector';
-import { generateAccessToken } from '~/utils/generateToken';
+import { generateToken } from '~/utils/generateToken';
 import { HttpException } from '~/utils/HttpException';
+import { serverConfig } from '~/config/server.config';
+import { hash, verify } from 'argon2';
+import asyncHandler from 'express-async-handler';
 
 const prisma = dbConnector.prisma;
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
-	const { email, password, username } = req.body;
+	const { email, password, username } = req.body as RegisterSchema;
 	const conflict = await prisma.user.findFirst({
 		where: {
 			OR: [{ email }, { username }],
@@ -19,7 +21,7 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 		throw new HttpException(409, 'Email or username is already taken');
 	}
 
-	const HASH_PASSWORD = await argon2.hash(password);
+	const HASH_PASSWORD = await hash(password);
 
 	await prisma.user.create({
 		data: {
@@ -29,17 +31,13 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 		},
 	});
 
-	// TODO: Notify user to verify their email
-	// 1) Generate a new special token
-	// 2) send that token to specified email address
-
 	res.status(201).json({
-		success: true,
+		message: 'success',
 	});
 });
 
 export const login = asyncHandler(async (req: Request, res: Response) => {
-	const { email, password } = req.body;
+	const { email, password } = req.body as LoginSchema;
 
 	const user = await prisma.user.findUnique({ where: { email } });
 
@@ -47,13 +45,18 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 		throw new HttpException(401, 'Invalid credentials');
 	}
 
-	const isMatch = await argon2.verify(user.hashPassword, password);
+	if (!user.verified) {
+		res.redirect(`http://localhost:${serverConfig.API_PORT}/api/auth/issue/email/${email}`);
+	}
 
-	if (!isMatch) {
+	if (!(await verify(user.hashPassword, password))) {
 		throw new HttpException(401, 'Invalid credentials');
 	}
 
-	const ACCESS_TOKEN = generateAccessToken(email);
+	const SECRET = serverConfig.ACCESS_TOKEN_SECRET;
+	const ACCESS_TOKEN = generateToken(email, SECRET, {
+		expiresIn: '10h',
+	});
 
 	res.status(200).json({
 		accessToken: ACCESS_TOKEN,
@@ -62,3 +65,16 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {});
+
+export const verifyPassword = asyncHandler(async (req: Request, res: Response) => {});
+
+export const issueEmail = asyncHandler(async (req: Request, res: Response) => {});
+
+export const issueToken = asyncHandler(async (req: Request, res: Response) => {
+	const { email } = req.params;
+	const user = await prisma.user.findUnique({ where: { email } });
+
+	if (!user) {
+		throw new HttpException(400, 'Invalid email address');
+	}
+});

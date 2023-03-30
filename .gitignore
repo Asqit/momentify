@@ -5,3 +5,6 @@ server/.idea
 server/dist
 server/node_modules
 server/public/*
+
+.vscode
+.idea

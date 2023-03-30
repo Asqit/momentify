@@ -1,8 +1,6 @@
 import { HttpException } from '~/utils/HttpException';
 import { dbConnector } from '~/utils/dbConnector';
-import { validateDto } from '~/utils/validateDto';
 import asyncHandler from 'express-async-handler';
-import { RetrievePostDto } from './post.dto';
 import { Request, Response } from 'express';
 import { unlink } from 'node:fs';
 
@@ -45,9 +43,7 @@ export const getPost = asyncHandler(async (req: Request, res: Response) => {
 		return;
 	}
 
-	const result = await validateDto(RetrievePostDto, post);
-
-	res.status(200).json(result);
+	res.status(200).json(post);
 });
 
 export const getAuthorPosts = asyncHandler(async (req: Request, res: Response) => {});

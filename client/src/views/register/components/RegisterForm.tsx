@@ -8,6 +8,7 @@ import YupPassword from 'yup-password';
 import { useFormik } from 'formik';
 import { useRegisterMutation } from '~/setup/features/auth/auth.api';
 import { toast } from 'react-toastify';
+import { isAuthErrorResponse } from '~/setup/features/auth/auth.types';
 
 YupPassword(yup);
 
@@ -33,9 +34,15 @@ export function RegisterForm() {
 			try {
 				await register(values).unwrap();
 
-				navigate('/email-verification');
+				navigate('/docs/email-verification');
 			} catch (error) {
-				toast(String(error));
+				const anyError = error as any;
+
+				if (anyError?.data && isAuthErrorResponse(anyError.data)) {
+					toast.error(anyError.data.message);
+				} else {
+					toast.error(`Unknown error occurred, ended with code ${anyError.code}`);
+				}
 			}
 		},
 	});
@@ -99,7 +106,7 @@ export function RegisterForm() {
 						<Button className='w-1/2' onClick={() => navigate('/login')}>
 							{t('form.login')}
 						</Button>
-						<Button className='w-1/2' buttonColor='primary' disabled={!formik.isValid}>
+						<Button className='w-1/2' buttonColor='primary' type='submit' disabled={!formik.isValid}>
 							{t('form.register')}
 						</Button>
 					</div>

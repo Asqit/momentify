@@ -1,5 +1,11 @@
 import { baseApi } from '../baseApi';
-import { ILoginCredentials, ILoginResponse, IRegisterCredentials } from './auth.types';
+import {
+	IAuthErrorResponse,
+	ILoginCredentials,
+	ILoginResponse,
+	IRegisterCredentials,
+	IRegisterResponse,
+} from './auth.types';
 
 export const authApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
@@ -12,7 +18,7 @@ export const authApi = baseApi.injectEndpoints({
 			}),
 		}),
 		// Register mutation ------------------------------------------
-		register: builder.mutation<void, IRegisterCredentials>({
+		register: builder.mutation<IRegisterResponse, IRegisterCredentials>({
 			query: (credentials) => ({
 				url: '/auth/',
 				method: 'POST',

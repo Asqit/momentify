@@ -13,21 +13,16 @@ datasource db {
 model User {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   email    String @unique
-  username String
+  username String @unique
   hashPassword String
-
+  verified Boolean @default(false) 
   followers    User[]   @relation("UserFollows", fields: [followersIDs], references: [id])
   followersIDs String[] @db.ObjectId
-
   following     User[]   @relation("UserFollows", fields: [followingIDs], references: [id]) 
   followingIDs  String[] @db.ObjectId
-
   posts    Post[]
   postsIDs String[] @db.ObjectId
   comments Comment[]
-
-  verified Boolean @default(false)
-
   @@map("users")
 }
 
