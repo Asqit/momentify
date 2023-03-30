@@ -8,11 +8,11 @@ export default function App() {
 		<>
 			<Routes>
 				<Route index element={<Homepage />} />
-				<Route path='/login' element={<Login />} />
-				<Route path='/register' element={<Register />} />
-				<Route path='*' element={<Lost />} />
-				<Route path='/docs'>
-					<Route path='email-verification' element={<AboutEmailVerification />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/register" element={<Register />} />
+				<Route path="*" element={<Lost />} />
+				<Route path="/docs">
+					<Route path="email-verification" element={<AboutEmailVerification />} />
 				</Route>
 			</Routes>
 			<ToastContainer />

@@ -1,10 +1,12 @@
 import { LoginSchema, RegisterSchema } from './auth.validation';
 import { Request, Response } from 'express';
 import { dbConnector } from '~/utils/dbConnector';
-import { generateToken } from '~/utils/generateToken';
+import { generateToken, isEmailToken } from '~/utils/generateToken';
 import { HttpException } from '~/utils/HttpException';
 import { serverConfig } from '~/config/server.config';
 import { hash, verify } from 'argon2';
+import { sendEmail } from '~/utils/sendEmail';
+import { verify as verifyJWT } from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 
 const prisma = dbConnector.prisma;
@@ -23,7 +25,7 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 
 	const HASH_PASSWORD = await hash(password);
 
-	await prisma.user.create({
+	const user = await prisma.user.create({
 		data: {
 			username,
 			email,
@@ -31,11 +33,33 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 		},
 	});
 
+	const EMAIL_TOKEN = generateToken(
+		{
+			id: user.id,
+			email: user.email,
+		},
+		serverConfig.EMAIL_TOKEN_SECRET,
+		{
+			expiresIn: '1h',
+		},
+	);
+
+	await sendEmail({
+		from: serverConfig.SMTP_USER,
+		to: email,
+		subject: 'Momentify - verify your email',
+		html: `
+      <p>Please click the following link to verify your email:</p>
+      <a href="http://localhost:${serverConfig.API_PORT}/api/auth/verify/email?token=${EMAIL_TOKEN}">Verify email</a>
+    `,
+	});
+
 	res.status(201).json({
 		message: 'success',
 	});
 });
 
+// Login ------------------------------------------------------------------------------------------------------------
 export const login = asyncHandler(async (req: Request, res: Response) => {
 	const { email, password } = req.body as LoginSchema;
 
@@ -64,13 +88,84 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 	});
 });
 
-export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {});
+// Email verification ------------------------------------------------------------------------------------------------------------
+export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
+	const { token } = req.params;
 
+	const decoded = verifyJWT(token, serverConfig.EMAIL_TOKEN_SECRET);
+
+	if (!isEmailToken(decoded)) {
+		throw new HttpException(401, 'Invalid token');
+	}
+
+	const user = await prisma.user.findUnique({
+		where: {
+			email: decoded.email,
+		},
+	});
+
+	if (!user) {
+		throw new HttpException(401, 'Invalid token data');
+	}
+
+	if (user.verified) {
+		throw new HttpException(403, 'User is already verified');
+	}
+
+	await prisma.user.update({
+		where: {
+			email: user.email,
+		},
+		data: {
+			verified: true,
+		},
+	});
+
+	res.sendStatus(200);
+});
+
+// verify password ------------------------------------------------------------------------------------------------------------
 export const verifyPassword = asyncHandler(async (req: Request, res: Response) => {});
 
-export const issueEmail = asyncHandler(async (req: Request, res: Response) => {});
+// issueEmail ------------------------------------------------------------------------------------------------------------
+export const issueEmail = asyncHandler(async (req: Request, res: Response) => {
+	const { email } = req.params;
+	const user = await prisma.user.findUnique({ where: { email } });
 
-export const issueToken = asyncHandler(async (req: Request, res: Response) => {
+	if (!user) {
+		throw new HttpException(404, 'No user was found');
+	}
+
+	if (user.verified) {
+		throw new HttpException(409, 'User is already verified');
+	}
+
+	const EMAIL_TOKEN = generateToken(
+		{
+			id: user.id,
+			email: user.email,
+		},
+		serverConfig.EMAIL_TOKEN_SECRET,
+		{
+			expiresIn: '1h',
+		},
+	);
+
+	await sendEmail({
+		from: serverConfig.SMTP_USER,
+		to: email,
+		subject: 'Momentify - verify your email',
+		html: `
+      <p>Please click the following link to verify your email:</p>
+      <a href="http://localhost:${serverConfig.API_PORT}/api/auth/verify/email?token=${EMAIL_TOKEN}">Verify email</a>
+    `,
+	});
+
+	res.sendStatus(200);
+});
+
+// issueToken ------------------------------------------------------------------------------------------------------------
+export const issuePassword = asyncHandler(async (req: Request, res: Response) => {
 	const { email } = req.params;
 	const user = await prisma.user.findUnique({ where: { email } });
 

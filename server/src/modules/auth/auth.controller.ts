@@ -10,7 +10,7 @@ router.post('/', validateRequest(registerSchema), service.register);
 router.post('/login', validateRequest(loginSchema), service.login);
 router.get('/verify/password/:token', service.verifyPassword);
 router.get('/verify/email/:token', service.verifyEmail);
-router.put('/issue/password/:email', protectedRoute);
-router.get('/issue/email/:email');
+router.put('/issue/password/:email', protectedRoute, service.issuePassword);
+router.get('/issue/email/:email', protectedRoute, service.issueEmail);
 
 export default router;

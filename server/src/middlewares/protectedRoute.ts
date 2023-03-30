@@ -1,5 +1,5 @@
 import { verify } from 'jsonwebtoken';
-import { isMomentifyToken } from '~/utils/generateToken';
+import { isAccessToken } from '~/utils/generateToken';
 import { Request, Response, NextFunction } from 'express';
 import asyncHandler from 'express-async-handler';
 import { serverConfig } from '~/config/server.config';
@@ -23,7 +23,7 @@ export const protectedRoute = asyncHandler(
 
 		const decoded = verify(TOKEN, SECRET);
 
-		if (!isMomentifyToken(decoded)) {
+		if (!isAccessToken(decoded)) {
 			throw new HttpException(401, 'Invalid authorization token');
 		}
 

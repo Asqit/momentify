@@ -11,6 +11,8 @@ interface Environment {
 	ACCESS_TOKEN_SECRET: string;
 	EMAIL_TOKEN_SECRET: string;
 	DATABASE_URL: string;
+	SMTP_USER: string;
+	SMTP_PASSWORD: string;
 }
 
 function initEnv(): Environment {
@@ -22,6 +24,8 @@ function initEnv(): Environment {
 		'ACCESS_TOKEN_SECRET',
 		'EMAIL_TOKEN_SECRET',
 		'DATABASE_URL',
+		'SMTP_USER',
+		'SMTP_PASSWORD',
 	];
 	const KEYS_LENGTH = keys.length;
 

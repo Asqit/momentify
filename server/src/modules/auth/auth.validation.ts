@@ -11,7 +11,10 @@ export interface RegisterSchema extends LoginSchema {
 
 const username = Joi.string().alphanum().min(3).max(30).required();
 const email = Joi.string().email().required();
-const password = Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'));
+// Password must contain 8 characters and at least one number, one letter and one unique character such as !#$%&?
+const password = Joi.string().pattern(
+	new RegExp('^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*d)(?=.*[!#$%&? "]).*$'),
+);
 
 export const loginSchema: ObjectSchema<LoginSchema> = Joi.object({
 	email,
