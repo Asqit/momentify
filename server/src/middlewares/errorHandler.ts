@@ -1,30 +1,19 @@
-import { Request, Response, NextFunction } from 'express'
-import { HttpException } from '~/utils/HttpException'
+import { NextFunction, Response, Request } from 'express';
+import { HttpException } from '~/utils/HttpException';
 
-export function errorHandler(
+function errorHandler(
 	err: HttpException | Error,
 	req: Request,
 	res: Response,
 	next: NextFunction,
 ) {
-	try {
-		const { stack, message } = err
-		const response: any = { message }
-
-		if (err instanceof HttpException) {
-			response.statusCode = err.statusCode
-		} else {
-			response.statusCode = res.statusCode ?? 500
-		}
-
-		if (process.env.NODE_ENV === 'development') {
-			response.stack = stack
-		}
-
-		res.status(response.statusCode).json(response)
-	} catch (error) {
-		res.status(500).json({
-			error,
-		})
-	}
+	const isDevelopment = process.env.NODE_ENV === 'development';
+	const status = err instanceof HttpException ? err.statusCode : res.statusCode;
+	const response = {
+		message: err.message,
+		...(isDevelopment && { stack: err.stack }),
+	};
+	res.status(status).json(response);
 }
+
+export { errorHandler };

@@ -46,7 +46,22 @@ export const getPost = asyncHandler(async (req: Request, res: Response) => {
 	res.status(200).json(post);
 });
 
-export const getAuthorPosts = asyncHandler(async (req: Request, res: Response) => {});
+export const getAuthorPosts = asyncHandler(async (req: Request, res: Response) => {
+	const { authorId } = req.params;
+	const posts = await prisma.post.findMany({
+		where: {
+			authorId,
+		},
+	});
+
+	if (!posts) {
+		throw new HttpException(404, 'No posts were found');
+	}
+
+	res.status(200).json({
+		results: posts,
+	});
+});
 
 export const updatePost = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;

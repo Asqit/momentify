@@ -9,11 +9,13 @@ import * as middlewares from '~/middlewares';
 import * as routes from '~/modules';
 import { serverConfig } from '~/config/server.config';
 import { logger } from './logger';
+import path from 'node:path';
 
 export async function initExpress() {
 	const router = express();
 	const server = http.createServer(router);
-	const { API_PORT } = serverConfig;
+	const { API_PORT, API_HOSTNAME } = serverConfig;
+	const PUBLIC_PATH = path.join(__dirname, 'public');
 
 	await dbConnector.connect();
 
@@ -34,6 +36,9 @@ export async function initExpress() {
 	router.use('/api/user', routes.userRoutes);
 	router.use(express.static('public'));
 
+	// Serve a public folder
+	router.use(express.static(PUBLIC_PATH));
+
 	// TODO: Add client serving here
 
 	router.use(middlewares.notFound);
@@ -41,9 +46,7 @@ export async function initExpress() {
 
 	server.listen(API_PORT, () => {
 		logger.info(
-			`A express application with pid of ${
-				process.pid
-			} is now available at http://localhost:${8080}`,
+			`A express application with pid of ${process.pid} is now available at http://${API_HOSTNAME}:${API_PORT}`,
 		);
 	});
 }

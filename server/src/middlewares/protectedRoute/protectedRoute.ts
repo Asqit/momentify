@@ -34,6 +34,8 @@ export const protectedRoute = asyncHandler(
 			throw new HttpException(403, 'Invalid authorization token');
 		}
 
+		res.locals.userId = user.id;
+
 		next();
 	},
 );

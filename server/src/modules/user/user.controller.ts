@@ -1,5 +1,9 @@
-import { Router } from 'express'
+import { Router } from 'express';
+import { protectedRoute } from '~/middlewares';
 
-const router = Router()
+const router = Router();
 
-export default router
+router.get('/:id', protectedRoute);
+router.put('/follow', protectedRoute);
+
+export default router;
