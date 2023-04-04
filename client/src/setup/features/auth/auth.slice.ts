@@ -13,10 +13,13 @@ const authSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		// Login --------------------------
-		builder.addMatcher(api.endpoints.login.matchFulfilled, (state, action: PayloadAction<ILoginResponse>) => {
-			state.accessToken = action.payload.accessToken;
-			state.user = action.payload.user;
-		});
+		builder.addMatcher(
+			api.endpoints.login.matchFulfilled,
+			(state, action: PayloadAction<ILoginResponse>) => {
+				state.accessToken = action.payload.accessToken;
+				state.user = action.payload.user;
+			},
+		);
 	},
 });
 

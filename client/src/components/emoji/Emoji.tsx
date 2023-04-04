@@ -1,19 +1,19 @@
 interface IEmojiProps {
-  label?: string;
-  symbol: string;
+	label?: string;
+	symbol: string;
 }
 
 export function Emoji(props: IEmojiProps) {
-  const { symbol, label } = props;
+	const { symbol, label } = props;
 
-  return (
-    <span
-      className='emoji'
-      role='img'
-      aria-label={label ? label : 'emoji symbol'}
-      aria-hidden={label ? 'false' : 'true'}
-    >
-      {symbol}
-    </span>
-  );
+	return (
+		<span
+			className="emoji"
+			role="img"
+			aria-label={label ? label : 'emoji symbol'}
+			aria-hidden={label ? 'false' : 'true'}
+		>
+			{symbol}
+		</span>
+	);
 }

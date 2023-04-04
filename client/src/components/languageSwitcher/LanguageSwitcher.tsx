@@ -12,12 +12,12 @@ export function LanguageSwitcher() {
 	const { i18n } = useTranslation();
 
 	return (
-		<select className='flex items-center justify-center gap-x-2 bg-transparent'>
+		<select className="flex items-center justify-center gap-x-2 bg-transparent">
 			{langs.map((lang) => {
 				return (
 					<option
 						key={lang.id}
-						className='disabled:opacity-50'
+						className="disabled:opacity-50"
 						disabled={i18n.resolvedLanguage === lang.shortCut}
 						onClick={() => i18n.changeLanguage(lang.shortCut)}
 					>

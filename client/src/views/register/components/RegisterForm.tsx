@@ -15,7 +15,7 @@ YupPassword(yup);
 const registerSchema = yup.object().shape({
 	username: yup.string().min(4).trim().required(),
 	email: yup.string().email().trim().required(),
-	password: yup.string().password().minSymbols(0).trim().required(),
+	password: yup.string().password().trim().required(),
 });
 
 export function RegisterForm() {
@@ -64,10 +64,10 @@ export function RegisterForm() {
 			{isLoading ? (
 				<Spinner />
 			) : (
-				<form className='flex flex-col gap-3' onSubmit={formik.handleSubmit}>
+				<form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
 					<Textfield
-						type='email'
-						name='email'
+						type="email"
+						name="email"
 						value={formik.values.email}
 						onChange={handleChange}
 						placeholder={String(t('form.email_placeholder'))}
@@ -75,8 +75,8 @@ export function RegisterForm() {
 						errorMessage={formik.errors.email}
 					/>
 					<Textfield
-						type='text'
-						name='username'
+						type="text"
+						name="username"
 						value={formik.values.username}
 						onChange={handleChange}
 						label={String(t('form.username'))}
@@ -84,7 +84,7 @@ export function RegisterForm() {
 						errorMessage={formik.errors.username}
 					/>
 					<Textfield
-						name='password'
+						name="password"
 						value={formik.values.password}
 						onChange={handleChange}
 						type={isPassword ? 'password' : 'text'}
@@ -95,18 +95,23 @@ export function RegisterForm() {
 						<Textfield.SubComponent>
 							<button
 								className={`text-3xl ${isPassword ? 'text-gray-600' : 'text-black'}`}
-								type='button'
+								type="button"
 								onClick={() => setIsPassword((prev) => !prev)}
 							>
 								{<AiOutlineEyeInvisible />}
 							</button>
 						</Textfield.SubComponent>
 					</Textfield>
-					<div className='flex gap-x-2'>
-						<Button className='w-1/2' onClick={() => navigate('/login')}>
+					<div className="flex gap-x-2">
+						<Button className="w-1/2" onClick={() => navigate('/login')}>
 							{t('form.login')}
 						</Button>
-						<Button className='w-1/2' buttonColor='primary' type='submit' disabled={!formik.isValid}>
+						<Button
+							className="w-1/2"
+							buttonColor="primary"
+							type="submit"
+							disabled={!formik.isValid}
+						>
 							{t('form.register')}
 						</Button>
 					</div>

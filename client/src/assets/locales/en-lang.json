@@ -1,25 +1,35 @@
 {
-  "native_name": "English",
-  "alt_name": "Angličtina",
-  "form": {
-    "username": "Username",
-    "email": "Email Address",
-    "password": "Password",
-    "username_placeholder": "How should we call you?",
-    "email_placeholder": "e.g. joedoe@email.com",
-    "password_placeholder": "A strong password",
-    "register": "Create Account",
-    "login": "Log In"
-  },
-  "register_section": {
-    "title": "Create a new account",
-    "subtitle": "Already a member?",
-    "subtitle_link": "Log In"
-  },
-  "auth_nav": {
-    "home": "Home",
-    "login": "Log In",
-    "register": "Register"
-  },
-  "validation": {}
+	"native_name": "English",
+	"alt_name": "Angličtina",
+	"form": {
+		"username": "Username",
+		"email": "Email Address",
+		"password": "Password",
+		"username_placeholder": "How should we call you?",
+		"email_placeholder": "e.g. joedoe@email.com",
+		"password_placeholder": "A strong password",
+		"register": "Create Account",
+		"login": "Log In"
+	},
+	"register_section": {
+		"title": "Create a new account",
+		"subtitle": "Already a member?",
+		"subtitle_link": "Log In"
+	},
+	"login_section": {
+		"title": "Log-in",
+		"subtitle": "Not a member yet?",
+		"subtitle_link": "Register"
+	},
+	"lost_section": {
+		"title": "404 Page not found",
+		"subtitle": "Oh no...the page you are looking for was not found",
+		"details": "We are sorry, but the page you are looking for does not exist or has been moved, renamed or is temporarily unavailable"
+	},
+	"auth_nav": {
+		"home": "Home",
+		"login": "Log In",
+		"register": "Register"
+	},
+	"validation": {}
 }

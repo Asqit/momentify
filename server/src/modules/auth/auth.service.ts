@@ -5,13 +5,14 @@ import { generateToken, isEmailToken } from '~/utils/generateToken';
 import { HttpException } from '~/utils/HttpException';
 import { serverConfig } from '~/config/server.config';
 import { hash, verify } from 'argon2';
-import { sendEmail } from '~/utils/sendEmail';
+import { sendVerificationEmail } from '~/utils/sendEmail';
 import { verify as verifyJWT } from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import Joi from 'joi';
 
 const prisma = dbConnector.prisma;
 
+// ------------------------------------------------------------------------------------> [POST] /
 export const register = asyncHandler(async (req: Request, res: Response) => {
 	const { email, password, username } = req.body as RegisterSchema;
 	const conflict = await prisma.user.findFirst({
@@ -32,6 +33,9 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 			email,
 			hashPassword: HASH_PASSWORD,
 		},
+		include: {
+			posts: true,
+		},
 	});
 
 	const EMAIL_TOKEN = generateToken(
@@ -45,26 +49,20 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 		},
 	);
 
-	await sendEmail({
-		from: serverConfig.SMTP_USER,
-		to: email,
-		subject: 'Momentify - verify your email',
-		html: `
-      <p>Please click the following link to verify your email:</p>
-      <a href="http://localhost:${serverConfig.API_PORT}/api/auth/verify/email?token=${EMAIL_TOKEN}">Verify email</a>
-    `,
-	});
+	await sendVerificationEmail(email, EMAIL_TOKEN);
 
 	res.status(201).json({
 		message: 'success',
 	});
 });
 
-// Login ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------> [POST] /login
 export const login = asyncHandler(async (req: Request, res: Response) => {
 	const { email, password } = req.body as LoginSchema;
 
-	const user = await prisma.user.findUnique({ where: { email } });
+	const user = await prisma.user.findUnique({
+		where: { email },
+	});
 
 	if (!user) {
 		throw new HttpException(401, 'Invalid credentials');
@@ -93,7 +91,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 	});
 });
 
-// Email verification --------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------> [GET] /verify/email/:token
 export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
 	const { token } = req.params;
 
@@ -129,7 +127,7 @@ export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
 	res.sendStatus(200);
 });
 
-// issueEmail ---------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------> [GET] /issue/email/:email
 export const issueEmail = asyncHandler(async (req: Request, res: Response) => {
 	const { email } = req.params;
 	const emailTest = Joi.string().email().trim().required();
@@ -160,20 +158,12 @@ export const issueEmail = asyncHandler(async (req: Request, res: Response) => {
 		},
 	);
 
-	await sendEmail({
-		from: serverConfig.SMTP_USER,
-		to: email,
-		subject: 'Momentify - verify your email',
-		html: `
-      <p>Please click the following link to verify your email:</p>
-      <a href="http://localhost:${serverConfig.API_PORT}/api/auth/verify/email?token=${EMAIL_TOKEN}">Verify email</a>
-    `,
-	});
+	sendVerificationEmail(email, EMAIL_TOKEN);
 
 	res.sendStatus(200);
 });
 
-// issueToken ----------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------> [PUT] /issue/password
 export const issuePassword = asyncHandler(async (req: Request, res: Response) => {
 	const { password, newPassword } = req.body as PasswordChangeSchema;
 	const { userId } = res.locals;

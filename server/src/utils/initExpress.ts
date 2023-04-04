@@ -45,6 +45,7 @@ export async function initExpress() {
 	router.use(middlewares.errorHandler);
 
 	server.listen(API_PORT, () => {
+		console.clear();
 		logger.info(
 			`A express application with pid of ${process.pid} is now available at http://${API_HOSTNAME}:${API_PORT}`,
 		);

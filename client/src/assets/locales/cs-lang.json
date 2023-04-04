@@ -1,25 +1,43 @@
 {
-  "native_name": "Čeština",
-  "alt_name": "Czech",
-  "form": {
-    "username": "Uživatelské Jméno",
-    "email": "Emailová Adresa",
-    "password": "Heslo",
-    "username_placeholder": "Jak ti máme říkat?",
-    "email_placeholder": "např. jannovak@email.cz",
-    "password_placeholder": "silné heslo",
-    "register": "Vytvořit Účet",
-    "login": "Přihlásit"
-  },
-  "register_section": {
-    "title": "Vytvořit nový účet",
-    "subtitle": "Již máš účet?",
-    "subtitle_link": "Přihlášení"
-  },
-  "auth_nav": {
-    "home": "Domů",
-    "login": "Přihlášení",
-    "register": "Registrace"
-  },
-  "validation": {}
+	"native_name": "Čeština",
+	"alt_name": "Czech",
+	"form": {
+		"username": "Uživatelské Jméno",
+		"email": "Emailová Adresa",
+		"password": "Heslo",
+		"username_placeholder": "Jak ti máme říkat?",
+		"email_placeholder": "např. jannovak@email.cz",
+		"password_placeholder": "silné heslo",
+		"register": "Vytvořit Účet",
+		"login": "Přihlásit",
+
+		"error_required": "požadované pole",
+		"error_not_email": "špatný email",
+		"error_password_length": "Heslo musí být alespoň 8 znaků dlouhé",
+		"error_password_symbols": "Heslo musí obsahovat alespoň 1 speciální znak",
+		"error_password_uppercase": "Heslo musí obsahovat alespoň 1 velké písmeno",
+		"error_password_numbers": "Heslo musí obsahovat alespoň 4 čísla",
+		"error_password_lowercase": "Heslo musí obsahovat alespoň 1 malé písmeno"
+	},
+	"register_section": {
+		"title": "Vytvořit nový účet",
+		"subtitle": "Již máš účet?",
+		"subtitle_link": "Přihlášení"
+	},
+	"login_section": {
+		"title": "Přihlášení",
+		"subtitle": "Ještě nemáš účet?",
+		"subtitle_link": "Registrace"
+	},
+	"lost_section": {
+		"title": "404 Stránka nenalezena",
+		"subtitle": "Ale né...vaše stránka nebyla nalezena",
+		"details": "Je nám líto, ale stránka, kterou hledáte, ne-existuje a nebo byla přenusuta, přejmenována a nebo je dočasně nedostupná"
+	},
+	"auth_nav": {
+		"home": "Domů",
+		"login": "Přihlášení",
+		"register": "Registrace"
+	},
+	"validation": {}
 }

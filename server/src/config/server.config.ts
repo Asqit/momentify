@@ -5,19 +5,31 @@ import { logger } from '~/utils/logger';
 dotenv.config();
 
 interface Environment {
+	/** A port on which the express aplication is operating */
 	API_PORT: string;
+	/** A hostname of the express application. (localhost by default) */
 	API_HOSTNAME: string;
+	/** A mode of the application. (either "development" or "production") */
 	NODE_ENV: string;
+	/** JWT token secret for authentication */
 	ACCESS_TOKEN_SECRET: string;
+	/** JWT token secret for email tokens */
 	EMAIL_TOKEN_SECRET: string;
+	/** A url, which you can use to connect with the database */
 	DATABASE_URL: string;
+	/** Your email credentials */
 	SMTP_USER: string;
+	/** Your email credentials */
 	SMTP_PASSWORD: string;
+	/** e.g. gmail, outlook, seznam... */
+	SMTP_SERVICE: string;
+	/** A port on which the smtp service is available */
+	SMTP_PORT: string;
 }
 
 function initEnv(): Environment {
-	const config: any = {};
-	const keys = [
+	const config: Partial<Environment> = {};
+	const keys: (keyof Environment)[] = [
 		'API_PORT',
 		'API_HOSTNAME',
 		'NODE_ENV',
@@ -26,21 +38,22 @@ function initEnv(): Environment {
 		'DATABASE_URL',
 		'SMTP_USER',
 		'SMTP_PASSWORD',
+		'SMTP_SERVICE',
+		'SMTP_PORT',
 	];
-	const KEYS_LENGTH = keys.length;
 
-	for (let i = 0; i < KEYS_LENGTH; i++) {
-		const KEY = keys[i];
+	for (const key of keys) {
+		const value = process.env[key];
 
-		if (!process.env[KEY]) {
-			logger.error(`Invalid environmental variable ${KEY}:${process.env[KEY]}`);
+		if (!value) {
+			logger.error(`Invalid environmental variable ${key}:${value}`);
 			exit(1);
 		}
 
-		config[KEY] = process.env[KEY];
+		config[key] = value;
 	}
 
-	return config;
+	return config as Environment;
 }
 
 export const serverConfig = initEnv();

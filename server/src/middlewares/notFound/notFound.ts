@@ -1,5 +1,7 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express';
 
-export function notFound(req: Request, res: Response, next: NextFunction) {
-	res.sendStatus(404)
+function notFound(req: Request, res: Response, next: NextFunction) {
+	res.sendStatus(404);
 }
+
+export { notFound };

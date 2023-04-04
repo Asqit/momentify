@@ -5,12 +5,12 @@ import english from '~/assets/locales/en-lang.json';
 import czech from '~/assets/locales/cs-lang.json';
 
 const resources = {
-  en: { translation: english },
-  cz: { translation: czech },
+	en: { translation: english },
+	cz: { translation: czech },
 };
 
 i18next.use(initReactI18next).use(LanguageDetector).init({
-  resources,
-  fallbackLng: 'en',
-  debug: false,
+	resources,
+	fallbackLng: 'en',
+	debug: false,
 });

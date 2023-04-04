@@ -6,6 +6,7 @@ import { unlink } from 'node:fs';
 
 const prisma = dbConnector.prisma;
 
+// ------------------------------------------------------------------------------------> [POST] /
 export const createPost = asyncHandler(async (req: Request, res: Response) => {
 	const { title, authorId } = req.body;
 	const images = req.files;
@@ -21,7 +22,7 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 		files = images.map((image) => image.path);
 	}
 
-	await prisma.post.create({
+	let post = await prisma.post.create({
 		data: {
 			title,
 			authorId,
@@ -30,10 +31,11 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 	});
 
 	res.status(201).json({
-		success: true,
+		id: post.id,
 	});
 });
 
+// ------------------------------------------------------------------------------------> [GET] post/:id
 export const getPost = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const post = await prisma.post.findUnique({ where: { id } });
@@ -46,6 +48,7 @@ export const getPost = asyncHandler(async (req: Request, res: Response) => {
 	res.status(200).json(post);
 });
 
+// ------------------------------------------------------------------------------------> [GET] post/posts/:authorId
 export const getAuthorPosts = asyncHandler(async (req: Request, res: Response) => {
 	const { authorId } = req.params;
 	const posts = await prisma.post.findMany({
@@ -63,10 +66,7 @@ export const getAuthorPosts = asyncHandler(async (req: Request, res: Response) =
 	});
 });
 
-export const updatePost = asyncHandler(async (req: Request, res: Response) => {
-	const { id } = req.params;
-});
-
+// ------------------------------------------------------------------------------------> [DELETE] /:id
 export const deletePost = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
 
@@ -94,4 +94,31 @@ export const deletePost = asyncHandler(async (req: Request, res: Response) => {
 	});
 
 	res.status(200).json(post.id);
+});
+
+// ------------------------------------------------------------------------------------> [PUT] /like/:id/:authorId
+export const likePost = asyncHandler(async (req: Request, res: Response) => {
+	const { id, authorId } = req.params;
+	const post = await prisma.post.findUnique({ where: { id } });
+
+	if (!post) {
+		throw new HttpException(404, 'No post was found');
+	}
+
+	const updatedPost = await prisma.post.update({
+		where: { id },
+		data: {
+			likedBy: post.likedBy.filter((userId) => {
+				if (userId === authorId) {
+					return;
+				}
+
+				return authorId;
+			}),
+		},
+	});
+
+	res.status(200).json({
+		post: updatedPost,
+	});
 });
