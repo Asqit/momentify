@@ -1,4 +1,4 @@
-import { sign, SignOptions, JwtPayload, verify } from 'jsonwebtoken';
+import { sign, SignOptions, JwtPayload } from 'jsonwebtoken';
 
 interface AccessToken extends JwtPayload {
 	email: string;

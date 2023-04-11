@@ -12,26 +12,61 @@ import { isAuthErrorResponse } from '~/setup/features/auth/auth.types';
 
 YupPassword(yup);
 
-const registerSchema = yup.object().shape({
-	username: yup.string().min(4).trim().required(),
-	email: yup.string().email().trim().required(),
-	password: yup.string().password().trim().required(),
-});
-
 export function RegisterForm() {
 	const [isPassword, setIsPassword] = useState<boolean>(true);
 	const [register, { isLoading }] = useRegisterMutation();
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+
+	const registerSchema = yup.object().shape({
+		username: yup
+			.string()
+			.min(4)
+			.trim()
+			.required(String(t('form.error_required'))),
+		email: yup
+			.string()
+			.email(String(t('form.error_not_email')))
+			.trim()
+			.required(String(t('form.error_required'))),
+		password: yup
+			.string()
+			.password()
+			.min(8, String(t('form.error_password_length')))
+			.minSymbols(1, String(t('form.error_password_symbols')))
+			.minLowercase(1, String(t('form.error_password_lowercase')))
+			.minNumbers(4, String(t('form.error_password_numbers')))
+			.minUppercase(1, String(t('form.error_password_uppercase')))
+			.trim()
+			.required(String(t('form.error_required'))),
+
+		verifyPassword: yup
+			.string()
+			.password()
+			.min(8, String(t('form.error_password_length')))
+			.minSymbols(1, String(t('form.error_password_symbols')))
+			.minLowercase(1, String(t('form.error_password_lowercase')))
+			.minNumbers(4, String(t('form.error_password_numbers')))
+			.minUppercase(1, String(t('form.error_password_uppercase')))
+			.trim()
+			.required(String(t('form.error_required'))),
+	});
+
 	const formik = useFormik({
 		initialValues: {
 			username: '',
 			email: '',
 			password: '',
+			verifyPassword: '',
 		},
 		validationSchema: registerSchema,
 		onSubmit: async (values) => {
 			try {
+				if (values.password !== values.verifyPassword) {
+					toast.error('Passwords does not match');
+					return;
+				}
+
 				await register(values).unwrap();
 
 				navigate('/docs/email-verification');
@@ -83,25 +118,43 @@ export function RegisterForm() {
 						placeholder={String(t('form.username_placeholder'))}
 						errorMessage={formik.errors.username}
 					/>
-					<Textfield
-						name="password"
-						value={formik.values.password}
-						onChange={handleChange}
-						type={isPassword ? 'password' : 'text'}
-						label={String(t('form.password'))}
-						placeholder={String(t('form.password_placeholder'))}
-						errorMessage={formik.errors.password}
-					>
-						<Textfield.SubComponent>
-							<button
-								className={`text-3xl ${isPassword ? 'text-gray-600' : 'text-black'}`}
-								type="button"
-								onClick={() => setIsPassword((prev) => !prev)}
+					<div className="flex justify-between gap-x-2">
+						<div className="w-1/2">
+							<Textfield
+								name="password"
+								parentClassName="w-full"
+								value={formik.values.password}
+								onChange={handleChange}
+								type={isPassword ? 'password' : 'text'}
+								label={String(t('form.password'))}
+								placeholder={String(t('form.password_placeholder'))}
+								errorMessage={formik.errors.password}
 							>
-								{<AiOutlineEyeInvisible />}
-							</button>
-						</Textfield.SubComponent>
-					</Textfield>
+								<Textfield.SubComponent>
+									<button
+										className={`text-3xl ${isPassword ? 'text-gray-600' : 'text-black'}`}
+										type="button"
+										onClick={() => setIsPassword((prev) => !prev)}
+									>
+										{<AiOutlineEyeInvisible />}
+									</button>
+								</Textfield.SubComponent>
+							</Textfield>
+						</div>
+
+						<div className="w-1/2">
+							<Textfield
+								name="verifyPassword"
+								parentClassName="w-full"
+								value={formik.values.verifyPassword}
+								onChange={handleChange}
+								type={isPassword ? 'password' : 'text'}
+								label={String(t('form.verify_password'))}
+								placeholder={String(t('form.verify_password_placeholder'))}
+								errorMessage={formik.errors.verifyPassword}
+							/>
+						</div>
+					</div>
 					<div className="flex gap-x-2">
 						<Button className="w-1/2" onClick={() => navigate('/login')}>
 							{t('form.login')}

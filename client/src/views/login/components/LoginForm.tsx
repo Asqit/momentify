@@ -1,5 +1,5 @@
 import { useLoginMutation } from '~/setup/features/auth/auth.api';
-import { AiOutlineEyeInvisible } from 'react-icons/ai';
+import { SlMagnifier } from 'react-icons/sl';
 import { Button, Spinner, Textfield } from '~/components';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -101,12 +101,12 @@ export function LoginForm() {
 								type="button"
 								onClick={() => setIsPassword((prev) => !prev)}
 							>
-								{<AiOutlineEyeInvisible />}
+								{<SlMagnifier />}
 							</button>
 						</Textfield.SubComponent>
 					</Textfield>
 					<div className="flex gap-x-2">
-						<Button className="w-1/2" onClick={() => navigate('/login')}>
+						<Button className="w-1/2" type="button" onClick={() => navigate('/register')}>
 							{t('form.register')}
 						</Button>
 						<Button

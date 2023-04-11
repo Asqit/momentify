@@ -1,13 +1,17 @@
 {
 	"native_name": "Čeština",
 	"alt_name": "Czech",
+	"loading": "Pracuji",
 	"form": {
 		"username": "Uživatelské Jméno",
 		"email": "Emailová Adresa",
 		"password": "Heslo",
+		"verify_password": "zadejte vaše heslo ještě jednou",
+		"verify_password_placeholder": "Heslo pro ověření",
 		"username_placeholder": "Jak ti máme říkat?",
 		"email_placeholder": "např. jannovak@email.cz",
 		"password_placeholder": "silné heslo",
+
 		"register": "Vytvořit Účet",
 		"login": "Přihlásit",
 
@@ -39,5 +43,9 @@
 		"login": "Přihlášení",
 		"register": "Registrace"
 	},
-	"validation": {}
+	"navbar_widget": {
+		"home": "Domů",
+		"new": "Vytvořit",
+		"account": "Účet"
+	}
 }

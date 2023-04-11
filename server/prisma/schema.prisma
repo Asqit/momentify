@@ -16,15 +16,11 @@ model User {
   username     String  @unique
   hashPassword String
   verified     Boolean @default(false)
-
   followers    User[]   @relation("UserFollows", fields: [followersIds], references: [id])
   followersIds String[] @db.ObjectId
-
   following    User[]   @relation("UserFollows", fields: [followingIds], references: [id])
   followingIds String[] @db.ObjectId
-
   posts Post[] @relation("author")
-
   comments Comment[]
 
   @@map("users")
@@ -34,13 +30,10 @@ model Post {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   title   String
   likedBy String[] @db.ObjectId 
-
   author   User   @relation("author", fields: [authorId], references: [id])
   authorId String @db.ObjectId
-
   body      String[] // Array of URLs to Post images
   createdAt DateTime @default(now())
-
   comments Comment[]
 
   @@map("posts")
@@ -50,10 +43,8 @@ model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   value     String
-
   authorId String @db.ObjectId
   author   User   @relation(fields: [authorId], references: [id])
-
   postId String @db.ObjectId
   post   Post   @relation(fields: [postId], references: [id])
 

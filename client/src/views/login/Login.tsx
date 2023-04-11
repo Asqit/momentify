@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AuthNav } from '~/components';
+import { AuthNav, Spinner } from '~/components';
 import { useTranslation } from 'react-i18next';
 import { LoginForm } from './components/LoginForm';
 

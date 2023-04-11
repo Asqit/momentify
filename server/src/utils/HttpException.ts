@@ -2,7 +2,7 @@ export class HttpException extends Error {
 	/**
 	 * A status code of the request.
 	 *
-	 * @default 500
+	 * @default - 500
 	 */
 	public statusCode: number = 500;
 

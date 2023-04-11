@@ -17,6 +17,11 @@ export interface IUser {
 	followers: string[];
 }
 
+export interface IChangePasswordBody {
+	password: string;
+	newPassword: string;
+}
+
 export interface ILoginCredentials {
 	email: string;
 	password: string;

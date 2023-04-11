@@ -1,5 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
-import { Homepage, Register, Login, Lost, AboutEmailVerification } from '~/views';
+import {
+	Homepage,
+	Register,
+	Login,
+	Lost,
+	AboutEmailVerification,
+	Account,
+	Post,
+	CreatePost,
+	Home,
+} from '~/views';
 import { ToastContainer } from 'react-toastify';
 import { ProtectedRoute } from './components';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,7 +19,12 @@ export default function App() {
 		<>
 			<Routes>
 				<Route element={<ProtectedRoute />}>
-					<Route index element={<Homepage />} />
+					<Route element={<Homepage />}>
+						<Route index element={<Home />} />
+						<Route path="account" element={<Account />} />
+						<Route path="post/:id" element={<Post />} />
+						<Route path="post/create" element={<CreatePost />} />
+					</Route>
 				</Route>
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />

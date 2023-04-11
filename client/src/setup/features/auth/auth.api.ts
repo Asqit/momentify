@@ -1,6 +1,6 @@
 import { baseApi } from '../baseApi';
 import {
-	IAuthErrorResponse,
+	IChangePasswordBody,
 	ILoginCredentials,
 	ILoginResponse,
 	IRegisterCredentials,
@@ -22,6 +22,13 @@ export const authApi = baseApi.injectEndpoints({
 			query: (credentials) => ({
 				url: '/auth/',
 				method: 'POST',
+				body: credentials,
+			}),
+		}),
+		changePassword: builder.mutation({
+			query: (credentials: IChangePasswordBody) => ({
+				url: '/auth/issue/password',
+				method: 'GET',
 				body: credentials,
 			}),
 		}),

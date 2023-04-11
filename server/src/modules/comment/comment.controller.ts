@@ -1,12 +1,33 @@
+import * as services from './comment.service';
+import { protectedRoute, validateRequest } from '~/middlewares';
+import { commentCreationSchema, commentUpdateSchema } from './comment.validation';
 import { Router } from 'express';
-import { protectedRoute } from '~/middlewares';
 
 const router = Router();
 
-router.post('/', protectedRoute); // user creates a comment             C
-router.get('/post/:id', protectedRoute); // get all comments relative to specific post R
-router.put('/:id', protectedRoute); // user updates a comment           U
-router.get('/:id', protectedRoute); // get specific comment             U
-router.delete('/:id', protectedRoute); // user deletes a comment        D
+// User creates a new comment
+router.post(
+	'/',
+	protectedRoute,
+	validateRequest(commentCreationSchema),
+	services.createComment,
+);
+
+// Get all post comments
+router.get('/post/:id', protectedRoute, services.getPostComments);
+
+// User updates his comment
+router.put(
+	'/:id',
+	protectedRoute,
+	validateRequest(commentUpdateSchema),
+	services.updateComment,
+);
+
+// Get specific comment
+router.get('/:id', protectedRoute, services.getComment);
+
+// User deletes a comment
+router.delete('/:id', protectedRoute, services.deleteComment);
 
 export default router;
