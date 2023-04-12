@@ -38,5 +38,11 @@
 		"home": "Home",
 		"new": "Create",
 		"account": "Account"
+	},
+	"sidebar_widget": {
+		"create": "Create",
+		"explore": "Explore",
+		"settings": "Settings",
+		"account": "Account"
 	}
 }

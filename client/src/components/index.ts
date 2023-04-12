@@ -1,13 +1,17 @@
-/// Regular components -------------------------------
-export * from './button/Button';
-export * from './brand/Brand';
-export * from './textfield/Textfield';
-export * from './emoji/Emoji';
-export * from './languageSwitcher/LanguageSwitcher';
-export * from './hamburger/Hamburger';
-export * from './authNav/AuthNav';
-export * from './spinner/Spinner';
-export * from './protectedRoute/ProtectedRoute';
+// Common components ------------------------------------->
+export * from './common/languageSwitcher/LanguageSwitcher';
+export * from './common/hamburger/Hamburger';
+export * from './common/textfield/Textfield';
+export * from './common/spinner/Spinner';
+export * from './common/button/Button';
+export * from './common/brand/Brand';
+export * from './common/emoji/Emoji';
 
-/// Dashboard widgets --------------------------------
-export * from './widgets';
+// Dashboard widgets ------------------------------------->
+export * from './dashboardWidgets/sidebar/Sidebar';
+export * from './dashboardWidgets/navbar/Navbar';
+export * from './dashboardWidgets/userDetails/UserDetails';
+
+// Others ------------------------------------------------>
+export * from './protectedRoute/ProtectedRoute';
+export * from './authNav/AuthNav';

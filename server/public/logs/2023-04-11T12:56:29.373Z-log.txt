@@ -1,0 +1,23 @@
+{"level":"info","message":"A express application with pid of 20360 is now available at http://localhost:8080"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1], Status - [201]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/id=64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/id=64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/posts/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/post/64355d6742c9a1dae4edafc4], Ip - [::ffff:127.0.0.1], Status - [200]"}

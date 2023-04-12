@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import {
-	Homepage,
+	Dashboard,
 	Register,
 	Login,
 	Lost,
@@ -18,13 +18,12 @@ export default function App() {
 	return (
 		<>
 			<Routes>
-				<Route element={<ProtectedRoute />}>
-					<Route element={<Homepage />}>
-						<Route index element={<Home />} />
-						<Route path="account" element={<Account />} />
-						<Route path="post/:id" element={<Post />} />
-						<Route path="post/create" element={<CreatePost />} />
-					</Route>
+				<Route element={<ProtectedRoute />}>{/* TODO: Return homepage routing */}</Route>
+				<Route path="" element={<Dashboard />}>
+					<Route index element={<Home />} />
+					<Route path="account" element={<Account />} />
+					<Route path="post/:id" element={<Post />} />
+					<Route path="post/create" element={<CreatePost />} />
 				</Route>
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />

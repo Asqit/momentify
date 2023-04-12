@@ -20,7 +20,7 @@
 	}
 
 	.link {
-		@apply text-sky-400 hover:underline;
+		@apply text-sky-400 hover:underline font-semibold;
 	}
 
 	.link.secondary {

@@ -5,8 +5,8 @@
 	"license": "MIT",
 	"scripts": {
 		"dev:prepare": "yarn && yarn prisma generate",
-		"start:dev": "nodemon ./src/index.ts",
-		"start:prod": "node ./dist/index.js",
+		"dev": "nodemon ./src/index.ts",
+		"prod": "node ./dist/index.js",
 		"build": "tsc --build && yarn format",
 		"format": "yarn prettier --write ."
 	},

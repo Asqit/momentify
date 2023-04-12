@@ -12,7 +12,7 @@ export function LanguageSwitcher() {
 	const { i18n } = useTranslation();
 
 	return (
-		<select className="flex items-center justify-center gap-x-2 bg-transparent">
+		<select className="inline-flex items-center justify-center gap-x-2 bg-transparent">
 			{langs.map((lang) => {
 				return (
 					<option

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Brand } from '../brand/Brand';
-import { Hamburger } from '../hamburger/Hamburger';
-import { LanguageSwitcher } from '../languageSwitcher/LanguageSwitcher';
+import { Brand } from '../common/brand/Brand';
+import { Hamburger } from '../common/hamburger/Hamburger';
+import { LanguageSwitcher } from '../common/languageSwitcher/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 

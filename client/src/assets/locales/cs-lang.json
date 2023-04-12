@@ -47,5 +47,11 @@
 		"home": "Domů",
 		"new": "Vytvořit",
 		"account": "Účet"
+	},
+	"sidebar_widget": {
+		"create": "Vytvořit",
+		"explore": "Objevuj",
+		"settings": "Nastavení",
+		"account": "Účet"
 	}
 }

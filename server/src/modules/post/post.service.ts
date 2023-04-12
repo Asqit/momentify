@@ -1,8 +1,10 @@
 import { HttpException } from '~/utils/HttpException';
 import { dbConnector } from '~/utils/dbConnector';
-import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
 import { unlink } from 'node:fs';
+import { Post } from '@prisma/client';
+import { shuffle } from '~/utils/shuffle';
+import asyncHandler from 'express-async-handler';
 
 const prisma = dbConnector.prisma;
 
@@ -46,6 +48,64 @@ export const getPost = asyncHandler(async (req: Request, res: Response) => {
 	}
 
 	res.status(200).json(post);
+});
+
+// ------------------------------------------------------------------------------------> [GET] posts/feed/person
+// TODO: Think of better algorithm. (this one is repetitive)
+export const getPersonFeed = asyncHandler(async (req: Request, res: Response) => {
+	const { userId: id } = res.locals;
+	const user = await prisma.user.findUnique({
+		where: { id },
+		include: {
+			followers: {
+				include: { posts: true },
+			},
+		},
+	});
+
+	if (!user) {
+		throw new HttpException(404, 'User not found');
+	}
+
+	const FOLLOWERS_LENGTH = user.followers.length;
+	let posts: Post[] = [];
+
+	// Append all posts into single array
+	for (let i = 0; i < FOLLOWERS_LENGTH; i++) {
+		const follower = user.followers[i];
+
+		const FOLLOWER_POSTS_LENGTH = follower.posts.length;
+		for (let j = 0; j < FOLLOWER_POSTS_LENGTH; j++) {
+			const post = follower.posts[j];
+			posts.push(post);
+		}
+	}
+
+	// Shuffle the array
+	posts = shuffle(posts);
+
+	res.status(200).json({
+		results: posts,
+	});
+});
+
+// ------------------------------------------------------------------------------------> [GET] posts/feed/global/:lastId
+export const getGlobalFeed = asyncHandler(async (req: Request, res: Response) => {
+	const { lastId } = req.params;
+
+	// Find first 30 posts, that has id > lastId
+	const posts = await prisma.post.findMany({
+		take: 30,
+		where: {
+			id: {
+				gt: lastId,
+			},
+		},
+	});
+
+	res.status(200).json({
+		results: posts,
+	});
 });
 
 // ------------------------------------------------------------------------------------> [GET] post/posts/:authorId

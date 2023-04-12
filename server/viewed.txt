@@ -1,0 +1,5 @@
+Ukládání stavu "viewed" pro příspěvky
+
+Ukládání seznamu ID uživatelů, kteří daný příspěvek viděli, v poli nebo seznamu v samotném příspěvku. 
+Tato metoda snižuje nároky na paměť a výkon, ale může být méně flexibilní, pokud chcete získat seznam uživatelů, 
+kteří viděli více příspěvků.
