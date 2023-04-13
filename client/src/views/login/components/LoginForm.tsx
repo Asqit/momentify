@@ -9,11 +9,12 @@ import YupPassword from 'yup-password';
 import * as yup from 'yup';
 import { isAuthErrorResponse } from '~/setup/features/auth/auth.types';
 import { toast } from 'react-toastify';
+import { truncateSync } from 'fs';
 
 YupPassword(yup);
 
 export function LoginForm() {
-	const [isPassword, setIsPassword] = useState<boolean>(false);
+	const [isPassword, setIsPassword] = useState<boolean>(true);
 	const [login, { isLoading }] = useLoginMutation();
 	const { t } = useTranslation();
 	const navigate = useNavigate();

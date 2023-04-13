@@ -1,4 +1,5 @@
 import { Button, Textfield } from '~/components';
+import { CreatePostForm } from './CreatePostForm';
 
 export function CreatePost() {
 	const handleSubmit = () => {};
@@ -7,11 +8,7 @@ export function CreatePost() {
 		<section>
 			<main>
 				<h1>Create a new post</h1>
-				<form onSubmit={handleSubmit}>
-					<input type="text" />
-					<input type="file" />
-					<button type="submit">create</button>
-				</form>
+				<CreatePostForm />
 			</main>
 		</section>
 	);

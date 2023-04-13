@@ -1,0 +1,6 @@
+{"level":"info","message":"Initializing prisma connector."}
+{"level":"info","message":"A express application with pid of 14672 is now available at http://localhost:8080"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}

@@ -7,10 +7,11 @@ export function Dashboard() {
 
 	return (
 		<section className="w-full h-screen flex flex-col md:flex-row">
-			{isDesktop ? <Sidebar /> : <Navbar />}
-			<div className="flex-grow">
+			{isDesktop ? <Sidebar /> : null}
+			<div className="flex-grow overflow-x-hidden overflow-y-auto">
 				<Outlet />
 			</div>
+			{isDesktop === false ? <Navbar /> : null}
 		</section>
 	);
 }

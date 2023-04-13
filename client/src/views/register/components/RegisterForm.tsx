@@ -67,7 +67,11 @@ export function RegisterForm() {
 					return;
 				}
 
-				await register(values).unwrap();
+				const body: any = values;
+
+				delete body.verifyPassword;
+
+				await register({ ...body }).unwrap();
 
 				navigate('/docs/email-verification');
 			} catch (error) {

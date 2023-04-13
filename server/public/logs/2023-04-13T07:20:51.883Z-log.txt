@@ -1,0 +1,150 @@
+{"level":"info","message":"Initializing prisma connector."}
+{"level":"info","message":"A express application with pid of 24718 is now available at http://localhost:8080"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/favicon.ico], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/favicon.ico], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/favicon.ico], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/public/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/favicon.ico], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1680385889128-599a31b1-7b6e-42d5-af5a-2db44ea2c814-gradient-synth-cat.png], Ip - [::ffff:127.0.0.1], Status - [404]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/], Ip - [::ffff:127.0.0.1], Status - [400]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/], Ip - [::ffff:127.0.0.1], Status - [400]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [302]"}
+{"level":"info","message":"Method - [GET], Url - [/api/auth/issue/email/ondrejtucek9@seznam.cz], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/api/auth/issue/email/ondrejtucek9@seznam.cz], Ip - [::ffff:127.0.0.1], Status - [401]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1], Status - [201]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1], Status - [201]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1], Status - [201]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375539668-62c71fac-09a2-41f8-bec9-f9c9bb646c93-Fuu_two.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375551474-ed9e20b0-d2cc-4f17-a4b7-c3ec239f15b6-mem%C3%83%C2%ADsek.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375572786-cedc7c41-3cad-4b11-bb7e-7054ce00200c-porco-rosso-plane-bellow.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375539668-62c71fac-09a2-41f8-bec9-f9c9bb646c93-Fuu_two.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [304]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375551474-ed9e20b0-d2cc-4f17-a4b7-c3ec239f15b6-mem%C3%83%C2%ADsek.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375572786-cedc7c41-3cad-4b11-bb7e-7054ce00200c-porco-rosso-plane-bellow.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375539668-62c71fac-09a2-41f8-bec9-f9c9bb646c93-Fuu_two.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375551474-ed9e20b0-d2cc-4f17-a4b7-c3ec239f15b6-mem%C3%83%C2%ADsek.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375572786-cedc7c41-3cad-4b11-bb7e-7054ce00200c-porco-rosso-plane-bellow.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375539668-62c71fac-09a2-41f8-bec9-f9c9bb646c93-Fuu_two.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375551474-ed9e20b0-d2cc-4f17-a4b7-c3ec239f15b6-mem%C3%83%C2%ADsek.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375572786-cedc7c41-3cad-4b11-bb7e-7054ce00200c-porco-rosso-plane-bellow.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [401]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375539668-62c71fac-09a2-41f8-bec9-f9c9bb646c93-Fuu_two.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375539668-62c71fac-09a2-41f8-bec9-f9c9bb646c93-Fuu_two.jpg], Ip - [::ffff:127.0.0.1], Status - [304]"}
+{"level":"info","message":"Method - [GET], Url - [/1681218919929-bb89d8f1-a527-4379-b77b-ca4964df3a20-Fuu_three.jpg], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375551474-ed9e20b0-d2cc-4f17-a4b7-c3ec239f15b6-mem%C3%83%C2%ADsek.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375551474-ed9e20b0-d2cc-4f17-a4b7-c3ec239f15b6-mem%C3%83%C2%ADsek.jpg], Ip - [::ffff:127.0.0.1], Status - [304]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375572786-cedc7c41-3cad-4b11-bb7e-7054ce00200c-porco-rosso-plane-bellow.jpg], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [GET], Url - [/1681375572786-cedc7c41-3cad-4b11-bb7e-7054ce00200c-porco-rosso-plane-bellow.jpg], Ip - [::ffff:127.0.0.1], Status - [304]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1], Status - [401]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/auth/login], Ip - [::ffff:127.0.0.1], Status - [200]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1]"}
+{"level":"info","message":"Method - [POST], Url - [/api/post/], Ip - [::ffff:127.0.0.1], Status - [400]"}

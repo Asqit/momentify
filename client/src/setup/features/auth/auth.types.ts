@@ -1,3 +1,5 @@
+import { Post } from '../posts/post.types';
+
 /**
  * This interface represents a user object sent to here by server-side
  * it is strapped of any crucial details.
@@ -8,13 +10,13 @@ export interface IUser {
 	username: string;
 
 	/** An array of post ids */
-	posts: string[];
+	posts: Post[];
 
 	/** An array of user ids */
-	following: string[];
+	following: IUser[];
 
 	/** An array of user ids */
-	followers: string[];
+	followers: IUser[];
 }
 
 export interface IChangePasswordBody {

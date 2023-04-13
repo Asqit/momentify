@@ -62,6 +62,11 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 
 	const user = await prisma.user.findUnique({
 		where: { email },
+		include: {
+			posts: true,
+			followers: true,
+			following: true,
+		},
 	});
 
 	if (!user) {

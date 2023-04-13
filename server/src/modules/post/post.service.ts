@@ -10,7 +10,8 @@ const prisma = dbConnector.prisma;
 
 // ------------------------------------------------------------------------------------> [POST] /
 export const createPost = asyncHandler(async (req: Request, res: Response) => {
-	const { title, authorId } = req.body;
+	const { title } = req.body;
+	const { authorId } = res.locals;
 	const images = req.files;
 	let files: any = images;
 
@@ -51,7 +52,6 @@ export const getPost = asyncHandler(async (req: Request, res: Response) => {
 });
 
 // ------------------------------------------------------------------------------------> [GET] posts/feed/person
-// TODO: Think of better algorithm. (this one is repetitive)
 export const getPersonFeed = asyncHandler(async (req: Request, res: Response) => {
 	const { userId: id } = res.locals;
 	const user = await prisma.user.findUnique({
