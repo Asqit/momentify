@@ -1,13 +1,13 @@
-import { IUser } from '~/setup/features/auth/auth.types';
-
+import { User } from '~/setup/features/auth/auth.types';
 import { FaRegComment, FaRegHeart } from 'react-icons/fa';
+import { Slideshow } from '~/components';
 
 interface MiniPostProps {
 	title: string;
 	likes: number;
-	author: IUser;
+	author: User;
 	/** The first image from the images array */
-	body: string;
+	body: string[] | string;
 	createdAt: Date;
 }
 
@@ -18,11 +18,12 @@ export function MiniPost(props: MiniPostProps) {
 	return (
 		<div className="min-w-fit max-w-[256px] border p-2 rounded-md">
 			<div className="mb-2">
-				<img
-					className="rounded-md object-cover max-w-xs"
-					crossOrigin="anonymous"
-					src={`http://localhost:8080/${body.split('/')[1]}`}
-				/>
+				{
+					Array.isArray(body) && body.length > 1 ?
+						<Slideshow images={body} />
+						:
+						<img crossOrigin="anonymous" className={"max-w-[500px] h-[400px] object-cover"} src={`http://localhost:8080/${body}`} alt={""} />
+				}
 			</div>
 			<div className="mt-2 flex items-center justify-between">
 				<div>

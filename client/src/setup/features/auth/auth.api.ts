@@ -1,16 +1,16 @@
 import { baseApi } from '../baseApi';
 import {
-	IChangePasswordBody,
-	ILoginCredentials,
-	ILoginResponse,
-	IRegisterCredentials,
-	IRegisterResponse,
+	ChangePasswordBody,
+	LoginCredentials,
+	LoginResponse,
+	RegisterCredentials,
+	RegisterResponse,
 } from './auth.types';
 
 export const authApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		// Login mutation --------------------------------------------
-		login: builder.mutation<ILoginResponse, ILoginCredentials>({
+		login: builder.mutation<LoginResponse, LoginCredentials>({
 			query: (credentials) => ({
 				url: '/auth/login',
 				body: credentials,
@@ -18,7 +18,7 @@ export const authApi = baseApi.injectEndpoints({
 			}),
 		}),
 		// Register mutation ------------------------------------------
-		register: builder.mutation<IRegisterResponse, IRegisterCredentials>({
+		register: builder.mutation<RegisterResponse, RegisterCredentials>({
 			query: (credentials) => ({
 				url: '/auth/',
 				method: 'POST',
@@ -26,7 +26,7 @@ export const authApi = baseApi.injectEndpoints({
 			}),
 		}),
 		changePassword: builder.mutation({
-			query: (credentials: IChangePasswordBody) => ({
+			query: (credentials: ChangePasswordBody) => ({
 				url: '/auth/issue/password',
 				method: 'GET',
 				body: credentials,

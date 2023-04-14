@@ -10,8 +10,7 @@ const prisma = dbConnector.prisma;
 
 // ------------------------------------------------------------------------------------> [POST] /
 export const createPost = asyncHandler(async (req: Request, res: Response) => {
-	const { title } = req.body;
-	const { authorId } = res.locals;
+	const { title, authorId } = req.body;
 	const images = req.files;
 	let files: any = images;
 
@@ -22,7 +21,7 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 	if (!Array.isArray(images)) {
 		files = [images];
 	} else {
-		files = images.map((image) => image.path);
+		files = images.map((image) => image.filename);
 	}
 
 	let post = await prisma.post.create({

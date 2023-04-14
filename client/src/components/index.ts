@@ -2,6 +2,7 @@
 export * from './common/languageSwitcher/LanguageSwitcher';
 export * from './common/hamburger/Hamburger';
 export * from './common/textfield/Textfield';
+export * from "./common/slideshow/Slideshow";
 export * from './common/spinner/Spinner';
 export * from './common/button/Button';
 export * from './common/brand/Brand';

@@ -7,13 +7,7 @@ import { postCreationSchema } from './post.validation';
 const router = Router();
 
 // Post creation
-router.post(
-	'/',
-	protectedRoute,
-	upload,
-	validateRequest(postCreationSchema),
-	service.createPost,
-);
+router.post('/', upload, validateRequest(postCreationSchema), service.createPost);
 
 // Toggle user's like
 router.put('/like/:id/:authorId', protectedRoute, service.likePost);

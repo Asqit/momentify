@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { UserDetails } from '~/components';
 import { MiniPost } from '~/components/dashboardWidgets/miniPost/MiniPost';
-import { IUser } from '~/setup/features/auth/auth.types';
 import { Post } from '~/setup/features/posts/post.types';
 
 export function Account() {
@@ -21,9 +20,10 @@ export function Account() {
 								<MiniPost
 									title={post.title}
 									author={user}
-									body={post.body[0]}
+									body={post.body}
 									likes={post.likedBy.length}
 									createdAt={post.createdAt}
+									key={post.id}
 								/>
 							);
 					  })

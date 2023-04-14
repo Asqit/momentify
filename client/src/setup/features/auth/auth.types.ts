@@ -4,7 +4,7 @@ import { Post } from '../posts/post.types';
  * This interface represents a user object sent to here by server-side
  * it is strapped of any crucial details.
  */
-export interface IUser {
+export interface User {
 	id: string;
 	email: string;
 	username: string;
@@ -13,51 +13,51 @@ export interface IUser {
 	posts: Post[];
 
 	/** An array of user ids */
-	following: IUser[];
+	following: User[];
 
 	/** An array of user ids */
-	followers: IUser[];
+	followers: User[];
 }
 
-export interface IChangePasswordBody {
+export interface ChangePasswordBody {
 	password: string;
 	newPassword: string;
 }
 
-export interface ILoginCredentials {
+export interface LoginCredentials {
 	email: string;
 	password: string;
 }
 
-export interface IRegisterCredentials extends ILoginCredentials {
+export interface RegisterCredentials extends LoginCredentials {
 	username: string;
 }
 
-export interface ILoginResponse {
-	user: IUser;
+export interface LoginResponse {
+	user: User;
 	accessToken: string;
 }
 
-export interface IAuthState {
-	user: IUser | null;
+export interface AuthState {
+	user: User | null;
 	accessToken: string;
 }
 
-export interface IAuthErrorResponse {
+export interface AuthErrorResponse {
 	message: string;
 	statusCode: number;
 	stack?: string;
 }
 
-export interface IRegisterResponse {
+export interface RegisterResponse {
 	message: string;
 }
 
-export function isAuthErrorResponse(test: unknown): test is IAuthErrorResponse {
+export function isAuthErrorResponse(test: unknown): test is AuthErrorResponse {
 	return (
-		(test as IAuthErrorResponse).message !== undefined &&
-		typeof (test as IAuthErrorResponse).message === 'string' &&
-		(test as IAuthErrorResponse).statusCode !== undefined &&
-		typeof (test as IAuthErrorResponse).statusCode === 'number'
+		(test as AuthErrorResponse).message !== undefined &&
+		typeof (test as AuthErrorResponse).message === 'string' &&
+		(test as AuthErrorResponse).statusCode !== undefined &&
+		typeof (test as AuthErrorResponse).statusCode === 'number'
 	);
 }

@@ -18,14 +18,14 @@ const postsApi = baseApi.injectEndpoints({
 			}),
 		}),
 		// create post mutation -------------------------------------------->
-		createPost: builder.mutation<void, CreatePostBody>({
+		createPost: builder.mutation<void, FormData>({
 			query: (body) => ({
-				url: '/post/',
+				url: '/post',
 				method: 'POST',
 				headers: {
-					'Content-Type': 'multipart/form-data',
+					'Content-Type': undefined // We should let RTK-Query generate the content-type itself, otherwise we will get Multipart: No boundary found error
 				},
-				body: { files: body.files, title: body.title },
+				body,
 			}),
 		}),
 		// Like post mutation --------------------------------------------->
