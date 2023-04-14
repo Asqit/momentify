@@ -1,1 +1,0 @@
-{"level":"error","message":"Prisma cannot connect to the database"}

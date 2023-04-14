@@ -1,1 +1,0 @@
-{"level":"info","message":"A express application with pid of 25835 is now available at http://localhost:8080"}
