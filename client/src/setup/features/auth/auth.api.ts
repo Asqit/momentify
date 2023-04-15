@@ -9,7 +9,7 @@ import {
 
 export const authApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
-		// Login mutation --------------------------------------------
+		// Login mutation -------------------------------------------->
 		login: builder.mutation<LoginResponse, LoginCredentials>({
 			query: (credentials) => ({
 				url: '/auth/login',
@@ -17,7 +17,7 @@ export const authApi = baseApi.injectEndpoints({
 				method: 'POST',
 			}),
 		}),
-		// Register mutation ------------------------------------------
+		// Register mutation ------------------------------------------>
 		register: builder.mutation<RegisterResponse, RegisterCredentials>({
 			query: (credentials) => ({
 				url: '/auth/',
@@ -25,6 +25,8 @@ export const authApi = baseApi.injectEndpoints({
 				body: credentials,
 			}),
 		}),
+
+		// Change password query -------------------------------------->
 		changePassword: builder.mutation({
 			query: (credentials: ChangePasswordBody) => ({
 				url: '/auth/issue/password',

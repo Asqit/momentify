@@ -17,6 +17,7 @@ export interface User {
 
 	/** An array of user ids */
 	followers: User[];
+	profilePicture?: string;
 }
 
 export interface ChangePasswordBody {

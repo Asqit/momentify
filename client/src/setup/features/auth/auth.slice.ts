@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authApi as api } from './auth.api';
-import { IAuthState, ILoginResponse } from './auth.types';
+import { AuthState, LoginResponse } from './auth.types';
 
-const initialState: IAuthState = {
+const initialState: AuthState = {
 	user: null,
 	accessToken: '',
 };
@@ -17,16 +17,16 @@ const authSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		// Login --------------------------
 		builder
+			// Login -------------------------->
 			.addMatcher(
 				api.endpoints.login.matchFulfilled,
-				(state, action: PayloadAction<ILoginResponse>) => {
+				(state, action: PayloadAction<LoginResponse>) => {
 					state.accessToken = action.payload.accessToken;
 					state.user = action.payload.user;
 				},
 			)
-			// Change password ----------------
+			// Change password ---------------->
 			.addMatcher(api.endpoints.changePassword.matchFulfilled, (state, action) => {
 				state.accessToken = '';
 				state.user = null;

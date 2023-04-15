@@ -90,17 +90,15 @@ export const getPersonFeed = asyncHandler(async (req: Request, res: Response) =>
 
 // ------------------------------------------------------------------------------------> [GET] posts/feed/global/:lastId
 export const getGlobalFeed = asyncHandler(async (req: Request, res: Response) => {
-	const { lastId } = req.params;
-
 	// Find first 30 posts, that has id > lastId
-	const posts = await prisma.post.findMany({
+	let posts = await prisma.post.findMany({
 		take: 30,
-		where: {
-			id: {
-				gt: lastId,
-			},
+		include: {
+			author: true,
 		},
 	});
+
+	posts = shuffle(posts);
 
 	res.status(200).json({
 		results: posts,

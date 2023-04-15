@@ -31,4 +31,6 @@ export const upload = multer({
 		}
 		cb(null, true);
 	},
-}).array('files', 8);
+});
+
+export const uploadPostBody = upload.array('files', 8);

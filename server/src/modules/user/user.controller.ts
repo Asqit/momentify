@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { protectedRoute } from '~/middlewares';
-import { getUser, toggleFollowUser } from './user.service';
+import { changeProfilePicture, getUser, toggleFollowUser } from './user.service';
+import { upload } from '~/utils/multer';
 
 const router = Router();
 
@@ -11,6 +12,6 @@ router.get('/:id', protectedRoute, getUser);
 router.put('/follow', protectedRoute, toggleFollowUser);
 
 // Change user picture
-router.put('/');
+router.put('/:id/image', protectedRoute, upload.single('file'), changeProfilePicture);
 
 export default router;

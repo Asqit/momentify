@@ -1,13 +1,13 @@
 import { protectedRoute, validateRequest } from '~/middlewares';
 import * as service from './post.service';
-import { upload } from '~/utils/multer';
+import { uploadPostBody } from '~/utils/multer';
 import { Router } from 'express';
 import { postCreationSchema } from './post.validation';
 
 const router = Router();
 
 // Post creation
-router.post('/', upload, validateRequest(postCreationSchema), service.createPost);
+router.post('/', uploadPostBody, validateRequest(postCreationSchema), service.createPost);
 
 // Toggle user's like
 router.put('/like/:id/:authorId', protectedRoute, service.likePost);
@@ -22,7 +22,7 @@ router.get('/posts/:authorId', protectedRoute, service.getAuthorPosts);
 router.get('/posts/feed/person', protectedRoute, service.getPersonFeed);
 
 // Get personalized feed
-router.get('/posts/feed/global/:lastId', protectedRoute, service.getGlobalFeed);
+router.get('/posts/feed/global/', protectedRoute, service.getGlobalFeed);
 
 // Author deletes post
 router.delete('/:id', protectedRoute, service.deletePost);

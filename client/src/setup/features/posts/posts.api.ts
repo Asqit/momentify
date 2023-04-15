@@ -12,8 +12,8 @@ const postsApi = baseApi.injectEndpoints({
 		}),
 		// get global feed query ------------------------------------------->
 		getGlobalFeed: builder.query({
-			query: (lastPostId: string) => ({
-				url: `/posts/feed/global/${lastPostId}`,
+			query: () => ({
+				url: `/post/posts/feed/global/`,
 				method: 'GET',
 			}),
 		}),
@@ -23,7 +23,7 @@ const postsApi = baseApi.injectEndpoints({
 				url: '/post',
 				method: 'POST',
 				headers: {
-					'Content-Type': undefined // We should let RTK-Query generate the content-type itself, otherwise we will get Multipart: No boundary found error
+					'Content-Type': undefined, // We should let RTK-Query generate the content-type itself, otherwise we will get Multipart: No boundary found error
 				},
 				body,
 			}),

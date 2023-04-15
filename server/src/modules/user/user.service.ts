@@ -64,3 +64,30 @@ export const toggleFollowUser = asyncHandler(async (req: Request, res: Response)
 		results: 'OK',
 	});
 });
+// ------------------------------------------------------------------------------------> [PUT] /:id/image
+export const changeProfilePicture = asyncHandler(async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const image = req.file;
+	const user = await prisma.user.findUnique({ where: { id } });
+
+	if (!image) {
+		throw new HttpException(400, 'Missing image');
+	}
+
+	if (!user) {
+		throw new HttpException(404, 'No user was found');
+	}
+
+	const updatedUser = await prisma.user.update({
+		where: { id },
+		data: { profilePicture: image.filename },
+	});
+
+	const responseUser: any = user;
+
+	delete responseUser.hashPassword;
+
+	res.status(200).json({
+		user: responseUser,
+	});
+});

@@ -15,6 +15,7 @@ model User {
   email        String  @unique
   username     String  @unique
   hashPassword String
+  profilePicture String?
   verified     Boolean @default(false)
   followers    User[]   @relation("UserFollows", fields: [followersIds], references: [id])
   followersIds String[] @db.ObjectId

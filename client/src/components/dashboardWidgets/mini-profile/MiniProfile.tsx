@@ -1,25 +1,26 @@
-import userPhoto from '~/assets/images/sample_user.jpg';
+import userPhoto from '~/assets/images/sample_user.png';
 import { useAppSelector } from '~/hooks';
-import { IUser } from '~/setup/features/auth/auth.types';
+import { User } from '~/setup/features/auth/auth.types';
 import { Post } from '~/setup/features/posts/post.types';
 
-type UserDetailsProps = {
+type MiniProfileProps = {
 	username: string;
 	email: string;
 	posts: Post[];
-	following: IUser[];
-	followers: IUser[];
+	following: User[];
+	followers: User[];
+	profilePicture?: string;
 };
 
 /** This is a simple view of User account, it's not including posts, just User photo, amount of: followers, following and posts */
-export function UserDetails(props: UserDetailsProps) {
-	const { username, email, posts, following, followers } = props;
+export function MiniProfile(props: MiniProfileProps) {
+	const { username, email, posts, following, followers, profilePicture } = props;
 
 	return (
 		<div className="w-full">
 			<div className="mx-auto min-h-[100px] w-[100px] rounded-full border my-4 outline-dashed outline-2 outline-offset-2 outline-sky-500">
 				<img
-					src={userPhoto}
+					src={profilePicture ? profilePicture : userPhoto}
 					alt="User photography"
 					className="object-cover rounded-full w-[100px] h-[100px]"
 				/>

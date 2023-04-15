@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, DragEvent } from 'react';
 import { toast } from 'react-toastify';
-import { Button, Textfield } from '~/components';
+import { Button, DragAndDrop, Slideshow } from '~/components';
 import { useCreatePostMutation } from '~/setup/features/posts/posts.api';
 import { useAppSelector } from '~/hooks';
 
@@ -9,11 +9,44 @@ export function CreatePostForm() {
 	const [previews, setPreviews] = useState<string[] | null>(null);
 	const [createPost, { isLoading }] = useCreatePostMutation();
 	const [title, setTitle] = useState<string>('');
-	const { user } = useAppSelector(state => state.auth);
+	const { user } = useAppSelector((state) => state.auth);
 
-	const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
+	const handlePostCreation = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		try {
+			const formData = new FormData();
+
+			if (!user) {
+				toast.error('Missing user');
+				return;
+			}
+
+			if (!title) {
+				toast.error('Missing title');
+				return;
+			}
+
+			if (!files) {
+				toast.error('Missing files');
+				return;
+			}
+
+			for (let i = 0; i < files.length; i++) {
+				formData.append('files', files[i]);
+			}
+
+			formData.append('title', title);
+			formData.append('authorId', user.id);
+
+			await createPost(formData).unwrap();
+		} catch (error) {
+			toast.error('Failed to create post');
+		}
+	};
+
+	const handleFileDrop = (files: FileList) => {
 		const images: string[] = [];
-		const files = e.target.files;
 
 		if (files) {
 			const FILES_LENGTH = files.length;
@@ -27,63 +60,35 @@ export function CreatePostForm() {
 		setPreviews(images);
 	};
 
-	const handlePostCreation = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		try {
-			const formData = new FormData();
-
-			if (!user) {
-				toast.error("Missing user");
-				return;
-			}
-
-			if (files) {
-				for (let i = 0; i < files.length; i++) {
-					formData.append('files', files[i]);
-				}
-			}
-
-			formData.append('title', title);
-			formData.append("authorId", user.id);
-
-			await createPost(formData).unwrap();
-		} catch (error) {
-			toast.error('Failed to create post');
-		}
-	};
-
 	return (
 		<div>
-			<form onSubmit={handlePostCreation} encType="multipart/form-data" method="POST">
-				<Textfield
-					label="Photos"
-					type="file"
-					multiple
-					name="files"
-					accept="image/*"
-					onChange={handleSelectImages}
-				/>
-				<Textfield
-					label="Title"
+			<form
+				onSubmit={handlePostCreation}
+				encType="multipart/form-data"
+				method="POST"
+				className={'flex flex-col mx-auto w-[400px] gap-4'}
+			>
+				<input
 					name="title"
 					value={title}
-					placeholder="e.g. Trip to Paris"
+					placeholder="Title"
+					className={'input'}
 					onChange={(e) => setTitle(e.currentTarget.value)}
 				/>
-				<Button buttonColor="primary" type="submit">
+				<DragAndDrop
+					onFileDrop={handleFileDrop}
+					className={
+						'border border-dashed h-[100px] flex flex-col items-center justify-center rounded-sm cursor-pointer'
+					}
+				>
+					<p>Drag and drop images or click</p>
+				</DragAndDrop>
+				<hr />
+				<Button buttonColor="primary" type="submit" disabled={!title || !files}>
 					create post
 				</Button>
 			</form>
-			<div>
-				{previews ? (
-					<div>
-						{previews.map((preview) => (
-							<img src={preview} key={previews.indexOf(preview)} />
-						))}
-					</div>
-				) : null}
-			</div>
+			<div>{previews ? <Slideshow images={previews} /> : null}</div>
 		</div>
 	);
 }

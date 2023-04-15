@@ -13,17 +13,21 @@ interface MiniPostProps {
 
 /** This is a small post view. (Will be used inside of grid) */
 export function MiniPost(props: MiniPostProps) {
-	const { title, likes, author, body, createdAt } = props;
+	const { likes, author, body, ...rest } = props;
 
 	return (
-		<div className="min-w-fit max-w-[256px] border p-2 rounded-md">
+		<div className="min-w-fit max-w-[256px] p-2">
 			<div className="mb-2">
-				{
-					Array.isArray(body) && body.length > 1 ?
-						<Slideshow images={body} />
-						:
-						<img crossOrigin="anonymous" className={"max-w-[500px] h-[400px] object-cover"} src={`http://localhost:8080/${body}`} alt={""} />
-				}
+				{Array.isArray(body) && body.length > 1 ? (
+					<Slideshow images={body.map((filename) => `http://localhost:8080/${filename}`)} />
+				) : (
+					<img
+						crossOrigin="anonymous"
+						className={'max-w-[500px] h-[400px] object-cover rounded-md'}
+						src={`http://localhost:8080/${body}`}
+						alt={''}
+					/>
+				)}
 			</div>
 			<div className="mt-2 flex items-center justify-between">
 				<div>

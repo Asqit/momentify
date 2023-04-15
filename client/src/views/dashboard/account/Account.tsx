@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import { UserDetails } from '~/components';
-import { MiniPost } from '~/components/dashboardWidgets/miniPost/MiniPost';
 import { Post } from '~/setup/features/posts/post.types';
+import { MiniProfile, MiniPost } from '~/components';
 
 export function Account() {
 	const data = useLocation();
@@ -11,7 +10,7 @@ export function Account() {
 	return (
 		<section>
 			<div className="py-8 border-b">
-				<UserDetails {...user} />
+				<MiniProfile {...user} />
 			</div>
 			<div className="p-4 flex flex-wrap gap-4 items-center justify-center">
 				{user && user.posts && user.posts.length > 0

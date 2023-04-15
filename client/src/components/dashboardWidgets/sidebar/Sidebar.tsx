@@ -7,11 +7,36 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { BsFillPlusCircleFill } from 'react-icons/bs';
 // Functions --------------------------------------------->
 import { Brand } from '~/components/common/brand/Brand';
-import { UserDetails } from '../userDetails/UserDetails';
+import { MiniProfile } from '~/components/dashboardWidgets/mini-profile/MiniProfile';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/hooks';
 import { logout as logoutAction } from '~/setup/features/auth/auth.slice';
+import { FC } from 'react';
+
+export type SidebarLinkProps = {
+	Icon: FC;
+	value: string;
+	to: string;
+	state?: any;
+};
+
+const SidebarLink = (props: SidebarLinkProps) => {
+	const { Icon, value, to, state } = props;
+
+	return (
+		<li>
+			<Link
+				to={to}
+				state={state ? state : null}
+				className="group relative  flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500"
+			>
+				<Icon /> {value}
+				<div className="absolute -z-10 w-[5px] h-full bg-sky-500 transition-all top-0 -right-4 group-hover:-right-5" />
+			</Link>
+		</li>
+	);
+};
 
 export function Sidebar() {
 	const { t } = useTranslation();
@@ -27,60 +52,32 @@ export function Sidebar() {
 			<div className="w-full h-full p-4 flex flex-col">
 				<header>
 					<Brand />
-					<UserDetails {...user} />
+					<MiniProfile {...user} />
 				</header>
 				<nav className="flex-grow">
 					<ul className="h-full">
-						<li>
-							<Link
-								to={''}
-								className="group relative  flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500"
-							>
-								<AiFillHome /> Feed
-								<div className="absolute -z-10 w-[5px] h-full bg-sky-500 transition-all top-0 -right-4 group-hover:-right-6" />
-							</Link>
-						</li>
-						<li>
-							<Link
-								to={'explore'}
-								className="group relative  flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500"
-							>
-								<TbZoomFilled /> {t('sidebar_widget.explore')}
-								<div className="absolute -z-10 w-[5px] h-full bg-sky-500 transition-all top-0 -right-4 group-hover:-right-6" />
-							</Link>
-						</li>
-						<li>
-							<Link
-								to={'post/create'}
-								className="group relative  flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500"
-							>
-								<BsFillPlusCircleFill /> {t('sidebar_widget.create')}
-								<div className="absolute -z-10 w-[5px] h-full bg-sky-500 transition-all top-0 -right-4 group-hover:-right-6" />
-							</Link>
-						</li>
-						<li>
-							<Link
-								to={'settings'}
-								className="group relative  flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500"
-							>
-								<IoIosSettings />
-								{t('sidebar_widget.settings')}
-
-								<div className="absolute -z-10 w-[5px] h-full bg-sky-500 transition-all top-0 -right-4 group-hover:-right-6" />
-							</Link>
-						</li>
-						<li>
-							<Link
-								to="account"
-								className="group relative flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500"
-								state={{ user }}
-							>
-								<FaUserAlt />
-								{t('sidebar_widget.account')}
-
-								<div className="absolute -z-10 w-[5px] h-full bg-sky-500 transition-all top-0 -right-4 group-hover:-right-6" />
-							</Link>
-						</li>
+						<SidebarLink Icon={AiFillHome} value={'Feed'} to={''} />
+						<SidebarLink
+							Icon={TbZoomFilled}
+							value={t('sidebar_widget.explore')}
+							to={'explore'}
+						/>
+						<SidebarLink
+							Icon={BsFillPlusCircleFill}
+							value={t('sidebar_widget.create')}
+							to={'post/create'}
+						/>
+						<SidebarLink
+							Icon={IoIosSettings}
+							value={t('sidebar_widget.settings')}
+							to={'settings'}
+						/>
+						<SidebarLink
+							Icon={FaUserAlt}
+							value={t('sidebar_widget.account')}
+							to={'account'}
+							state={{ user }}
+						/>
 					</ul>
 				</nav>
 				<footer className="border-t">
