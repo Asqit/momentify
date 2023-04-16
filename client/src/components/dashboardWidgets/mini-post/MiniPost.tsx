@@ -1,6 +1,7 @@
 import { User } from '~/setup/features/auth/auth.types';
 import { FaRegComment, FaRegHeart } from 'react-icons/fa';
 import { Slideshow } from '~/components';
+import sampleUser from "~/assets/images/sample_user.png";
 
 interface MiniPostProps {
 	title: string;
@@ -16,7 +17,7 @@ export function MiniPost(props: MiniPostProps) {
 	const { likes, author, body, ...rest } = props;
 
 	return (
-		<div className="min-w-fit max-w-[256px] p-2">
+		<div className="min-w-fit max-w-[256px] p-2 border border-transparent rounded-md transition-colors hover:border-gray-200">
 			<div className="mb-2">
 				{Array.isArray(body) && body.length > 1 ? (
 					<Slideshow images={body.map((filename) => `http://localhost:8080/${filename}`)} />
@@ -29,8 +30,9 @@ export function MiniPost(props: MiniPostProps) {
 					/>
 				)}
 			</div>
-			<div className="mt-2 flex items-center justify-between">
-				<div>
+			<div className="mt-2 flex items-center justify-between px-2">
+				<div className={"flex gap-x-2 items-center"}>
+					<img src={author.profilePicture ? author.profilePicture : sampleUser} alt={"User photo"} width={32} />
 					<b className="capitalize">{author.username}</b>
 				</div>
 				<div className="flex gap-x-3">
