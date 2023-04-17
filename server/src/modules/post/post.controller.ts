@@ -15,14 +15,23 @@ router.put('/like/:id/:authorId', protectedRoute, service.likePost);
 // Get single post (detailed view)
 router.get('/:id', protectedRoute, service.getPost);
 
+// Get all posts
+router.get('/', protectedRoute);
+
 // Get all posts by user
 router.get('/posts/:authorId', protectedRoute, service.getAuthorPosts);
 
-// Get feed
+// Get personalized feed
 router.get('/posts/feed/person', protectedRoute, service.getPersonFeed);
 
-// Get personalized feed
+// Get global feed (explore)
 router.get('/posts/feed/global/', protectedRoute, service.getGlobalFeed);
+
+// Toggle a like on post
+router.put('/:id/like', protectedRoute);
+
+// Create a comment
+router.put('/:id/comment', protectedRoute);
 
 // Author deletes post
 router.delete('/:id', protectedRoute, service.deletePost);

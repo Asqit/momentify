@@ -1,5 +1,4 @@
 import { baseApi } from '../baseApi';
-import { CreatePostBody } from './post.types';
 
 const postsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
@@ -23,7 +22,10 @@ const postsApi = baseApi.injectEndpoints({
 				url: '/post',
 				method: 'POST',
 				headers: {
-					'Content-Type': undefined, // We should let RTK-Query generate the content-type itself, otherwise we will get Multipart: No boundary found error
+					// Let RTK-Query generate the content type.
+					// If we define it as "multipart/form-data" it fails
+					// And even if we manually set the boundary it fails
+					'Content-Type': undefined,
 				},
 				body,
 			}),
