@@ -1,25 +1,19 @@
 import { baseApi } from '../baseApi';
+import { Post } from './post.types';
 
 const postsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
-		// get personalized feed query -------------------------------------->
-		getPersonFeed: builder.query({
+		// get all posts --------------------------------------------------->
+		getGlobalFeed: builder.query<Post[], void>({
 			query: () => ({
-				url: '/posts/feed/person',
+				url: `/posts/`,
 				method: 'GET',
 			}),
 		}),
-		// get global feed query ------------------------------------------->
-		getGlobalFeed: builder.query({
-			query: () => ({
-				url: `/post/posts/feed/global/`,
-				method: 'GET',
-			}),
-		}),
-		// create post mutation -------------------------------------------->
+		// Create post mutation -------------------------------------------->
 		createPost: builder.mutation<void, FormData>({
 			query: (body) => ({
-				url: '/post',
+				url: '/posts',
 				method: 'POST',
 				headers: {
 					// Let RTK-Query generate the content type.
@@ -31,16 +25,16 @@ const postsApi = baseApi.injectEndpoints({
 			}),
 		}),
 		// Like post mutation --------------------------------------------->
-		likePost: builder.mutation({
-			query: () => ({
-				url: '/post/like/:id/:authorId',
+		likePost: builder.mutation<Post, { id: string; userId: string }>({
+			query: ({ id, userId }) => ({
+				url: `/posts/${id}/like/${userId}`,
 				method: 'PUT',
 			}),
 		}),
 		// Delete post mutation -------------------------------------------->
-		deletePost: builder.mutation({
-			query: () => ({
-				url: '/post/',
+		deletePost: builder.mutation<void, string>({
+			query: (id) => ({
+				url: `/posts/${id}`,
 				method: 'DELETE',
 			}),
 		}),
@@ -52,5 +46,4 @@ export const {
 	useLikePostMutation,
 	useCreatePostMutation,
 	useGetGlobalFeedQuery,
-	useGetPersonFeedQuery,
 } = postsApi;

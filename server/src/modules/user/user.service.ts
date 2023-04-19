@@ -12,7 +12,7 @@ export const getUser = asyncHandler(async (req: Request, res: Response) => {
 		where: {
 			id,
 		},
-		include: { posts: true },
+		include: { posts: true, followers: true, following: true },
 	});
 
 	if (!user) {
@@ -24,15 +24,15 @@ export const getUser = asyncHandler(async (req: Request, res: Response) => {
 	delete responseUser.hashPassword;
 
 	res.status(200).json({
-		user: responseUser,
+		...responseUser,
 	});
 });
 
 // ------------------------------------------------------------------------------------> [PUT] /follow
 export const toggleFollowUser = asyncHandler(async (req: Request, res: Response) => {
-	const { userId, followerId } = req.body;
+	const { userId, followerId } = req.params;
 	const user = await prisma.user.findUnique({ where: { id: userId } }); // target user
-	const follower = await prisma.user.findUnique({ where: { id: followerId } }); // This guy should follows user
+	const follower = await prisma.user.findUnique({ where: { id: followerId } }); // This guy should follow user
 
 	if (!user || !follower) {
 		throw new HttpException(404, 'Users were not found');

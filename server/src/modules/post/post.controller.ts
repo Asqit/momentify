@@ -10,25 +10,22 @@ const router = Router();
 router.post('/', uploadPostBody, validateRequest(postCreationSchema), service.createPost);
 
 // Toggle user's like
-router.put('/like/:id/:authorId', protectedRoute, service.likePost);
+router.put('/:id/like/:userId', protectedRoute, service.likePost);
 
 // Get single post (detailed view)
 router.get('/:id', protectedRoute, service.getPost);
 
 // Get all posts
-router.get('/', protectedRoute);
+router.get('/', protectedRoute, service.getAllPosts);
 
 // Get all posts by user
 router.get('/posts/:authorId', protectedRoute, service.getAuthorPosts);
 
 // Get personalized feed
-router.get('/posts/feed/person', protectedRoute, service.getPersonFeed);
+router.get('/feed/person', protectedRoute, service.getPersonFeed);
 
 // Get global feed (explore)
-router.get('/posts/feed/global/', protectedRoute, service.getGlobalFeed);
-
-// Toggle a like on post
-router.put('/:id/like', protectedRoute);
+router.get('/feed/global/', protectedRoute, service.getGlobalFeed);
 
 // Create a comment
 router.put('/:id/comment', protectedRoute);

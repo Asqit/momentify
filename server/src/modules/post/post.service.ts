@@ -37,7 +37,7 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 	});
 });
 
-// ------------------------------------------------------------------------------------> [GET] post/:id
+// ------------------------------------------------------------------------------------> [GET] posts/:id
 export const getPost = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const post = await prisma.post.findUnique({ where: { id } });
@@ -48,6 +48,17 @@ export const getPost = asyncHandler(async (req: Request, res: Response) => {
 	}
 
 	res.status(200).json(post);
+});
+
+// ------------------------------------------------------------------------------------> [GET] posts/
+export const getAllPosts = asyncHandler(async (req: Request, res: Response) => {
+	const posts = await prisma.post.findMany({
+		include: {
+			author: true,
+		},
+	});
+
+	res.status(200).json(posts);
 });
 
 // ------------------------------------------------------------------------------------> [GET] posts/feed/person
@@ -155,27 +166,25 @@ export const deletePost = asyncHandler(async (req: Request, res: Response) => {
 
 // ------------------------------------------------------------------------------------> [PUT] /like/:id/:authorId
 export const likePost = asyncHandler(async (req: Request, res: Response) => {
-	const { id, authorId } = req.params;
+	const { id, userId } = req.params;
 	const post = await prisma.post.findUnique({ where: { id } });
 
 	if (!post) {
 		throw new HttpException(404, 'No post was found');
 	}
 
+	const isAlreadyLiked = post.likedBy.includes(userId);
+
 	const updatedPost = await prisma.post.update({
 		where: { id },
 		data: {
-			likedBy: post.likedBy.filter((userId) => {
-				if (userId === authorId) {
-					return;
-				}
-
-				return authorId;
-			}),
+			likedBy: isAlreadyLiked
+				? post.likedBy.filter((id) => id !== userId)
+				: [...post.likedBy, userId],
 		},
 	});
 
 	res.status(200).json({
-		post: updatedPost,
+		...updatedPost,
 	});
 });

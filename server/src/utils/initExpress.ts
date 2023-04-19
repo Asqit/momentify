@@ -31,9 +31,9 @@ export async function initExpress() {
 
 	// Api endpoints
 	router.use('/api/auth', routes.authRoutes);
-	router.use('/api/comment', routes.commentRoutes);
-	router.use('/api/post', routes.postRoutes);
-	router.use('/api/user', routes.userRoutes);
+	router.use('/api/comments', routes.commentRoutes);
+	router.use('/api/posts', routes.postRoutes);
+	router.use('/api/users', routes.userRoutes);
 	router.use(express.static('public'));
 
 	// Serve a public folder

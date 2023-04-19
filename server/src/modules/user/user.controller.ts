@@ -8,8 +8,8 @@ const router = Router();
 // Get user details
 router.get('/:id', protectedRoute, getUser);
 
-// Follow/Unfollow user
-router.put('/follow', protectedRoute, toggleFollowUser);
+// Follow/Un-follow user
+router.put('/:userId/follow/:followerId', protectedRoute, toggleFollowUser);
 
 // Change user picture
 router.put('/:id/image', protectedRoute, upload.single('file'), changeProfilePicture);

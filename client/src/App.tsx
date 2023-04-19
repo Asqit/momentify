@@ -21,7 +21,7 @@ export default function App() {
 				<Route element={<ProtectedRoute />}>
 					<Route path="" element={<Dashboard />}>
 						<Route index element={<Home />} />
-						<Route path="account" element={<Account />} />
+						<Route path="account/:id" element={<Account />} />
 						<Route path="post/:id" element={<Post />} />
 						<Route path="post/create" element={<CreatePost />} />
 						<Route path="*" element={<Lost />} />

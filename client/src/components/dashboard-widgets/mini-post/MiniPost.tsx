@@ -1,44 +1,89 @@
 import { User } from '~/setup/features/auth/auth.types';
-import { FaRegComment, FaRegHeart } from 'react-icons/fa';
+import { FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa';
 import { Slideshow } from '~/components';
-import sampleUser from "~/assets/images/sample_user.png";
+import { Link } from 'react-router-dom';
+import { useLikePostMutation } from '~/setup/features/posts/posts.api';
+import { toast } from 'react-toastify';
+import { useMemo, useState } from 'react';
+import sampleUser from '~/assets/images/sample_user.png';
+import { useAppSelector } from '~/hooks';
 
 interface MiniPostProps {
 	title: string;
-	likes: number;
+	likedBy: string[];
 	author: User;
-	/** The first image from the images array */
 	body: string[] | string;
 	createdAt: Date;
+	id: string;
 }
 
 /** This is a small post view. (Will be used inside of grid) */
 export function MiniPost(props: MiniPostProps) {
-	const { likes, author, body, ...rest } = props;
+	const [details, setDetails] = useState<MiniPostProps>(props);
+	const [likePost, {}] = useLikePostMutation();
+	const { id: userId } = useAppSelector((st) => st.auth.user!);
+
+	const handleLike = async () => {
+		try {
+			if (!details.id) {
+				toast.error('id is invalid');
+				return;
+			}
+
+			const data = await likePost({
+				userId: userId,
+				id: details.id,
+			}).unwrap();
+
+			setDetails({
+				...details,
+				...data,
+			});
+		} catch (error) {
+			toast.error(String(error));
+		}
+	};
 
 	return (
-		<div className="min-w-fit max-w-[256px] p-2 border border-transparent rounded-md transition-colors hover:border-gray-200">
+		<div className="min-w-fit max-w-[256px] p-2">
 			<div className="mb-2">
-				{Array.isArray(body) && body.length > 1 ? (
-					<Slideshow images={body.map((filename) => `http://localhost:8080/${filename}`)} />
+				{Array.isArray(details.body) && details.body.length > 1 ? (
+					<MemoizedSlideshow
+						images={details.body.map((filename) => `http://localhost:8080/${filename}`)}
+					/>
 				) : (
 					<img
 						crossOrigin="anonymous"
 						className={'max-w-[500px] h-[400px] object-cover rounded-md'}
-						src={`http://localhost:8080/${body}`}
+						src={`http://localhost:8080/${details.body}`}
 						alt={''}
 					/>
 				)}
 			</div>
-			<div className="mt-2 flex items-center justify-between px-2">
-				<div className={"flex gap-x-2 items-center"}>
-					<img src={author.profilePicture ? author.profilePicture : sampleUser} alt={"User photo"} width={32} />
-					<b className="capitalize">{author.username}</b>
-				</div>
+			<div className="mt-4 flex items-center justify-between px-4">
+				<Link to={`account/${details.author.id}`} className={'flex gap-x-4 items-center'}>
+					<img
+						src={
+							details.author.profilePicture
+								? `http://localhost:8080/${details.author.profilePicture}`
+								: sampleUser
+						}
+						alt={'User photo'}
+						className="rounded-full aspect-square outline-dashed outline-2 outline-offset-2 outline-sky-500"
+						crossOrigin="anonymous"
+						width={32}
+					/>
+					<b className="capitalize">{details.author.username}</b>
+				</Link>
 				<div className="flex gap-x-3">
-					<span className="flex items-center text-lg gap-x-2">
-						<FaRegHeart /> {likes ? likes : 0}
-					</span>
+					<button onClick={handleLike} className="flex items-center text-lg gap-x-2">
+						{details.likedBy && details.likedBy.includes(userId) ? (
+							<FaHeart className="text-red-500" />
+						) : (
+							<FaRegHeart />
+						)}{' '}
+						{details.likedBy ? details.likedBy.length : 0}
+					</button>
 					<span className="flex items-center text-lg gap-x-2">
 						<FaRegComment /> {0}
 					</span>
@@ -46,4 +91,12 @@ export function MiniPost(props: MiniPostProps) {
 			</div>
 		</div>
 	);
+}
+
+function MemoizedSlideshow({ images }: { images: string[] }) {
+	const memoizedSlideshow = useMemo(() => {
+		return <Slideshow images={images} />;
+	}, [images]);
+
+	return memoizedSlideshow;
 }

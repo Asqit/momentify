@@ -7,9 +7,9 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { BsFillPlusCircleFill } from 'react-icons/bs';
 // Functions --------------------------------------------->
 import { Brand } from '~/components/common/brand/Brand';
-import { MiniProfile } from '~/components/dashboardWidgets/mini-profile/MiniProfile';
+import { MiniProfile } from '~/components';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/hooks';
 import { logout as logoutAction } from '~/setup/features/auth/auth.slice';
 import { FC } from 'react';
@@ -26,14 +26,18 @@ const SidebarLink = (props: SidebarLinkProps) => {
 
 	return (
 		<li>
-			<Link
+			<NavLink
 				to={to}
 				state={state ? state : null}
-				className="group relative  flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500"
+				className={({ isActive, isPending }) =>
+					`group relative  flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500 ${
+						isActive ? 'text-sky-500' : 'text-black'
+					}`
+				}
 			>
 				<Icon /> {value}
 				<div className="absolute -z-10 w-[5px] h-full bg-sky-500 transition-all top-0 -right-4 group-hover:-right-5" />
-			</Link>
+			</NavLink>
 		</li>
 	);
 };
@@ -48,7 +52,7 @@ export function Sidebar() {
 	};
 
 	return (
-		<aside className="max-w-lg border-r relative bg-white">
+		<aside className="w-[280px] border-r relative bg-white">
 			<div className="w-full h-full p-4 flex flex-col">
 				<header>
 					<Brand />
@@ -75,8 +79,7 @@ export function Sidebar() {
 						<SidebarLink
 							Icon={FaUserAlt}
 							value={t('sidebar_widget.account')}
-							to={'account'}
-							state={{ user }}
+							to={`account/${user.id}`}
 						/>
 					</ul>
 				</nav>

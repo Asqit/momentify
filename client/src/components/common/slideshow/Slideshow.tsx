@@ -22,7 +22,7 @@ export function Slideshow(props: SlideshowProps) {
 	};
 
 	return (
-		<div className="max-w-[500px] overflow-hidden mx-auto relative">
+		<div className="max-w-[500px] overflow-hidden mx-auto relative rounded-md">
 			<div
 				className={`whitespace-nowrap transition-all duration-1000`}
 				style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
@@ -31,10 +31,10 @@ export function Slideshow(props: SlideshowProps) {
 					return (
 						<img
 							crossOrigin="anonymous"
-							className="w-full h-[400px] object-cover inline-block rounded-md"
+							className="w-full h-[400px] object-cover inline-block"
 							src={filename}
 							key={filename}
-							alt=""
+							alt={filename}
 						/>
 					);
 				})}
