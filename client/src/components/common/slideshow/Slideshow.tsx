@@ -35,6 +35,7 @@ export function Slideshow(props: SlideshowProps) {
 							src={filename}
 							key={filename}
 							alt={filename}
+							loading="lazy"
 						/>
 					);
 				})}

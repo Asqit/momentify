@@ -1,9 +1,14 @@
 import userPhoto from '~/assets/images/sample_user.png';
+import { useChangeProfilePictureMutation } from '~/setup/features/users/users.api';
 import { User } from '~/setup/features/auth/auth.types';
 import { Post } from '~/setup/features/posts/post.types';
 import { DragAndDrop } from '~/components';
+import { toast } from 'react-toastify';
+import { useAppDispatch } from '~/hooks';
+import { updateUser } from '~/setup/features/auth/auth.slice';
 
 type MiniProfileProps = {
+	id: string;
 	username: string;
 	email: string;
 	posts: Post[];
@@ -14,9 +19,26 @@ type MiniProfileProps = {
 
 /** This is a simple view of User account, it's not including posts, just User photo, amount of: followers, following and posts */
 export function MiniProfile(props: MiniProfileProps) {
-	const { username, posts, following, followers, profilePicture } = props;
+	const { id, username, posts, following, followers, profilePicture } = props;
+	const [changeProfilePicture] = useChangeProfilePictureMutation();
+	const dispatch = useAppDispatch();
 
-	const handleFileDrop = (files: FileList) => {};
+	const handleFileDrop = async (files: FileList) => {
+		try {
+			const fd = new FormData();
+
+			fd.append('file', files[0]);
+
+			const updatedUser = await changeProfilePicture({
+				data: fd,
+				id,
+			}).unwrap();
+
+			dispatch(updateUser(updatedUser));
+		} catch (error) {
+			toast.error('Profile picture could not be updated');
+		}
+	};
 
 	return (
 		<div className="w-full">

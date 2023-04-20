@@ -57,6 +57,7 @@ export function MiniPost(props: MiniPostProps) {
 						className={'max-w-[500px] h-[400px] object-cover rounded-md'}
 						src={`http://localhost:8080/${details.body}`}
 						alt={''}
+						loading="lazy"
 					/>
 				)}
 			</div>

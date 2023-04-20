@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authApi as api } from './auth.api';
-import { AuthState, LoginResponse } from './auth.types';
+import { AuthState, LoginResponse, User } from './auth.types';
 
 const initialState: AuthState = {
 	user: null,
@@ -14,6 +14,12 @@ const authSlice = createSlice({
 		logout: (state) => {
 			state.accessToken = '';
 			state.user = null;
+		},
+		updateUser: (state, action: PayloadAction<User>) => {
+			state.user = {
+				...state.user,
+				...action.payload,
+			};
 		},
 	},
 	extraReducers: (builder) => {
@@ -35,4 +41,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { logout } = authSlice.actions;
+export const { logout, updateUser } = authSlice.actions;

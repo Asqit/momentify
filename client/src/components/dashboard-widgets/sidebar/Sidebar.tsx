@@ -1,6 +1,6 @@
 // Icons ------------------------------------------------->
 import { AiFillHome } from 'react-icons/ai';
-import { TbZoomFilled } from 'react-icons/tb';
+import { BsCompassFill } from 'react-icons/bs';
 import { IoIosSettings } from 'react-icons/io';
 import { FaUserAlt } from 'react-icons/fa';
 import { HiOutlineLogout } from 'react-icons/hi';
@@ -52,7 +52,7 @@ export function Sidebar() {
 	};
 
 	return (
-		<aside className="w-[280px] border-r relative bg-white">
+		<aside className="w-[280px] border-r relative bg-white flex-shrink-0">
 			<div className="w-full h-full p-4 flex flex-col">
 				<header>
 					<Brand />
@@ -62,7 +62,7 @@ export function Sidebar() {
 					<ul className="h-full">
 						<SidebarLink Icon={AiFillHome} value={'Feed'} to={''} />
 						<SidebarLink
-							Icon={TbZoomFilled}
+							Icon={BsCompassFill}
 							value={t('sidebar_widget.explore')}
 							to={'explore'}
 						/>

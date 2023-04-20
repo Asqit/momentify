@@ -1,3 +1,4 @@
+import { User } from '../auth/auth.types';
 import { baseApi } from '../baseApi';
 
 const usersApi = baseApi.injectEndpoints({
@@ -17,10 +18,10 @@ const usersApi = baseApi.injectEndpoints({
 			}),
 		}),
 		// Change user picture ----------------------------------->
-		changeProfilePicture: builder.mutation<void, { data: FormData; id: string }>({
+		changeProfilePicture: builder.mutation<User, { data: FormData; id: string }>({
 			query: ({ id, data }) => ({
 				method: 'PUT',
-				url: `/users/${id}`,
+				url: `/users/${id}/image`,
 				headers: {
 					'Content-Type': undefined,
 				},
@@ -30,4 +31,8 @@ const usersApi = baseApi.injectEndpoints({
 	}),
 });
 
-export const { useGetUserQuery, useToggleFollowUserMutation } = usersApi;
+export const {
+	useGetUserQuery,
+	useToggleFollowUserMutation,
+	useChangeProfilePictureMutation,
+} = usersApi;
