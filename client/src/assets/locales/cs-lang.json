@@ -52,6 +52,7 @@
 		"create": "Vytvořit",
 		"explore": "Objevuj",
 		"settings": "Nastavení",
-		"account": "Účet"
+		"account": "Účet",
+		"logout": "Odhlásit se"
 	}
 }

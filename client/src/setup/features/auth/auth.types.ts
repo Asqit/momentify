@@ -1,4 +1,4 @@
-import { Post } from '../posts/post.types';
+import { Post } from '../posts/posts.types';
 
 /**
  * This interface represents a user object sent to here by server-side
@@ -11,6 +11,12 @@ export interface User {
 
 	/** An array of post ids */
 	posts: Post[];
+
+	/** references to all following */
+	followingIds: string[];
+
+	/** reference to all followers */
+	followersIds: string[];
 
 	/** An array of user ids */
 	following: User[];

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
-import { Post } from '~/setup/features/posts/post.types';
-import { MiniProfile, MiniPost, Spinner, Button } from '~/components';
+import { Post } from '~/setup/features/posts/posts.types';
+import { MiniProfile, MiniPost, Spinner, Button, ProfileDetails } from '~/components';
 import { useGetUserQuery } from '~/setup/features/users/users.api';
 
 export function Account() {
@@ -13,10 +13,10 @@ export function Account() {
 				<Spinner />
 			) : (
 				<>
-					<div className="py-8 border-b">
-						<MiniProfile {...user} />
+					<div className="py-8">
+						<ProfileDetails {...user} />
 					</div>
-					<div className="p-4 flex flex-wrap gap-4 items-center justify-center">
+					<div className="p-4 flex flex-wrap gap-4 items-center justify-center border-t">
 						{user && user.posts && user.posts.length > 0
 							? user.posts.map((post: Post) => {
 									return (

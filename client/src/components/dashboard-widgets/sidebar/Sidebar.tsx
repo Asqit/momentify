@@ -31,7 +31,7 @@ const SidebarLink = (props: SidebarLinkProps) => {
 				state={state ? state : null}
 				className={({ isActive, isPending }) =>
 					`group relative  flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500 ${
-						isActive ? 'text-sky-500' : 'text-black'
+						isActive ? 'text-sky-500 gap-x-3' : 'text-gray-700'
 					}`
 				}
 			>
@@ -52,11 +52,15 @@ export function Sidebar() {
 	};
 
 	return (
-		<aside className="w-[280px] border-r relative bg-white flex-shrink-0">
+		<aside className="w-[280px] relative bg-gray-100 flex-shrink-0">
 			<div className="w-full h-full p-4 flex flex-col">
 				<header>
-					<Brand />
-					<MiniProfile {...user} />
+					<div className="mb-4">
+						<Brand />
+					</div>
+					<div className="my-4 mt-8">
+						<MiniProfile {...user} />
+					</div>
 				</header>
 				<nav className="flex-grow">
 					<ul className="h-full">
@@ -86,10 +90,10 @@ export function Sidebar() {
 				<footer className="border-t">
 					<button
 						onClick={logout}
-						className="flex gap-x-2 items-center font-medium my-4 hover:text-red-500"
+						className="flex gap-x-2 items-center font-medium mt-4 text-gray-700 hover:text-red-500"
 					>
 						<HiOutlineLogout />
-						Logout
+						{t('sidebar_widget.logout')}
 					</button>
 				</footer>
 			</div>

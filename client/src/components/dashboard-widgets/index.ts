@@ -4,6 +4,8 @@
 // that are used only inside of Dashboard
 // section and pages.
 // =============================================
+export * from './profile-details/ProfileDetails';
+export * from './mini-post/MiniPostSkeleton';
 export * from './mini-profile/MiniProfile';
 export * from './mini-post/MiniPost';
 export * from './sidebar/Sidebar';

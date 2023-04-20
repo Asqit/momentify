@@ -88,7 +88,7 @@ export function CreatePostForm() {
 					create post
 				</Button>
 			</form>
-			<div>{previews ? <Slideshow images={previews} /> : null}</div>
+			<div className="mt-4">{previews ? <Slideshow images={previews} /> : null}</div>
 		</div>
 	);
 }

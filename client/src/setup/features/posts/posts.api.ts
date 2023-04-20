@@ -1,7 +1,7 @@
 import { baseApi } from '../baseApi';
-import { Post } from './post.types';
+import { Post } from './posts.types';
 
-const postsApi = baseApi.injectEndpoints({
+export const postsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		// get all posts --------------------------------------------------->
 		getGlobalFeed: builder.query<Post[], void>({

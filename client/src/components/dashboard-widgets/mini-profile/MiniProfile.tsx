@@ -1,7 +1,7 @@
 import userPhoto from '~/assets/images/sample_user.png';
 import { useChangeProfilePictureMutation } from '~/setup/features/users/users.api';
 import { User } from '~/setup/features/auth/auth.types';
-import { Post } from '~/setup/features/posts/post.types';
+import { Post } from '~/setup/features/posts/posts.types';
 import { DragAndDrop } from '~/components';
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '~/hooks';
@@ -45,7 +45,7 @@ export function MiniProfile(props: MiniProfileProps) {
 			<DragAndDrop
 				onFileDrop={handleFileDrop}
 				className={
-					'mx-auto h-[100px] w-[100px] rounded-full border my-4 outline-dashed outline-2 outline-offset-2 outline-sky-500 cursor-pointer relative group'
+					'mx-auto h-[100px] w-[100px] rounded-full border my-4 mb-5 outline-dashed outline-2 outline-offset-2 outline-sky-500 cursor-pointer relative group'
 				}
 			>
 				<img
@@ -59,22 +59,22 @@ export function MiniProfile(props: MiniProfileProps) {
 				</span>
 			</DragAndDrop>
 
-			<h4 className="font-semibold text-lg text-center my-2 capitalize">{username}</h4>
-			<div className="flex gap-x-2 justify-center items-center text-center">
-				<p>
+			<h4 className="font-semibold text-lg text-center my-3 capitalize">{username}</h4>
+			<div className="grid grid-cols-3 divide-x">
+				<p className="p-1 text-center">
 					<span className="text-black font-medium">{posts.length}</span>
 					<br />
-					<span className="text-gray-400 font-medium">Posts</span>
+					<span className="text-gray-400 font-medium text-sm">Posts</span>
 				</p>
-				<p>
+				<p className="p-1 text-center">
 					<span className="text-black font-medium">{following.length}</span>
 					<br />
-					<span className="text-gray-400 font-medium">Following</span>
+					<span className="text-gray-400 font-medium text-sm">Following</span>
 				</p>
-				<p>
+				<p className="p-1 text-center">
 					<span className="text-black font-medium">{followers.length}</span>
 					<br />
-					<span className="text-gray-400 font-medium">Followers</span>
+					<span className="text-gray-400 font-medium text-sm">Followers</span>
 				</p>
 			</div>
 		</div>

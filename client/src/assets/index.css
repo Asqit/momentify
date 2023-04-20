@@ -4,7 +4,7 @@
 
 @layer components {
 	.btn {
-		@apply disabled:cursor-not-allowed disabled:opacity-50 py-3 px-6 rounded-xl bg-gray-500 text-white hover:bg-gray-600 active:bg-gray-700 transition-colors shadow-sm shadow-gray-700 font-semibold capitalize;
+		@apply disabled:cursor-not-allowed disabled:opacity-50 py-3 px-6 rounded-md bg-gray-500 text-white hover:bg-gray-600 active:bg-gray-700 transition-colors shadow-sm shadow-gray-700 font-semibold capitalize;
 	}
 
 	.btn.primary {

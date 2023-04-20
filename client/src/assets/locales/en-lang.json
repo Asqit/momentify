@@ -43,6 +43,7 @@
 		"create": "Create",
 		"explore": "Explore",
 		"settings": "Settings",
-		"account": "Account"
+		"account": "Account",
+		"logout": "Logout"
 	}
 }

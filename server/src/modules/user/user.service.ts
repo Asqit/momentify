@@ -38,12 +38,14 @@ export const toggleFollowUser = asyncHandler(async (req: Request, res: Response)
 		throw new HttpException(404, 'Users were not found');
 	}
 
-	if (user.followersIds.includes(followerId)) {
-		user.followersIds.filter((id) => id !== followerId);
-		follower.followingIds.filter((id) => id !== userId);
+	const isFollowerFollowing = user.followersIds.includes(followerId);
+
+	if (isFollowerFollowing) {
+	  user.followersIds = user.followersIds.filter((id) => id !== followerId);
+	  follower.followingIds =	follower.followingIds.filter((id) => id !== userId);
 	} else {
-		user.followersIds.push(followerId);
-		follower.followingIds.push(userId);
+	  user.followersIds.push(followerId);
+	  follower.followingIds.push(userId);
 	}
 
 	const updatedUser = await prisma.user.update({

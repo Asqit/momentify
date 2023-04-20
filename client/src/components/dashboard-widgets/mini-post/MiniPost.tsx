@@ -45,7 +45,7 @@ export function MiniPost(props: MiniPostProps) {
 	};
 
 	return (
-		<div className="min-w-fit max-w-[256px] p-2">
+		<div className="min-w-fit p-2">
 			<div className="mb-2">
 				{Array.isArray(details.body) && details.body.length > 1 ? (
 					<MemoizedSlideshow
@@ -54,7 +54,7 @@ export function MiniPost(props: MiniPostProps) {
 				) : (
 					<img
 						crossOrigin="anonymous"
-						className={'max-w-[500px] h-[400px] object-cover rounded-md'}
+						className={'max-w-[500px] aspect-square object-cover rounded-md'}
 						src={`http://localhost:8080/${details.body}`}
 						alt={''}
 						loading="lazy"
@@ -72,6 +72,7 @@ export function MiniPost(props: MiniPostProps) {
 						alt={'User photo'}
 						className="rounded-full aspect-square outline-dashed outline-2 outline-offset-2 outline-sky-500"
 						crossOrigin="anonymous"
+						loading="lazy"
 						width={32}
 					/>
 					<b className="capitalize">{details.author.username}</b>

@@ -31,7 +31,7 @@ export function Slideshow(props: SlideshowProps) {
 					return (
 						<img
 							crossOrigin="anonymous"
-							className="w-full h-[400px] object-cover inline-block"
+							className="w-full aspect-square object-cover inline-block"
 							src={filename}
 							key={filename}
 							alt={filename}

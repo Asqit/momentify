@@ -20,7 +20,7 @@ export function Textfield(props: ITextfieldProps & ITextfieldComposition) {
 		: 'bg-gray-200 border-gray-200';
 
 	const styledClassName = ` 
-  font-semibold text-black rounded-2xl border-2 py-2 px-4
+  font-semibold text-black rounded-md border-2 py-2 px-4
   ${focusClass} ${alignmentClass} ${outlineClass} ${parentClassName ? parentClassName : ''}
 `;
 
