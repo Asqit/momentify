@@ -12,6 +12,7 @@ import { Email } from '~/utils/Email';
 import { Jwt } from '~/utils/Jwt';
 import { PrismaConnector } from '~/utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
+import jwt from 'jsonwebtoken';
 import Joi from 'joi';
 
 const prisma = PrismaConnector.client;
@@ -180,4 +181,24 @@ export const issuePassword = asyncHandler(async (req: Request, res: Response) =>
 	});
 
 	res.sendStatus(200);
+});
+
+// ------------------------------------------------------------------------------------> [GET] /refresh
+export const refreshToken = asyncHandler(async (req: Request, res: Response) => {
+	const { auth: REFRESH_TOKEN } = req.cookies;
+	const data = Jwt.verifyRefreshToken(REFRESH_TOKEN);
+	const user = await prisma.user.findUnique({ where: { id: data.userId } });
+
+	if (!user) {
+		throw new HttpException(403, 'Invalid token');
+	}
+
+	const NEW_ACCESS_TOKEN = Jwt.createAccessToken(user.id);
+	const NEW_REFRESH_TOKEN = Jwt.createRefreshToken(user.id);
+
+	res.cookie('auth', NEW_REFRESH_TOKEN, { httpOnly: true });
+
+	res.status(200).send({
+		accessToken: NEW_ACCESS_TOKEN,
+	});
 });

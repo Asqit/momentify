@@ -4,6 +4,7 @@ import { cpus } from 'node:os';
 import { PrismaConnector } from './utils/PrismaConnector';
 import { logger } from './utils/logger';
 import { serverConfig } from '~/config/server.config';
+// I am using 'as' imports for barrel imports, don't be confused <-------------------------------- Read me
 import * as middleware from '~/middlewares';
 import * as routes from '~/routes';
 import express from 'express';
@@ -11,6 +12,7 @@ import cluster, { Worker } from 'cluster';
 import compression from 'compression';
 import helmet from 'helmet';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 /** Main application class. Can be used to create cluster. */
 export class App {
@@ -60,6 +62,7 @@ export class App {
 		router.use(compression());
 		router.use(express.urlencoded({ extended: true, limit: '12mb' }));
 		router.use(express.json());
+		router.use(cookieParser());
 		router.use(helmet());
 		router.use(cors());
 

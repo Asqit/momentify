@@ -30,4 +30,6 @@ authRoutes.put(
 // User manually wants to verify his/her email
 authRoutes.get('/issue/email/:email', Jwt.protectedRoute(), service.issueEmail);
 
+authRoutes.get('/refresh', service.refreshToken);
+
 export { authRoutes };

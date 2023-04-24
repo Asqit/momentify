@@ -109,4 +109,18 @@ export class Jwt {
 			}
 		});
 	}
+
+	public static verifyRefreshToken(token: string): MomentifyToken {
+		try {
+			const data = jwt.verify(token, serverConfig.REFRESH_TOKEN_SECRET);
+
+			if (!this.isMomentifyToken(data)) {
+				throw new Error('Is not our token');
+			}
+
+			return data;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
