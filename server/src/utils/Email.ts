@@ -1,6 +1,11 @@
 import { SendMailOptions, createTransport } from 'nodemailer';
 import { serverConfig } from '~/config/server.config';
 
+/**
+ * Class for email manipulation
+ *
+ * **Note**: class is not instantiable, just contains static methods.
+ */
 export class Email {
 	private static readonly transporter = createTransport({
 		host: serverConfig.SMTP_SERVICE,
@@ -11,6 +16,12 @@ export class Email {
 		},
 	});
 
+	/**
+	 * Method used when user needs to verify their email address
+	 * @param emailTo User's email address which needs to be verified
+	 * @param token Token which authenticates this operation
+	 * @returns information how email was found
+	 */
 	public static async sendVerification(emailTo: string, token: string) {
 		try {
 			const opts: SendMailOptions = {

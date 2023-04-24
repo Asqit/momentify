@@ -1,6 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '~/utils/logger';
 
+/**
+ * Middleware used to log every `Request` and our `Response` to it.
+ * @param req Express request
+ * @param res Express response
+ * @param next Express nextFunction
+ */
 function requestLogger(req: Request, res: Response, next: NextFunction) {
 	const { method, url } = req;
 	const ip = req.socket.remoteAddress;

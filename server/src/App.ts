@@ -12,6 +12,7 @@ import compression from 'compression';
 import helmet from 'helmet';
 import cors from 'cors';
 
+/** Main application class. Can be used to create cluster. */
 export class App {
 	private readonly router: express.Application;
 	private readonly PUBLIC_PATH: string;
@@ -25,6 +26,11 @@ export class App {
 		this.initMiddlewares();
 	}
 
+	/**
+	 * This method will serve
+	 * every possible endpoint
+	 * needed by client
+	 */
 	private initRoutes() {
 		const router = this.router;
 
@@ -37,11 +43,18 @@ export class App {
 		router.use('/api/comments', routes.commentRoutes);
 	}
 
+	/**
+	 * This method will initialize
+	 * every middleware used in the app
+	 * and also executes `initRoutes`
+	 * method.
+	 */
 	private async initMiddlewares() {
 		const router = this.router;
 
 		await PrismaConnector.connect();
 
+		// Disable framework metadata
 		router.disable('x-powered-by');
 
 		router.use(compression());
@@ -49,6 +62,8 @@ export class App {
 		router.use(express.json());
 		router.use(helmet());
 		router.use(cors());
+
+		// Logging every request and response
 		router.use(middleware.requestLogger);
 
 		this.initRoutes();
@@ -57,6 +72,10 @@ export class App {
 		router.use(middleware.errorHandler);
 	}
 
+	/**
+	 * This methods starts the application.
+	 * Check console for output
+	 */
 	public listen() {
 		const { API_HOSTNAME, API_PORT } = serverConfig;
 
@@ -67,6 +86,10 @@ export class App {
 		});
 	}
 
+	/**
+	 * Static method, that will create a new cluster application
+	 * @returns Either array of `cluster.Worker` if needed or `undefined`.
+	 */
 	public static initCluster() {
 		let workers: Worker[] = [];
 

@@ -4,31 +4,46 @@ import { logger } from '~/utils/logger';
 
 dotenv.config();
 
+/** Interface representing sheet of env. variables needed by the Application. */
 interface Environment {
-	/** A port on which the express aplication is operating */
+	/** A port on which the express application is operating */
 	API_PORT: string;
+
 	/** A hostname of the express application. (localhost by default) */
 	API_HOSTNAME: string;
+
 	/** A mode of the application. (either "development" or "production") */
 	NODE_ENV: string;
+
 	/** JWT token secret for authentication */
 	ACCESS_TOKEN_SECRET: string;
+
 	/** JWT token secret for email tokens */
 	EMAIL_TOKEN_SECRET: string;
-	/** JWT token secret for authentication */
+
+	/** JWT token secret for refresh tokens */
 	REFRESH_TOKEN_SECRET: string;
+
 	/** A url, which you can use to connect with the database */
 	DATABASE_URL: string;
+
 	/** Your email credentials */
 	SMTP_USER: string;
+
 	/** Your email credentials */
 	SMTP_PASSWORD: string;
+
 	/** e.g. gmail, outlook, seznam... */
 	SMTP_SERVICE: string;
+
 	/** A port on which the smtp service is available */
 	SMTP_PORT: string;
 }
 
+/**
+ * This function will shallowly check for env. variables and as the case may be exit the app with code 1
+ * @returns Object containing every env. variables needed in the app runtime.
+ */
 function initEnv(): Environment {
 	const config: Partial<Environment> = {};
 	const keys: (keyof Environment)[] = [

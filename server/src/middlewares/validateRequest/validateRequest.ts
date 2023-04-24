@@ -6,6 +6,11 @@ interface ValidatedRequest<T> extends Request {
 	body: T;
 }
 
+/**
+ * Middleware used to validate request with Joi
+ * @param schema how the request should be shaped
+ * @returns express RequestHandler
+ */
 export function validateRequest(schema: ObjectSchema) {
 	return (req: Request, res: Response, next: NextFunction) => {
 		const result: ValidationResult = schema.validate(req.body);

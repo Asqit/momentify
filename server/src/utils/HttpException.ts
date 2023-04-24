@@ -1,8 +1,11 @@
+/**
+ * Specialized error class for Http errors.
+ */
 export class HttpException extends Error {
 	/**
 	 * A status code of the request.
 	 *
-	 * @default - 500
+	 * By default is `500` which means server error
 	 */
 	public statusCode: number = 500;
 

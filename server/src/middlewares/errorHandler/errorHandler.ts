@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from 'express';
 import { HttpException } from '~/utils/HttpException';
 
+/** Custom error handler middleware */
 function errorHandler(
 	err: HttpException | Error,
 	req: Request,
@@ -13,6 +14,7 @@ function errorHandler(
 		message: err.message,
 		...(isDevelopment && { stack: err.stack }),
 	};
+
 	res.status(status).json(response);
 }
 
