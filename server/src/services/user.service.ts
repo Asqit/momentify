@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { HttpException } from '~/utils/HttpException';
-import { dbConnector } from '~/utils/dbConnector';
+import { PrismaConnector } from '~/utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
 
-const prisma = dbConnector.prisma;
+const prisma = PrismaConnector.client;
 
 // ------------------------------------------------------------------------------------> [GET] /:id
 export const getUser = asyncHandler(async (req: Request, res: Response) => {
@@ -41,11 +41,11 @@ export const toggleFollowUser = asyncHandler(async (req: Request, res: Response)
 	const isFollowerFollowing = user.followersIds.includes(followerId);
 
 	if (isFollowerFollowing) {
-	  user.followersIds = user.followersIds.filter((id) => id !== followerId);
-	  follower.followingIds =	follower.followingIds.filter((id) => id !== userId);
+		user.followersIds = user.followersIds.filter((id) => id !== followerId);
+		follower.followingIds = follower.followingIds.filter((id) => id !== userId);
 	} else {
-	  user.followersIds.push(followerId);
-	  follower.followingIds.push(userId);
+		user.followersIds.push(followerId);
+		follower.followingIds.push(userId);
 	}
 
 	const updatedUser = await prisma.user.update({

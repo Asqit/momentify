@@ -1,12 +1,12 @@
 import { HttpException } from '~/utils/HttpException';
-import { dbConnector } from '~/utils/dbConnector';
 import { Request, Response } from 'express';
 import { unlink } from 'node:fs';
 import { Post } from '@prisma/client';
 import { shuffle } from '~/utils/shuffle';
+import { PrismaConnector } from '~/utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
 
-const prisma = dbConnector.prisma;
+const prisma = PrismaConnector.client;
 
 // ------------------------------------------------------------------------------------> [POST] /
 export const createPost = asyncHandler(async (req: Request, res: Response) => {

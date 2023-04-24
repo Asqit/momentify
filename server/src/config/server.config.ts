@@ -15,6 +15,8 @@ interface Environment {
 	ACCESS_TOKEN_SECRET: string;
 	/** JWT token secret for email tokens */
 	EMAIL_TOKEN_SECRET: string;
+	/** JWT token secret for authentication */
+	REFRESH_TOKEN_SECRET: string;
 	/** A url, which you can use to connect with the database */
 	DATABASE_URL: string;
 	/** Your email credentials */
@@ -35,6 +37,7 @@ function initEnv(): Environment {
 		'NODE_ENV',
 		'ACCESS_TOKEN_SECRET',
 		'EMAIL_TOKEN_SECRET',
+		'REFRESH_TOKEN_SECRET',
 		'DATABASE_URL',
 		'SMTP_USER',
 		'SMTP_PASSWORD',

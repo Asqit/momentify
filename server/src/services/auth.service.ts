@@ -1,16 +1,20 @@
-import { LoginSchema, PasswordChangeSchema, RegisterSchema } from './auth.validation';
+import {
+	LoginSchema,
+	PasswordChangeSchema,
+	RegisterSchema,
+} from '../validation/auth.validation';
 import { Request, Response } from 'express';
-import { dbConnector } from '~/utils/dbConnector';
-import { generateToken, isEmailToken } from '~/utils/generateToken';
 import { HttpException } from '~/utils/HttpException';
 import { serverConfig } from '~/config/server.config';
 import { hash, verify } from 'argon2';
-import { sendVerificationEmail } from '~/utils/sendEmail';
 import { verify as verifyJWT } from 'jsonwebtoken';
+import { Email } from '~/utils/Email';
+import { Jwt } from '~/utils/Jwt';
+import { PrismaConnector } from '~/utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
 import Joi from 'joi';
 
-const prisma = dbConnector.prisma;
+const prisma = PrismaConnector.client;
 
 // ------------------------------------------------------------------------------------> [POST] /
 export const register = asyncHandler(async (req: Request, res: Response) => {
@@ -38,18 +42,9 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 		},
 	});
 
-	const EMAIL_TOKEN = generateToken(
-		{
-			id: user.id,
-			email: user.email,
-		},
-		serverConfig.EMAIL_TOKEN_SECRET,
-		{
-			expiresIn: '1h',
-		},
-	);
+	const EMAIL_TOKEN = Jwt.createEmailToken(user.id);
 
-	await sendVerificationEmail(email, EMAIL_TOKEN);
+	await Email.sendVerification(email, EMAIL_TOKEN);
 
 	res.status(201).json({
 		message: 'success',
@@ -81,14 +76,14 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 		throw new HttpException(401, 'Invalid credentials');
 	}
 
-	const SECRET = serverConfig.ACCESS_TOKEN_SECRET;
-	const ACCESS_TOKEN = generateToken({ email }, SECRET, {
-		expiresIn: '60 minutes',
-	});
+	const ACCESS_TOKEN = Jwt.createAccessToken(user.id);
+	const REFRESH_TOKEN = Jwt.createRefreshToken(user.id);
 
 	let responseUser: any = user;
 
 	delete responseUser.hashPassword;
+
+	res.cookie('auth', REFRESH_TOKEN, { httpOnly: true });
 
 	res.status(200).json({
 		accessToken: ACCESS_TOKEN,
@@ -102,7 +97,7 @@ export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
 
 	const decoded = verifyJWT(token, serverConfig.EMAIL_TOKEN_SECRET);
 
-	if (!isEmailToken(decoded)) {
+	if (!Jwt.isMomentifyToken(decoded)) {
 		throw new HttpException(401, 'Invalid token');
 	}
 
@@ -152,18 +147,9 @@ export const issueEmail = asyncHandler(async (req: Request, res: Response) => {
 		throw new HttpException(409, 'User is already verified');
 	}
 
-	const EMAIL_TOKEN = generateToken(
-		{
-			id: user.id,
-			email: user.email,
-		},
-		serverConfig.EMAIL_TOKEN_SECRET,
-		{
-			expiresIn: '1h',
-		},
-	);
+	const EMAIL_TOKEN = Jwt.createEmailToken(user.id);
 
-	sendVerificationEmail(email, EMAIL_TOKEN);
+	Email.sendVerification(email, EMAIL_TOKEN);
 
 	res.sendStatus(200);
 });
