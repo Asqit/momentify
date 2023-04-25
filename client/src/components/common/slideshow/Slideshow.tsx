@@ -45,10 +45,12 @@ export function Slideshow(props: SlideshowProps) {
 					'absolute z-10 top-0 left-0 h-full px-2 backdrop-blur-md rounded-l-md  text-white text-xl'
 				}
 				onClick={moveLeft}
+				type="button"
 			>
 				<FiChevronLeft />
 			</button>
 			<button
+				type="button"
 				className={
 					'absolute z-10 top-0 right-0 h-full px-2 backdrop-blur-md rounded-r-md text-white text-xl'
 				}

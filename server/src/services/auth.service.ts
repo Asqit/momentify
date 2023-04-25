@@ -60,8 +60,8 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 		where: { email },
 		include: {
 			posts: true,
-			followers: true,
-			following: true,
+			followers: false,
+			following: false,
 		},
 	});
 

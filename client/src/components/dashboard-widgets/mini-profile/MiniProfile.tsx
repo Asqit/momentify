@@ -12,14 +12,14 @@ type MiniProfileProps = {
 	username: string;
 	email: string;
 	posts: Post[];
-	following: User[];
-	followers: User[];
+	followingIds: string[];
+	followersIds: string[];
 	profilePicture?: string;
 };
 
 /** This is a simple view of User account, it's not including posts, just User photo, amount of: followers, following and posts */
 export function MiniProfile(props: MiniProfileProps) {
-	const { id, username, posts, following, followers, profilePicture } = props;
+	const { id, username, posts, followingIds, followersIds, profilePicture } = props;
 	const [changeProfilePicture] = useChangeProfilePictureMutation();
 	const dispatch = useAppDispatch();
 
@@ -67,12 +67,12 @@ export function MiniProfile(props: MiniProfileProps) {
 					<span className="text-gray-400 font-medium text-sm">Posts</span>
 				</p>
 				<p className="p-1 text-center">
-					<span className="text-black font-medium">{following.length}</span>
+					<span className="text-black font-medium">{followingIds.length}</span>
 					<br />
 					<span className="text-gray-400 font-medium text-sm">Following</span>
 				</p>
 				<p className="p-1 text-center">
-					<span className="text-black font-medium">{followers.length}</span>
+					<span className="text-black font-medium">{followersIds.length}</span>
 					<br />
 					<span className="text-gray-400 font-medium text-sm">Followers</span>
 				</p>

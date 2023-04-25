@@ -9,13 +9,17 @@ import YupPassword from 'yup-password';
 import * as yup from 'yup';
 import { isAuthErrorResponse } from '~/setup/features/auth/auth.types';
 import { toast } from 'react-toastify';
-import { truncateSync } from 'fs';
 
 YupPassword(yup);
 
-export function LoginForm() {
+interface LoginFormProps {
+	preLoginLocation?: string;
+}
+
+export function LoginForm(props: LoginFormProps) {
 	const [isPassword, setIsPassword] = useState<boolean>(true);
 	const [login, { isLoading }] = useLoginMutation();
+	const { preLoginLocation } = props;
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 
@@ -47,7 +51,7 @@ export function LoginForm() {
 			try {
 				await login(values).unwrap();
 
-				navigate('..');
+				navigate(preLoginLocation ? preLoginLocation : '..');
 			} catch (error) {
 				const anyError = error as any;
 

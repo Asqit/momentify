@@ -29,6 +29,16 @@
 		"subtitle": "Oh no...the page you are looking for was not found",
 		"details": "We are sorry, but the page you are looking for does not exist or has been moved, renamed or is temporarily unavailable"
 	},
+	"create_post_section": {
+		"title": "Share a new moment",
+		"drag_and_drop": "Drag and drop images or click",
+		"submit": "Share",
+		"delete": "Cancel",
+		"post_title": "Title",
+		"missing_user": "Unauthorized Access",
+		"missing_title": "Missing post title",
+		"missing_files": "Missing post pictures"
+	},
 	"auth_nav": {
 		"home": "Home",
 		"login": "Log In",

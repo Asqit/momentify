@@ -31,3 +31,7 @@
 		@apply p-2 rounded-sm border;
 	}
 }
+
+*.dev {
+	outline: 1px solid red;
+}

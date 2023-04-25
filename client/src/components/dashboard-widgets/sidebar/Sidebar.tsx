@@ -53,7 +53,7 @@ export function Sidebar() {
 
 	return (
 		<aside className="w-[280px] relative bg-gray-100 flex-shrink-0">
-			<div className="w-full h-full p-4 flex flex-col">
+			<div className="w-full h-full p-4 flex flex-col overflow-y-scroll overflow-x-hidden">
 				<header>
 					<div className="mb-4">
 						<Brand />
@@ -87,7 +87,8 @@ export function Sidebar() {
 						/>
 					</ul>
 				</nav>
-				<footer className="border-t">
+				<footer>
+					<hr />
 					<button
 						onClick={logout}
 						className="flex gap-x-2 items-center font-medium mt-4 text-gray-700 hover:text-red-500"

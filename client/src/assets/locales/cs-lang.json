@@ -38,6 +38,16 @@
 		"subtitle": "Ale né...vaše stránka nebyla nalezena",
 		"details": "Je nám líto, ale stránka, kterou hledáte, ne-existuje a nebo byla přenusuta, přejmenována a nebo je dočasně nedostupná"
 	},
+	"create_post_section": {
+		"title": "Sdílet nový moment",
+		"drag_and_drop": "Přetáhněte obrázky nebo klikněte",
+		"submit": "Sdílet",
+		"delete": "Zrušit",
+		"post_title": "Titulek",
+		"missing_user": "Neautorizovaný přístup",
+		"missing_title": "Chybný titulek",
+		"missing_files": "Chybý obrázky"
+	},
 	"auth_nav": {
 		"home": "Domů",
 		"login": "Přihlášení",

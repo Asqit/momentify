@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
-import { AuthNav, Spinner } from '~/components';
+import { Link, useLocation } from 'react-router-dom';
+import { AuthNav } from '~/components';
 import { useTranslation } from 'react-i18next';
 import { LoginForm } from './components/LoginForm';
 
 export function Login() {
 	const { t } = useTranslation();
+	const location = useLocation();
+	const { state } = location;
 
 	return (
 		<section className="w-full">
@@ -23,7 +25,7 @@ export function Login() {
 									{t('login_section.subtitle_link')}
 								</Link>
 							</h4>
-							<LoginForm />
+							<LoginForm preLoginLocation={state.location} />
 						</div>
 					</article>
 				</main>
