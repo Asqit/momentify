@@ -5,6 +5,9 @@ import { Post } from '@prisma/client';
 import { shuffle } from '~/utils/shuffle';
 import { PrismaConnector } from '~/utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import sharp from 'sharp';
 
 const prisma = PrismaConnector.client;
 
@@ -13,6 +16,7 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 	const { title, authorId } = req.body;
 	const images = req.files;
 	let files: any = images;
+	const finalFiles: string[] = [];
 
 	if (!images) {
 		throw new HttpException(400, 'Bad request');
@@ -24,11 +28,25 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 		files = images.map((image) => image.filename);
 	}
 
+	for (let file of files) {
+		const imageBuffer = await fs.readFile(`public/${file}`);
+		const webpBuffer = await sharp(imageBuffer).webp().toBuffer();
+		const NEW_FILENAME = file.replace(path.extname(file), '.webp');
+
+		// Save a webp version of the file
+		await sharp(webpBuffer).toFile(`public/${NEW_FILENAME}`);
+
+		// Remove original file
+		await fs.rm(`public/${file}`);
+
+		finalFiles.push(NEW_FILENAME);
+	}
+
 	let post = await prisma.post.create({
 		data: {
 			title,
 			authorId,
-			body: files,
+			body: finalFiles,
 		},
 	});
 

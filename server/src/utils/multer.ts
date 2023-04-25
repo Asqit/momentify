@@ -19,15 +19,9 @@ export const upload = multer({
 	},
 	fileFilter: function (req, file, cb) {
 		let ext = path.extname(file.originalname).toLowerCase();
+		const exts = ['.png', '.jpg', '.gif', '.mp3', '.mp4', '.jpeg'];
 
-		if (
-			ext !== '.png' &&
-			ext !== '.jpg' &&
-			ext !== '.gif' &&
-			ext !== '.mp3' &&
-			ext !== '.mp4' &&
-			ext !== '.jpeg'
-		) {
+		if (!exts.includes(ext)) {
 			return cb(new HttpException(415, 'Invalid file-format'));
 		}
 		cb(null, true);
