@@ -4,27 +4,24 @@ import { Post } from '../posts/posts.types';
  * This interface represents a user object sent to here by server-side
  * it is strapped of any crucial details.
  */
-export interface User {
+export type User = {
 	id: string;
 	email: string;
 	username: string;
-
-	/** An array of post ids */
-	posts: Post[];
-
-	/** references to all following */
-	followingIds: string[];
-
-	/** reference to all followers */
+	profilePicture: string | null;
+	verified: boolean;
 	followersIds: string[];
+	followingIds: string[];
+};
 
-	/** An array of user ids */
-	following: User[];
-
-	/** An array of user ids */
+/**
+ * An interface representing a user with all references to his posts, followers and who is he/she following.
+ */
+export type UserWithReferences = User & {
 	followers: User[];
-	profilePicture?: string;
-}
+	following: User[];
+	posts: Post[];
+};
 
 export interface ChangePasswordBody {
 	password: string;

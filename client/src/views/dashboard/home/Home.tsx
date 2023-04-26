@@ -1,7 +1,5 @@
 import { useGetGlobalFeedQuery } from '~/setup/features/posts/posts.api';
 import { MiniPost, MiniPostSkeleton } from '~/components';
-import { Post } from '~/setup/features/posts/posts.types';
-import { Suspense } from 'react';
 
 export function Home() {
 	const { data, isLoading } = useGetGlobalFeedQuery();
@@ -13,13 +11,13 @@ export function Home() {
 				{data
 					? data.map((post) => (
 							<MiniPost
-								title={post.title}
-								likedBy={post.likedBy}
-								author={post.author}
-								body={post.body}
-								createdAt={post.createdAt}
+								title={post.title!}
+								likedBy={post.likedBy!}
+								author={post.author!}
+								body={post.body!}
+								createdAt={post.createdAt!}
 								key={post.id}
-								id={post.id}
+								id={post.id!}
 							/>
 					  ))
 					: null}

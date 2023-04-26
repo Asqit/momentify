@@ -22,7 +22,7 @@ export function Slideshow(props: SlideshowProps) {
 	};
 
 	return (
-		<div className="max-w-[500px] overflow-hidden mx-auto relative rounded-md">
+		<div className="max-w-[500px] overflow-hidden mx-auto relative rounded-md group">
 			<div
 				className={`whitespace-nowrap transition-all duration-1000`}
 				style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
@@ -42,7 +42,7 @@ export function Slideshow(props: SlideshowProps) {
 			</div>
 			<button
 				className={
-					'absolute z-10 top-0 left-0 h-full px-2 backdrop-blur-md rounded-l-md  text-white text-xl'
+					'absolute z-10 top-0 -left-9 group-hover:left-0 transition-all h-full px-2 backdrop-blur-md rounded-l-md  text-white text-xl'
 				}
 				onClick={moveLeft}
 				type="button"
@@ -52,7 +52,7 @@ export function Slideshow(props: SlideshowProps) {
 			<button
 				type="button"
 				className={
-					'absolute z-10 top-0 right-0 h-full px-2 backdrop-blur-md rounded-r-md text-white text-xl'
+					'absolute z-10 top-0 -right-9 group-hover:right-0 transition-all h-full px-2 backdrop-blur-md rounded-r-md text-white text-xl'
 				}
 				onClick={moveRight}
 			>

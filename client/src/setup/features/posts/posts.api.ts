@@ -1,10 +1,10 @@
 import { baseApi } from '../baseApi';
-import { Post } from './posts.types';
+import { Post, PostWithReferences } from './posts.types';
 
 export const postsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		// get all posts --------------------------------------------------->
-		getGlobalFeed: builder.query<Post[], void>({
+		getGlobalFeed: builder.query<Partial<PostWithReferences>[], void>({
 			query: () => ({
 				url: `/posts/`,
 				method: 'GET',
@@ -12,7 +12,7 @@ export const postsApi = baseApi.injectEndpoints({
 		}),
 		// Create post mutation -------------------------------------------->
 		createPost: builder.mutation<void, FormData>({
-			query: (body) => ({
+			query: (body: FormData) => ({
 				url: '/posts',
 				method: 'POST',
 				headers: {
@@ -22,6 +22,13 @@ export const postsApi = baseApi.injectEndpoints({
 					'Content-Type': undefined,
 				},
 				body,
+			}),
+		}),
+		// Get post ------------------------------------------------------->
+		getPost: builder.query<PostWithReferences, string>({
+			query: (id: string) => ({
+				url: `/posts/${id}`,
+				method: 'GET',
 			}),
 		}),
 		// Like post mutation --------------------------------------------->
@@ -42,8 +49,10 @@ export const postsApi = baseApi.injectEndpoints({
 });
 
 export const {
+	useGetPostQuery,
 	useDeletePostMutation,
 	useLikePostMutation,
 	useCreatePostMutation,
+	// This Query will fetch every post available, including post author. (That's why it's partial, because comments are missing)
 	useGetGlobalFeedQuery,
 } = postsApi;

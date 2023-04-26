@@ -1,4 +1,5 @@
 import { User } from '~/setup/features/auth/auth.types';
+import { Comment } from '../comments/comments.types';
 
 /** POST body for creating a new post. (`body: string[]` is array of images) */
 export type CreatePostBody = {
@@ -6,13 +7,18 @@ export type CreatePostBody = {
 	files: FormData;
 };
 
-/** Structure of singular post */
+/** Structure of singular post without references */
 export type Post = {
 	id: string;
 	title: string;
 	likedBy: string[];
 	authorId: string;
-	author: User;
 	body: string[];
 	createdAt: Date;
+};
+
+/** Structure of a singular post, that has all references */
+export type PostWithReferences = Post & {
+	author: User;
+	comments: Comment[];
 };

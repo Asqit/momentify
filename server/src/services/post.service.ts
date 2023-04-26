@@ -59,7 +59,10 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 // ------------------------------------------------------------------------------------> [GET] posts/:id
 export const getPost = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
-	const post = await prisma.post.findUnique({ where: { id } });
+	const post = await prisma.post.findUnique({
+		where: { id },
+		include: { comments: true, author: true },
+	});
 
 	if (!post) {
 		res.sendStatus(404);

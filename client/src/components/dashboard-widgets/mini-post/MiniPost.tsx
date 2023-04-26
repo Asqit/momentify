@@ -15,6 +15,7 @@ interface MiniPostProps {
 	body: string[] | string;
 	createdAt: Date;
 	id: string;
+	onClickCallback?: () => void;
 }
 
 /** This is a small post view. (Will be used inside of grid) */
@@ -30,6 +31,15 @@ export function MiniPost(props: MiniPostProps) {
 				return;
 			}
 
+			let newLikedBy = details.likedBy.includes(userId)
+				? details.likedBy.filter((id) => id !== userId)
+				: [...details.likedBy, userId];
+
+			setDetails({
+				...details,
+				likedBy: newLikedBy,
+			});
+
 			const data = await likePost({
 				userId: userId,
 				id: details.id,
@@ -41,11 +51,18 @@ export function MiniPost(props: MiniPostProps) {
 			});
 		} catch (error) {
 			toast.error(String(error));
+
+			let newLikedBy = details.likedBy.filter((id) => id !== userId);
+
+			setDetails({
+				...details,
+				likedBy: newLikedBy,
+			});
 		}
 	};
 
 	return (
-		<div className="min-w-fit p-2">
+		<div className="w-fit h-fit p-2">
 			<div className="mb-2">
 				{Array.isArray(details.body) && details.body.length > 1 ? (
 					<MemoizedSlideshow
