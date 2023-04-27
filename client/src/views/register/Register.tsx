@@ -11,7 +11,7 @@ export function Register() {
 			<div className="h-screen lg:grid lg:grid-cols-2">
 				<figure className="hidden lg:block bg-gradient-to-bl to-black  from-sky-500"></figure>
 
-				<main className="w-full h-full flex flex-col">
+				<main className="w-full h-full flex flex-col dark:bg-gray-950 dark:text-gray-200">
 					<AuthNav />
 					<article className="flex-grow flex flex-col justify-center items-center">
 						<div className="max-w-5xl w-full md:w-[90%] p-4">

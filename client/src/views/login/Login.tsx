@@ -5,13 +5,11 @@ import { LoginForm } from './components/LoginForm';
 
 export function Login() {
 	const { t } = useTranslation();
-	const location = useLocation();
-	const { state } = location;
 
 	return (
 		<section className="w-full">
 			<div className="h-screen lg:grid lg:grid-cols-2">
-				<main className="w-full h-full flex flex-col">
+				<main className="w-full h-full flex flex-col dark:bg-gray-950 dark:text-gray-200">
 					<AuthNav />
 					<article className="flex-grow flex flex-col justify-center items-center">
 						<div className="max-w-5xl w-full md:w-[90%] p-4">
@@ -25,7 +23,7 @@ export function Login() {
 									{t('login_section.subtitle_link')}
 								</Link>
 							</h4>
-							<LoginForm preLoginLocation={state.location} />
+							<LoginForm />
 						</div>
 					</article>
 				</main>

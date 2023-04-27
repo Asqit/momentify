@@ -59,20 +59,26 @@ export function MiniProfile(props: MiniProfileProps) {
 				</span>
 			</DragAndDrop>
 
-			<h4 className="font-semibold text-lg text-center my-3 capitalize">{username}</h4>
-			<div className="grid grid-cols-3 divide-x">
+			<h4 className="font-semibold text-lg text-center my-3 capitalize dark:text-gray-200">
+				{username}
+			</h4>
+			<div className="grid grid-cols-3 divide-x dark:divide-gray-800">
 				<p className="p-1 text-center">
-					<span className="text-black font-medium">{posts.length}</span>
+					<span className="text-black dark:text-white font-medium">{posts.length}</span>
 					<br />
 					<span className="text-gray-400 font-medium text-sm">Posts</span>
 				</p>
 				<p className="p-1 text-center">
-					<span className="text-black font-medium">{followingIds.length}</span>
+					<span className="text-black dark:text-white font-medium">
+						{followingIds.length}
+					</span>
 					<br />
 					<span className="text-gray-400 font-medium text-sm">Following</span>
 				</p>
 				<p className="p-1 text-center">
-					<span className="text-black font-medium">{followersIds.length}</span>
+					<span className="text-black dark:text-white font-medium">
+						{followersIds.length}
+					</span>
 					<br />
 					<span className="text-gray-400 font-medium text-sm">Followers</span>
 				</p>

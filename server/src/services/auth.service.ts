@@ -14,6 +14,7 @@ import { PrismaConnector } from '~/utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import Joi from 'joi';
+import { User } from '@prisma/client';
 
 const prisma = PrismaConnector.client;
 
@@ -84,7 +85,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 
 	delete responseUser.hashPassword;
 
-	res.cookie('auth', REFRESH_TOKEN, { httpOnly: true });
+	res.cookie('auth', REFRESH_TOKEN, { httpOnly: true, sameSite: 'strict' });
 
 	res.status(200).json({
 		accessToken: ACCESS_TOKEN,
@@ -198,7 +199,12 @@ export const refreshToken = asyncHandler(async (req: Request, res: Response) => 
 
 	res.cookie('auth', NEW_REFRESH_TOKEN, { httpOnly: true });
 
+	const responseUser: Partial<User> = user;
+
+	delete responseUser.hashPassword;
+
 	res.status(200).send({
 		accessToken: NEW_ACCESS_TOKEN,
+		user: responseUser,
 	});
 });

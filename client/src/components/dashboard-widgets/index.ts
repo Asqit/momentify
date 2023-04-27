@@ -5,9 +5,10 @@
 // section and pages.
 // =============================================
 export * from './profile-details/ProfileDetails';
+export * from './inline-profile/InlineProfile';
 export * from './mini-post/MiniPostSkeleton';
 export * from './mini-profile/MiniProfile';
-export * from './post-modal/PostModal';
+export * from './heart-button/HeartButton';
 export * from './mini-post/MiniPost';
 export * from './sidebar/Sidebar';
 export * from './navbar/Navbar';

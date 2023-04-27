@@ -1,6 +1,6 @@
 {
 	"native_name": "English",
-	"alt_name": "Angličtina",
+	"eng_name": "Angličtina",
 	"loading": "Working",
 	"form": {
 		"username": "Username",
@@ -12,7 +12,15 @@
 		"email_placeholder": "e.g. joedoe@email.com",
 		"password_placeholder": "A strong password",
 		"register": "Create Account",
-		"login": "Log In"
+		"login": "Log In",
+
+		"error_required": "required field",
+		"error_not_email": "invalid email",
+		"error_password_length": "password must be at least 8 characters long",
+		"error_password_symbols": "password must contain at least 1 symbol",
+		"error_password_uppercase": "password must contain at least 1 uppercase letter",
+		"error_password_numbers": "password must contain at least 4 numbers",
+		"error_password_lowercase": "password must contain at least 1 lowercase letter"
 	},
 	"register_section": {
 		"title": "Create a new account",

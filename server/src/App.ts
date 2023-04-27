@@ -29,9 +29,8 @@ export class App {
 	}
 
 	/**
-	 * This method will serve
-	 * every possible endpoint
-	 * needed by client
+	 * This method will serve every possible
+	 * endpoint needed by client
 	 */
 	private initRoutes() {
 		const router = this.router;

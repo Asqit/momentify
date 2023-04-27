@@ -69,6 +69,10 @@ export const getPost = asyncHandler(async (req: Request, res: Response) => {
 		return;
 	}
 
+	const responsePost: any = post;
+
+	delete responsePost.author.hashPassword;
+
 	res.status(200).json(post);
 });
 

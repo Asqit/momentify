@@ -16,11 +16,11 @@ export function Textfield(props: ITextfieldProps & ITextfieldComposition) {
 	const outlineClass = errorMessage ? 'outline-red-600/50 border-red-600' : '';
 	const alignmentClass = children ? 'inline-flex items-center' : 'inline-block';
 	const focusClass = isFocused
-		? 'bg-white outline outline-4 outline-blue-500/20 border-sky-500'
-		: 'bg-gray-200 border-gray-200';
+		? 'bg-white dark:bg-gray-700 outline outline-4 outline-blue-500/20 border-sky-500'
+		: 'bg-gray-200 border-gray-200 dark:bg-gray-600 dark:border-gray-700';
 
 	const styledClassName = ` 
-  font-semibold text-black rounded-md border-2 py-2 px-4
+  font-semibold text-black dark:text-gray-200 rounded-md border-2 py-2 px-4
   ${focusClass} ${alignmentClass} ${outlineClass} ${parentClassName ? parentClassName : ''}
 `;
 

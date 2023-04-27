@@ -13,8 +13,22 @@ import {
 import { ToastContainer } from 'react-toastify';
 import { ProtectedRoute } from './components';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 
 export default function App() {
+	useEffect(() => {
+		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		const isDarkTheme = localStorage.getItem('momentify/theme')
+			? JSON.parse(localStorage.getItem('momentify/theme')!).theme === 'dark'
+			: false;
+
+		if (isDarkTheme || prefersDark) {
+			document.documentElement.classList.add('dark');
+		} else {
+			document.documentElement.classList.remove('dark');
+		}
+	}, []);
+
 	return (
 		<>
 			<Routes>

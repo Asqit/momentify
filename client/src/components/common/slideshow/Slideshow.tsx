@@ -3,10 +3,11 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 type SlideshowProps = {
 	images: string[];
+	onClickCallback: () => void;
 };
 
 export function Slideshow(props: SlideshowProps) {
-	const { images } = props;
+	const { images, onClickCallback } = props;
 	const [index, setIndex] = useState<number>(0);
 
 	const moveRight = () => {
@@ -24,8 +25,9 @@ export function Slideshow(props: SlideshowProps) {
 	return (
 		<div className="max-w-[500px] overflow-hidden mx-auto relative rounded-md group">
 			<div
-				className={`whitespace-nowrap transition-all duration-1000`}
+				className={`whitespace-nowrap transition-all duration-1000 cursor-pointer`}
 				style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
+				onClick={onClickCallback}
 			>
 				{images.map((filename) => {
 					return (
@@ -35,7 +37,7 @@ export function Slideshow(props: SlideshowProps) {
 							src={filename}
 							key={filename}
 							alt={filename}
-							loading="lazy"
+							loading="eager"
 						/>
 					);
 				})}

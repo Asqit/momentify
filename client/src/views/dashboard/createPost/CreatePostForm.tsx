@@ -86,7 +86,7 @@ export function CreatePostForm() {
 
 					{previews ? (
 						<>
-							<Slideshow images={previews} />
+							<Slideshow images={previews} onClickCallback={() => {}} />
 							<Button buttonColor="danger" type="button" onClick={() => setPreviews(null)}>
 								{t('create_post_section.delete')}
 							</Button>
@@ -95,14 +95,14 @@ export function CreatePostForm() {
 						<DragAndDrop
 							onFileDrop={handleFileDrop}
 							className={
-								'bg-gray-200 border-2 text-gray-400 border-gray-400 border-dashed h-[100px] flex flex-col items-center justify-center rounded-sm cursor-pointer'
+								'bg-gray-200 dark:bg-gray-600 dark:border-gray-700 border-2 text-gray-400 border-gray-400 border-dashed h-[100px] flex flex-col items-center justify-center rounded-sm cursor-pointer'
 							}
 						>
 							<p>{t('create_post_section.drag_and_drop')}</p>
 						</DragAndDrop>
 					)}
 
-					<hr />
+					<hr className="dark:border-gray-800" />
 					<Button buttonColor="primary" type="submit" disabled={!title || !files}>
 						{t('create_post_section.submit')}
 					</Button>

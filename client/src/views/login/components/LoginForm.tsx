@@ -12,16 +12,14 @@ import { toast } from 'react-toastify';
 
 YupPassword(yup);
 
-interface LoginFormProps {
-	preLoginLocation?: string;
-}
+interface LoginFormProps {}
 
 export function LoginForm(props: LoginFormProps) {
 	const [isPassword, setIsPassword] = useState<boolean>(true);
 	const [login, { isLoading }] = useLoginMutation();
-	const { preLoginLocation } = props;
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const {} = props;
 
 	const loginSchema = yup.object({
 		email: yup
@@ -51,7 +49,7 @@ export function LoginForm(props: LoginFormProps) {
 			try {
 				await login(values).unwrap();
 
-				navigate(preLoginLocation ? preLoginLocation : '..');
+				navigate('..');
 			} catch (error) {
 				const anyError = error as any;
 

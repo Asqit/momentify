@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { HttpException } from '~/utils/HttpException';
 import { PrismaConnector } from '~/utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
+import fs from 'node:fs/promises';
+import sharp from 'sharp';
 
 const prisma = PrismaConnector.client;
 
@@ -80,9 +82,19 @@ export const changeProfilePicture = asyncHandler(async (req: Request, res: Respo
 		throw new HttpException(404, 'No user was found');
 	}
 
+	// `req.file` does not actually contain buffer, so instead we are reading it from storage.
+	const imageBuffer = await fs.readFile(image.path);
+	const webpBuffer = await sharp(imageBuffer).webp().toBuffer();
+	const NEW_FILENAME = image.filename.split('.')[0] + '.webp';
+
+	await sharp(webpBuffer).toFile(`public/${NEW_FILENAME}`);
+
+	// delete the original uploaded file, since we don't need it anymore.
+	await fs.rm(image.path);
+
 	const updatedUser = await prisma.user.update({
 		where: { id },
-		data: { profilePicture: image.filename },
+		data: { profilePicture: NEW_FILENAME },
 	});
 
 	const responseUser: any = user;
