@@ -8,7 +8,7 @@ import YupPassword from 'yup-password';
 import { useFormik } from 'formik';
 import { useRegisterMutation } from '~/setup/features/auth/auth.api';
 import { toast } from 'react-toastify';
-import { isAuthErrorResponse } from '~/setup/features/auth/auth.types';
+import { isHttpException } from '~/setup/features/auth/auth.types';
 
 YupPassword(yup);
 
@@ -77,7 +77,7 @@ export function RegisterForm() {
 			} catch (error) {
 				const anyError = error as any;
 
-				if (anyError?.data && isAuthErrorResponse(anyError.data)) {
+				if (anyError?.data && isHttpException(anyError.data)) {
 					toast.error(anyError.data.message);
 				} else {
 					toast.error(`Unknown error occurred, ended with code ${anyError.code}`);

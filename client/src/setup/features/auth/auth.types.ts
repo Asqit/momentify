@@ -51,13 +51,14 @@ export interface AuthErrorResponse {
 	message: string;
 	statusCode: number;
 	stack?: string;
+	i18ClientKey?: string;
 }
 
 export interface RegisterResponse {
 	message: string;
 }
 
-export function isAuthErrorResponse(test: unknown): test is AuthErrorResponse {
+export function isHttpException(test: unknown): test is AuthErrorResponse {
 	return (
 		(test as AuthErrorResponse).message !== undefined &&
 		typeof (test as AuthErrorResponse).message === 'string' &&

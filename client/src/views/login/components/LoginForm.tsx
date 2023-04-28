@@ -7,7 +7,7 @@ import { FormEvent, useState } from 'react';
 import { useFormik } from 'formik';
 import YupPassword from 'yup-password';
 import * as yup from 'yup';
-import { isAuthErrorResponse } from '~/setup/features/auth/auth.types';
+import { isHttpException } from '~/setup/features/auth/auth.types';
 import { toast } from 'react-toastify';
 
 YupPassword(yup);
@@ -53,7 +53,7 @@ export function LoginForm(props: LoginFormProps) {
 			} catch (error) {
 				const anyError = error as any;
 
-				if (anyError?.data && isAuthErrorResponse(anyError.data)) {
+				if (anyError?.data && isHttpException(anyError.data)) {
 					toast.error(anyError.data.message);
 				} else {
 					toast.error(`Unknown error occurred, ended with code ${anyError.code}`);

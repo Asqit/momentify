@@ -6,10 +6,11 @@
 // =============================================
 export * from './language-switcher/LanguageSwitcher';
 export * from './drag-and-drop/DragAndDrop';
+export * from './lazy-image/LazyImage';
 export * from './hamburger/Hamburger';
 export * from './slideshow/Slideshow';
 export * from './textfield/Textfield';
-export * from './lazy-image/LazyImage';
+export * from './textarea/TextArea';
 export * from './spinner/Spinner';
 export * from './button/Button';
 export * from './emoji/Emoji';

@@ -23,7 +23,7 @@ export function Slideshow(props: SlideshowProps) {
 	};
 
 	return (
-		<div className="max-w-[500px] overflow-hidden mx-auto relative rounded-md group">
+		<div className="w-full max-w-2xl overflow-hidden mx-auto relative rounded-md group">
 			<div
 				className={`whitespace-nowrap transition-all duration-1000 cursor-pointer`}
 				style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
@@ -33,7 +33,7 @@ export function Slideshow(props: SlideshowProps) {
 					return (
 						<img
 							crossOrigin="anonymous"
-							className="w-full aspect-square object-cover inline-block"
+							className="w-full aspect-square object-cover inline-block dark:brightness-75"
 							src={filename}
 							key={filename}
 							alt={filename}
@@ -44,7 +44,7 @@ export function Slideshow(props: SlideshowProps) {
 			</div>
 			<button
 				className={
-					'absolute z-10 top-0 -left-9 group-hover:left-0 transition-all h-full px-2 backdrop-blur-md rounded-l-md  text-white text-xl'
+					'absolute z-10 -left-9 group-hover:left-0 transition-all w-[32px] h-[50px] top-1/2 px-2 backdrop-blur-md rounded-md  text-white text-xl'
 				}
 				onClick={moveLeft}
 				type="button"
@@ -54,7 +54,7 @@ export function Slideshow(props: SlideshowProps) {
 			<button
 				type="button"
 				className={
-					'absolute z-10 top-0 -right-9 group-hover:right-0 transition-all h-full px-2 backdrop-blur-md rounded-r-md text-white text-xl'
+					'absolute z-10 -right-9 group-hover:right-0 transition-all w-[32px] h-[50px] top-1/2 px-2 backdrop-blur-md rounded-md text-white text-xl'
 				}
 				onClick={moveRight}
 			>

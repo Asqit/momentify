@@ -6,11 +6,11 @@ export function Home() {
 
 	return (
 		<section className={'w-full h-full'}>
-			<div className={'flex flex-wrap py-[4px]'}>
+			<div className={'flex flex-wrap p-4 gap-4'}>
 				{isLoading ? [...Array(10).keys()].map((i) => <MiniPostSkeleton key={i} />) : null}
 				{data
 					? data.map((post) => (
-							<div className="flex-[25%] py-[4px] align-middle dev">
+							<div className="max-w-sm">
 								<MiniPost
 									title={post.title!}
 									likedBy={post.likedBy!}

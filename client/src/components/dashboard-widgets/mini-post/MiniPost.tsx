@@ -66,7 +66,7 @@ export function MiniPost(props: MiniPostProps) {
 	};
 
 	return (
-		<div className="w-fit h-fit p-2 pb-3 border border-transparent  hover:border-gray-200 dark:text-gray-200 dark:hover:border-gray-800 transition-colors rounded-xl">
+		<div className="w-fit h-fit p-2 pb-3 border border-transparent dark:bg-gray-950  hover:border-gray-200 dark:text-gray-200 dark:hover:border-gray-800 transition-colors rounded-xl">
 			<div className="mb-2">
 				{Array.isArray(details.body) && details.body.length > 1 ? (
 					<MemoizedSlideshow
@@ -76,7 +76,9 @@ export function MiniPost(props: MiniPostProps) {
 				) : (
 					<img
 						crossOrigin="anonymous"
-						className={'max-w-[500px] aspect-square object-cover rounded-md'}
+						className={
+							'max-w-2xl w-full aspect-square object-cover rounded-md cursor-pointer'
+						}
 						src={`http://localhost:8080/${details.body}`}
 						alt=""
 						onClick={navigateToPost}
