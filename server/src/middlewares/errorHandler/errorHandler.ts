@@ -9,7 +9,12 @@ function errorHandler(
 	next: NextFunction,
 ) {
 	const isDevelopment = process.env.NODE_ENV === 'development';
-	const status = err instanceof HttpException ? err.statusCode : res.statusCode;
+	const status =
+		err instanceof HttpException
+			? err.statusCode
+			: res.statusCode == 200
+			? 400
+			: res.statusCode;
 	const response = {
 		message: err.message,
 		...(isDevelopment && { stack: err.stack }),
