@@ -62,8 +62,9 @@ export class App {
 		router.use(express.urlencoded({ extended: true, limit: '12mb' }));
 		router.use(express.json());
 		router.use(cookieParser());
-		router.use(helmet());
-		router.use(cors());
+		router.use(cors({ origin: ['http://localhost:8080', 'http://localhost:5173'] }));
+		//TODO: Fix cors errors with helmet
+		//router.use(helmet());
 
 		// Logging every request and response
 		router.use(middleware.requestLogger);

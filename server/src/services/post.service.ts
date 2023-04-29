@@ -29,7 +29,12 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 	}
 
 	for (let file of files) {
-		// TODO: Find a more less expensive way to do webp conversion.
+		// Skip every file with .webp extension
+		if (path.extname(file) === '.webp') {
+			finalFiles.push(file);
+			continue;
+		}
+
 		const imageBuffer = await fs.readFile(`public/${file}`);
 		const webpBuffer = await sharp(imageBuffer).webp().toBuffer();
 		const NEW_FILENAME = file.replace(path.extname(file), '.webp');

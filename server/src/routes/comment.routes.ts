@@ -22,7 +22,7 @@ commentRoutes.get('/post/:id', Jwt.protectedRoute(), services.getPostComments);
 
 // User updates his comment
 commentRoutes.put(
-	'/:id',
+	'/',
 	Jwt.protectedRoute(),
 	validateRequest(commentUpdateSchema),
 	services.updateComment,

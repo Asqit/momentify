@@ -1,25 +1,32 @@
-import { ImgHTMLAttributes, useState } from 'react';
+import { ImgHTMLAttributes, useEffect, useState } from 'react';
 
-interface LazyImageProps extends ImgHTMLAttributes<HTMLImageElement> {}
+interface LazyImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+	src: string;
+}
 
 export function LazyImage(props: LazyImageProps) {
-	const [isLoaded, setIsLoaded] = useState<boolean>(false);
+	const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+
+	useEffect(() => {
+		setLoadedSrc(null);
+		if (props.src) {
+			const handleLoad = () => {
+				setLoadedSrc(props.src);
+			};
+			const image = new Image();
+			image.addEventListener('load', handleLoad);
+			image.src = props.src;
+			return () => {
+				image.removeEventListener('load', handleLoad);
+			};
+		}
+	}, [props.src]);
+
+	if (loadedSrc === props.src) {
+		return <img {...props} />;
+	}
 
 	return (
-		<>
-			{isLoaded === false ? (
-				<div className="w-full min-w-[300px] inline-block aspect-square bg-gray-400 animate-pulse rounded-md" />
-			) : null}
-
-			<img
-				{...props}
-				onLoad={() => {
-					setIsLoaded((prev) => !prev);
-				}}
-				className={`${props.className ? props.className : ''} ${
-					isLoaded ? 'inline-block' : 'hidden'
-				}`}
-			/>
-		</>
+		<div className="w-full aspect-square bg-gray-300 animate-pulse rounded-md inline-block dark:brightness-75" />
 	);
 }

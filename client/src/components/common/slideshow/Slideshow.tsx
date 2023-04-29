@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { LazyImage } from '../lazy-image/LazyImage';
 
 type SlideshowProps = {
 	images: string[];
@@ -25,19 +26,19 @@ export function Slideshow(props: SlideshowProps) {
 	return (
 		<div className="w-full max-w-2xl overflow-hidden mx-auto relative rounded-md group">
 			<div
-				className={`whitespace-nowrap transition-all duration-1000 cursor-pointer`}
+				className={`whitespace-nowrap transition-all duration-1000 cursor-pointer `}
 				style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
 				onClick={onClickCallback}
 			>
 				{images.map((filename) => {
 					return (
-						<img
-							crossOrigin="anonymous"
+						<LazyImage
 							className="w-full aspect-square object-cover inline-block dark:brightness-75"
 							src={filename}
 							key={filename}
 							alt={filename}
 							loading="eager"
+							crossOrigin="anonymous"
 						/>
 					);
 				})}

@@ -11,7 +11,7 @@ export function Navbar() {
 	const user = useAppSelector((st) => st.auth.user!);
 
 	return (
-		<nav className="w-full border-t">
+		<nav className="w-full border-t dark:bg-gray-950 dark:text-gray-200 dark:border-gray-800">
 			<div className="p-4">
 				<ul className="flex items-center justify-evenly">
 					<Link
@@ -39,8 +39,7 @@ export function Navbar() {
 						<IoIosSettings />
 					</Link>
 					<Link
-						to={'account'}
-						state={{ user }}
+						to={`/account/${user.id}`}
 						className="font-semibold text-lg  transition-colors hover:text-sky-500"
 					>
 						<FaUserAlt />

@@ -1,6 +1,6 @@
 import { User } from '~/setup/features/auth/auth.types';
 import { FaRegComment } from 'react-icons/fa';
-import { HeartButton, InlineProfile, Slideshow } from '~/components';
+import { HeartButton, InlineProfile, LazyImage, Slideshow } from '~/components';
 import { useNavigate } from 'react-router-dom';
 import { useLikePostMutation } from '~/setup/features/posts/posts.api';
 import { toast } from 'react-toastify';
@@ -74,7 +74,7 @@ export function MiniPost(props: MiniPostProps) {
 						images={details.body.map((filename) => `http://localhost:8080/${filename}`)}
 					/>
 				) : (
-					<img
+					<LazyImage
 						crossOrigin="anonymous"
 						className={
 							'max-w-2xl w-full aspect-square object-cover rounded-md cursor-pointer'

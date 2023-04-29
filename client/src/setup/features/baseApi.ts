@@ -8,6 +8,17 @@ import {
 import { updateAccessToken, logout } from './auth/auth.slice';
 import { RootState } from '../store';
 
+// -----------------------------------------------------------------
+// Differences between Mutations and Query:
+// 1. Queries just asks API for data
+// 2. Mutations are able to mutate the cached data
+// 3. Mutations are able to invalidate cache data and force re-fetch
+// -----------------------------------------------------------------
+
+// Following http connector uses fetchBaseQuery
+// which uses in-build fetch API
+// We also try to utilize auth.accessToken
+// Which is used to authenticate user
 const baseQuery = fetchBaseQuery({
 	baseUrl: '/api',
 	prepareHeaders: (headers, { getState }) => {
@@ -21,7 +32,11 @@ const baseQuery = fetchBaseQuery({
 	},
 });
 
-const baseQueryWithReauth: BaseQueryFn<
+// Here we extend the http connector
+// by having "middleware" which calls
+// JWT refreshToken endpoint if
+// accessToken is expired
+const baseQueryWithReAuth: BaseQueryFn<
 	string | FetchArgs,
 	unknown,
 	FetchBaseQueryError
@@ -46,6 +61,6 @@ const baseQueryWithReauth: BaseQueryFn<
 
 export const baseApi = createApi({
 	reducerPath: 'api',
-	baseQuery: baseQueryWithReauth,
+	baseQuery: baseQueryWithReAuth,
 	endpoints: () => ({}),
 });

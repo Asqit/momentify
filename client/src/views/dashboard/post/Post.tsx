@@ -5,13 +5,15 @@ import {
 	PostSkeleton,
 	Slideshow,
 	Comment,
-	TextArea,
+	Button,
+	Textfield,
 } from '~/components';
-import { useGetPostQuery } from '~/setup/features/posts/posts.api';
+import { useGetPostQuery, useLikePostMutation } from '~/setup/features/posts/posts.api';
 import { toast } from 'react-toastify';
 import { FaRegComment } from 'react-icons/fa';
 import { useAppSelector } from '~/hooks';
-import { isHttpException } from '~/setup/features/auth/auth.types';
+import { useEffect, useState } from 'react';
+import { PostWithReferences } from '~/setup/features/posts/posts.types';
 
 interface PostProps {}
 
@@ -20,6 +22,8 @@ export function Post(props: PostProps) {
 	const navigate = useNavigate();
 	const { id: postId } = state;
 	const { id: userId } = useAppSelector((st) => st.auth.user!);
+	const [likePost] = useLikePostMutation();
+	const [postDetails, setPostDetails] = useState<PostWithReferences | null>(null);
 
 	if (!postId || !userId) {
 		toast.error('Failed to fetch post');
@@ -28,6 +32,52 @@ export function Post(props: PostProps) {
 
 	const { data, isLoading, isError } = useGetPostQuery(postId); // RKT-Query query
 
+	useEffect(() => {
+		if (data) {
+			setPostDetails(data);
+		}
+	}, [data]);
+
+	const handleLike = async () => {
+		try {
+			if (!postDetails) {
+				toast.error('id is invalid');
+				return;
+			}
+
+			let newLikedBy = postDetails.likedBy.includes(userId)
+				? postDetails.likedBy.filter((id) => id !== userId)
+				: [...postDetails.likedBy, userId];
+
+			setPostDetails({
+				...postDetails,
+				likedBy: newLikedBy,
+			});
+
+			const data = await likePost({
+				userId: userId,
+				id: postDetails.id,
+			}).unwrap();
+
+			setPostDetails({
+				...postDetails,
+				...data,
+			});
+		} catch (error) {
+			toast.error(String(error));
+
+			if (postDetails) {
+				let newLikedBy = postDetails.likedBy.filter((id) => id !== userId);
+
+				setPostDetails({
+					...postDetails,
+					likedBy: newLikedBy,
+				});
+			}
+		}
+	};
+
+	// Rendering --------------------------------------------------------------------------------------------------->
 	if (isLoading) {
 		return <PostSkeleton />;
 	}
@@ -49,7 +99,7 @@ export function Post(props: PostProps) {
 				{isLoading ? (
 					<PostSkeleton />
 				) : (
-					<article className="w-full h-full p-4 dark:text-gray-200 overflow-y-auto">
+					<article className="w-full h-full p-4 dark:text-gray-200 overflow-y-auto dark:bg-gray-950">
 						<InlineProfile
 							id={data.authorId}
 							username={data.author.username}
@@ -79,8 +129,8 @@ export function Post(props: PostProps) {
 							<div className="flex items-center gap-x-2">
 								<HeartButton
 									isLiked={data.likedBy.includes(userId)}
-									onClick={() => {}}
-									likes={data.likedBy.length}
+									onClick={handleLike}
+									likes={postDetails ? postDetails.likedBy.length : data.likedBy.length}
 								/>
 							</div>
 							<span className="flex items-center text-lg gap-x-2">
@@ -92,31 +142,31 @@ export function Post(props: PostProps) {
 							{data.title}
 						</p>
 						<hr className="dark:border-gray-800 my-4" />
-						<details>
-							<summary>comment section</summary>
-							<ul className="my-4">
-								{data.comments.length === 0 ? (
-									<li>
-										<span>Be first one to post a comment</span>
-									</li>
-								) : (
-									data.comments.map((details) => (
-										<Comment
-											userId={details.authorId}
-											value={details.value}
-											key={details.id}
-										/>
-									))
-								)}
-							</ul>
-
-							<TextArea
-								label="comment"
-								placeholder="e.g. nice pictures"
-								parentClassName="w-full"
-								className="resize-y"
+						<ul className="my-4">
+							{data.comments.length === 0 ? (
+								<li>
+									<span>Be first one to post a comment</span>
+								</li>
+							) : (
+								data.comments.map((details) => (
+									<Comment
+										userId={details.authorId}
+										value={details.value}
+										key={details.id}
+									/>
+								))
+							)}
+						</ul>
+						<div className="flex w-full">
+							<Textfield
+								parentClassName="flex-grow rounded-r-none"
+								label="Your comment"
+								placeholder="e.g. Nice photos"
 							/>
-						</details>
+							<Button className="rounded-l-none" buttonColor="primary">
+								post
+							</Button>
+						</div>
 					</article>
 				)}
 			</main>
