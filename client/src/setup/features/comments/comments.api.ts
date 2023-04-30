@@ -1,10 +1,10 @@
 import { baseApi } from '../baseApi';
-import { CreateCommentPayload, UpdateCommentPayload } from './comments.types';
+import { CreateCommentPayload, UpdateCommentPayload, Comment } from './comments.types';
 
 const commentsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		// Create comment --------------------------------------------->
-		createComment: builder.mutation<string, CreateCommentPayload>({
+		createComment: builder.mutation<Comment, CreateCommentPayload>({
 			query: (body: CreateCommentPayload) => ({
 				url: '/comments',
 				method: 'POST',

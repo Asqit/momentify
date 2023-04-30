@@ -86,6 +86,7 @@ export const getAllPosts = asyncHandler(async (req: Request, res: Response) => {
 	const posts = await prisma.post.findMany({
 		include: {
 			author: true,
+			comments: true,
 		},
 	});
 
@@ -137,6 +138,7 @@ export const getGlobalFeed = asyncHandler(async (req: Request, res: Response) =>
 		take: 30,
 		include: {
 			author: true,
+			comments: true,
 		},
 	});
 

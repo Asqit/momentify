@@ -14,34 +14,28 @@ export function Comment(props: CommentProps) {
 	if (isLoading) {
 		return (
 			<li>
-				<li className="flex items-center gap-x-2 my-8">
+				<div className="flex items-center gap-x-2 my-8">
 					<figure className="inline-block w-[32px] aspect-square rounded-full bg-gray-200 animate-pulse" />
 					<span
 						className={`inline-block w-[96px] h-[16px] bg-gray-200 animate-pulse rounded-md`}
 					/>
-				</li>
+				</div>
 			</li>
 		);
 	}
 
+	if (!data) {
+		return null;
+	}
+
 	return (
-		<li>
-			<div className="inline-block">
-				<img
-					crossOrigin="anonymous"
-					className={
-						'w-full max-h-[500px] aspect-square object-cover rounded-md cursor-pointer dark:brightness-75'
-					}
-					src={
-						data?.profilePicture
-							? `http://localhost:8080/${data.profilePicture}`
-							: sampleUser
-					}
-					alt=""
-					loading="eager"
-				/>
-			</div>
-			<p>{value}</p>
+		<li className="my-4 flex items-center justify-start flex-wrap gap-x-3 ">
+			<InlineProfile
+				id={data.id}
+				username={data.username}
+				profilePicture={data.profilePicture}
+			/>
+			-<p>{value}</p>
 		</li>
 	);
 }

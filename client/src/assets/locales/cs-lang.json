@@ -2,6 +2,9 @@
 	"native_name": "Čeština",
 	"eng_name": "Czech",
 	"loading": "Pracuji",
+	"theme": "Téma",
+	"language": "Jazyk",
+
 	"form": {
 		"username": "Uživatelské Jméno",
 		"email": "Emailová Adresa",
@@ -36,6 +39,7 @@
 	"lost_section": {
 		"title": "404 Stránka nenalezena",
 		"subtitle": "Ale né...vaše stránka nebyla nalezena",
+		"go_back": "Jdi zpět",
 		"details": "Je nám líto, ale stránka, kterou hledáte, ne-existuje a nebo byla přenusuta, přejmenována a nebo je dočasně nedostupná"
 	},
 	"create_post_section": {

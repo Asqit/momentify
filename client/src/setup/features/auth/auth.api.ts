@@ -33,7 +33,14 @@ export const authApi = baseApi.injectEndpoints({
 				body: credentials,
 			}),
 		}),
+		// Change password query -------------------------------------->
+		RefreshLogin: builder.mutation<LoginResponse, void>({
+			query: () => ({
+				method: 'GET',
+				url: '/auth/refresh',
+			}),
+		}),
 	}),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useRefreshLoginMutation } = authApi;

@@ -12,8 +12,9 @@ import { useGetPostQuery, useLikePostMutation } from '~/setup/features/posts/pos
 import { toast } from 'react-toastify';
 import { FaRegComment } from 'react-icons/fa';
 import { useAppSelector } from '~/hooks';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { PostWithReferences } from '~/setup/features/posts/posts.types';
+import { useCreateCommentMutation } from '~/setup/features/comments/comments.api';
 
 interface PostProps {}
 
@@ -23,14 +24,16 @@ export function Post(props: PostProps) {
 	const { id: postId } = state;
 	const { id: userId } = useAppSelector((st) => st.auth.user!);
 	const [likePost] = useLikePostMutation();
+	const [postComment] = useCreateCommentMutation();
 	const [postDetails, setPostDetails] = useState<PostWithReferences | null>(null);
+	const [commentValue, setCommentValue] = useState<string>('');
 
 	if (!postId || !userId) {
 		toast.error('Failed to fetch post');
-		return navigate('..');
+		navigate('..');
 	}
 
-	const { data, isLoading, isError } = useGetPostQuery(postId); // RKT-Query query
+	const { data, isLoading, isError } = useGetPostQuery(postId!); // RKT-Query query
 
 	useEffect(() => {
 		if (data) {
@@ -74,6 +77,33 @@ export function Post(props: PostProps) {
 					likedBy: newLikedBy,
 				});
 			}
+		}
+	};
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		try {
+			if (!data) {
+				return;
+			}
+
+			if (!postDetails) {
+				setPostDetails(data);
+			}
+
+			const comment = await postComment({
+				postId: postId!,
+				authorId: userId,
+				value: commentValue,
+			}).unwrap();
+
+			setPostDetails({
+				...postDetails!,
+				comments: [...postDetails!.comments, comment],
+			});
+		} catch (error) {
+			toast.error('Failed to post a comment');
 		}
 	};
 
@@ -143,30 +173,38 @@ export function Post(props: PostProps) {
 						</p>
 						<hr className="dark:border-gray-800 my-4" />
 						<ul className="my-4">
-							{data.comments.length === 0 ? (
-								<li>
-									<span>Be first one to post a comment</span>
-								</li>
-							) : (
-								data.comments.map((details) => (
-									<Comment
-										userId={details.authorId}
-										value={details.value}
-										key={details.id}
-									/>
-								))
-							)}
+							{postDetails ? (
+								postDetails.comments.length === 0 ? (
+									<li className="my-4">
+										<span>Be first one to post a comment</span>
+									</li>
+								) : (
+									postDetails.comments.map((details) => (
+										<Comment
+											userId={details.authorId}
+											value={details.value}
+											key={details.id}
+										/>
+									))
+								)
+							) : null}
 						</ul>
-						<div className="flex w-full">
+						<form className="flex w-full" onSubmit={handleSubmit}>
 							<Textfield
 								parentClassName="flex-grow rounded-r-none"
 								label="Your comment"
 								placeholder="e.g. Nice photos"
+								onChange={(e) => setCommentValue(e.currentTarget.value)}
 							/>
-							<Button className="rounded-l-none" buttonColor="primary">
+							<Button
+								disabled={!commentValue}
+								className="rounded-l-none"
+								type="submit"
+								buttonColor="primary"
+							>
 								post
 							</Button>
-						</div>
+						</form>
 					</article>
 				)}
 			</main>

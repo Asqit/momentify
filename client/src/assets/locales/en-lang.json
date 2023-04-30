@@ -2,6 +2,9 @@
 	"native_name": "English",
 	"eng_name": "Angličtina",
 	"loading": "Working",
+	"theme": "Theme",
+	"language": "Language",
+
 	"form": {
 		"username": "Username",
 		"email": "Email Address",
@@ -34,6 +37,7 @@
 	},
 	"lost_section": {
 		"title": "404 Page not found",
+		"go_back": "Go back",
 		"subtitle": "Oh no...the page you are looking for was not found",
 		"details": "We are sorry, but the page you are looking for does not exist or has been moved, renamed or is temporarily unavailable"
 	},

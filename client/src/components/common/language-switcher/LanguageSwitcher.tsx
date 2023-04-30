@@ -6,8 +6,6 @@ const langs = [
 	{ emoji: '🇨🇿', id: 1, shortCut: 'cz', name: 'Čeština' },
 ];
 
-// TODO: change onClick to onChange
-// TODO: Fix emoji inside of option
 export function LanguageSwitcher() {
 	const { i18n } = useTranslation();
 
@@ -17,11 +15,11 @@ export function LanguageSwitcher() {
 				return (
 					<option
 						key={lang.id}
-						className="disabled:opacity-50"
+						className="disabled:opacity-50 disabled:hidden"
 						disabled={i18n.resolvedLanguage === lang.shortCut}
 						onClick={() => i18n.changeLanguage(lang.shortCut)}
 					>
-						{lang.name}
+						<Emoji symbol={lang.emoji} label={lang.name} />
 					</option>
 				);
 			})}

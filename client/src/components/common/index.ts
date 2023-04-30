@@ -5,6 +5,7 @@
 // they are not bounded to any specific section
 // =============================================
 export * from './language-switcher/LanguageSwitcher';
+export * from './toggle-switch/ToggleSwitch';
 export * from './drag-and-drop/DragAndDrop';
 export * from './lazy-image/LazyImage';
 export * from './hamburger/Hamburger';

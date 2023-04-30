@@ -39,7 +39,15 @@ const authSlice = createSlice({
 			.addMatcher(api.endpoints.changePassword.matchFulfilled, (state, action) => {
 				state.accessToken = '';
 				state.user = null;
-			});
+			})
+			// Login via refresh token -------->
+			.addMatcher(
+				api.endpoints.RefreshLogin.matchFulfilled,
+				(state, action: PayloadAction<LoginResponse>) => {
+					state.accessToken = action.payload.accessToken;
+					state.user = action.payload.user;
+				},
+			);
 	},
 });
 

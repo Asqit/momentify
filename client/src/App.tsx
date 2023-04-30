@@ -9,25 +9,24 @@ import {
 	Post,
 	CreatePost,
 	Home,
+	Settings,
 } from '~/views';
 import { ToastContainer } from 'react-toastify';
 import { ProtectedRoute } from './components';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
+import { useDarkMode } from 'usehooks-ts';
 
 export default function App() {
-	useEffect(() => {
-		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-		const isDarkTheme = localStorage.getItem('momentify/theme')
-			? JSON.parse(localStorage.getItem('momentify/theme')!).theme === 'dark'
-			: false;
+	const { isDarkMode } = useDarkMode();
 
-		if (isDarkTheme || prefersDark) {
+	useEffect(() => {
+		if (isDarkMode) {
 			document.documentElement.classList.add('dark');
 		} else {
 			document.documentElement.classList.remove('dark');
 		}
-	}, []);
+	}, [isDarkMode]);
 
 	return (
 		<>
@@ -38,6 +37,7 @@ export default function App() {
 						<Route path="account/:id" element={<Account />} />
 						<Route path="post/:id" element={<Post />} />
 						<Route path="post/create" element={<CreatePost />} />
+						<Route path="settings" element={<Settings />} />
 						<Route path="*" element={<Lost />} />
 					</Route>
 				</Route>

@@ -15,10 +15,10 @@ export type Post = {
 	authorId: string;
 	body: string[];
 	createdAt: Date;
+	comments: Comment[];
 };
 
 /** Structure of a singular post, that has all references */
 export type PostWithReferences = Post & {
 	author: User;
-	comments: Comment[];
 };

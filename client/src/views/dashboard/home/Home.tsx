@@ -10,14 +10,13 @@ export function Home() {
 				{isLoading ? [...Array(10).keys()].map((i) => <MiniPostSkeleton key={i} />) : null}
 				{data
 					? data.map((post) => (
-							<div className="max-w-sm">
+							<div className="max-w-sm" key={post.id}>
 								<MiniPost
 									title={post.title!}
 									likedBy={post.likedBy!}
 									author={post.author!}
 									body={post.body!}
 									createdAt={post.createdAt!}
-									key={post.id}
 									id={post.id!}
 								/>
 							</div>

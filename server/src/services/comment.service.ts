@@ -13,7 +13,7 @@ export const createComment = asyncHandler(async (req: Request, res: Response) =>
 	});
 
 	res.status(201).json({
-		results: comment,
+		...comment,
 	});
 });
 
