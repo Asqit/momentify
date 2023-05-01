@@ -52,6 +52,15 @@
 		"missing_title": "Chybný titulek",
 		"missing_files": "Chybý obrázky"
 	},
+	"settings_section": {
+		"title": "Nastavení",
+		"language": "Jazyk",
+		"theme": "Temné Téma",
+		"password": "Změna Hesla",
+		"verify_email": "Ověření Emailové Adresy",
+		"danger_zone": "Nebezpečná zóna",
+		"delete_account": "Smazat účet"
+	},
 	"auth_nav": {
 		"home": "Domů",
 		"login": "Přihlášení",

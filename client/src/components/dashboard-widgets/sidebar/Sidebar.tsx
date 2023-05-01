@@ -13,6 +13,7 @@ import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/hooks';
 import { logout as logoutAction } from '~/setup/features/auth/auth.slice';
 import { FC, useState } from 'react';
+import { useGetUserQuery } from '~/setup/features/users/users.api';
 
 export type SidebarLinkProps = {
 	Icon: FC;
@@ -53,7 +54,18 @@ const SidebarLink = (props: SidebarLinkProps) => {
 
 export function Sidebar() {
 	const { t } = useTranslation();
-	const user = useAppSelector((st) => st.auth.user!);
+	const { user } = useAppSelector((st) => st.auth);
+
+	if (!user) {
+		return;
+	}
+
+	const { data } = useGetUserQuery(user.id);
+
+	if (!data) {
+		return <p>no data</p>;
+	}
+
 	const dispatch = useAppDispatch();
 
 	const logout = () => {
@@ -68,7 +80,7 @@ export function Sidebar() {
 						<Brand />
 					</div>
 					<div className="my-4 mt-8">
-						<MiniProfile {...user} />
+						<MiniProfile {...data} />
 					</div>
 				</header>
 				<nav className="flex-grow">

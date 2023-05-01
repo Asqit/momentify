@@ -10,16 +10,19 @@ export function LanguageSwitcher() {
 	const { i18n } = useTranslation();
 
 	return (
-		<select className="inline-flex items-center justify-center gap-x-2 bg-transparent">
+		<select
+			className="inline-flex items-center justify-center gap-x-2 bg-transparent"
+			defaultValue={'cz'}
+		>
 			{langs.map((lang) => {
 				return (
 					<option
 						key={lang.id}
-						className="disabled:opacity-50 disabled:hidden"
+						className="disabled:opacity-50"
 						disabled={i18n.resolvedLanguage === lang.shortCut}
 						onClick={() => i18n.changeLanguage(lang.shortCut)}
 					>
-						<Emoji symbol={lang.emoji} label={lang.name} />
+						{lang.name}
 					</option>
 				);
 			})}

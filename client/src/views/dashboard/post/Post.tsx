@@ -8,12 +8,15 @@ import {
 	Button,
 	Textfield,
 } from '~/components';
-import { useGetPostQuery, useLikePostMutation } from '~/setup/features/posts/posts.api';
+import {
+	useDeletePostMutation,
+	useGetPostQuery,
+	useLikePostMutation,
+} from '~/setup/features/posts/posts.api';
 import { toast } from 'react-toastify';
 import { FaRegComment } from 'react-icons/fa';
 import { useAppSelector } from '~/hooks';
-import { FormEvent, useEffect, useState } from 'react';
-import { PostWithReferences } from '~/setup/features/posts/posts.types';
+import { FormEvent, ReactNode, useState } from 'react';
 import { useCreateCommentMutation } from '~/setup/features/comments/comments.api';
 
 interface PostProps {}
@@ -25,7 +28,7 @@ export function Post(props: PostProps) {
 	const { id: userId } = useAppSelector((st) => st.auth.user!);
 	const [likePost] = useLikePostMutation();
 	const [postComment] = useCreateCommentMutation();
-	const [postDetails, setPostDetails] = useState<PostWithReferences | null>(null);
+	const [deletePost] = useDeletePostMutation();
 	const [commentValue, setCommentValue] = useState<string>('');
 
 	if (!postId || !userId) {
@@ -33,77 +36,48 @@ export function Post(props: PostProps) {
 		navigate('..');
 	}
 
-	const { data, isLoading, isError } = useGetPostQuery(postId!); // RKT-Query query
-
-	useEffect(() => {
-		if (data) {
-			setPostDetails(data);
-		}
-	}, [data]);
+	const { data, isLoading, isError } = useGetPostQuery(postId!);
 
 	const handleLike = async () => {
 		try {
-			if (!postDetails) {
-				toast.error('id is invalid');
+			if (!data) {
 				return;
 			}
 
-			let newLikedBy = postDetails.likedBy.includes(userId)
-				? postDetails.likedBy.filter((id) => id !== userId)
-				: [...postDetails.likedBy, userId];
-
-			setPostDetails({
-				...postDetails,
-				likedBy: newLikedBy,
-			});
-
-			const data = await likePost({
+			await likePost({
 				userId: userId,
-				id: postDetails.id,
+				id: data?.id,
 			}).unwrap();
-
-			setPostDetails({
-				...postDetails,
-				...data,
-			});
 		} catch (error) {
 			toast.error(String(error));
-
-			if (postDetails) {
-				let newLikedBy = postDetails.likedBy.filter((id) => id !== userId);
-
-				setPostDetails({
-					...postDetails,
-					likedBy: newLikedBy,
-				});
-			}
 		}
 	};
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		e.currentTarget.reset();
 
 		try {
 			if (!data) {
 				return;
 			}
 
-			if (!postDetails) {
-				setPostDetails(data);
-			}
-
-			const comment = await postComment({
+			await postComment({
 				postId: postId!,
 				authorId: userId,
 				value: commentValue,
 			}).unwrap();
-
-			setPostDetails({
-				...postDetails!,
-				comments: [...postDetails!.comments, comment],
-			});
 		} catch (error) {
 			toast.error('Failed to post a comment');
+		}
+	};
+
+	const handleDeletePost = async () => {
+		try {
+			await deletePost(postId!).unwrap();
+			toast.info('Post has been successfully deleted');
+		} catch (error) {
+			toast.error('Failed to delete post');
 		}
 	};
 
@@ -130,11 +104,24 @@ export function Post(props: PostProps) {
 					<PostSkeleton />
 				) : (
 					<article className="w-full h-full p-4 dark:text-gray-200 overflow-y-auto dark:bg-gray-950">
-						<InlineProfile
-							id={data.authorId}
-							username={data.author.username}
-							profilePicture={data?.author.profilePicture}
-						/>
+						<div className="flex justify-between">
+							<InlineProfile
+								id={data.authorId}
+								username={data.author.username}
+								profilePicture={data?.author.profilePicture}
+							/>
+							{data.authorId === userId ? (
+								<DotMenu>
+									<ul className="w-[120px] flex flex-col gap-2">
+										<li>
+											<Button buttonColor="danger" onClick={handleDeletePost}>
+												delete post
+											</Button>
+										</li>
+									</ul>
+								</DotMenu>
+							) : null}
+						</div>
 						<figure className="my-4">
 							{data.body.length === 1 ? (
 								<img
@@ -149,9 +136,6 @@ export function Post(props: PostProps) {
 							) : (
 								<Slideshow
 									images={data.body.map((filename) => `http://localhost:8080/${filename}`)}
-									onClickCallback={function (): void {
-										throw new Error('Function not implemented.');
-									}}
 								/>
 							)}
 						</figure>
@@ -160,54 +144,101 @@ export function Post(props: PostProps) {
 								<HeartButton
 									isLiked={data.likedBy.includes(userId)}
 									onClick={handleLike}
-									likes={postDetails ? postDetails.likedBy.length : data.likedBy.length}
+									likes={data.likedBy.length}
 								/>
 							</div>
-							<span className="flex items-center text-lg gap-x-2">
-								<FaRegComment /> {data.comments.length}
-							</span>
+							<a href="#comment">
+								<span className="flex items-center text-lg gap-x-2">
+									<FaRegComment /> {data.comments.length}
+								</span>
+							</a>
 						</div>
 						<p>
 							<span className="font-bold capitalize">{data.author.username}: </span>
 							{data.title}
 						</p>
-						<hr className="dark:border-gray-800 my-4" />
-						<ul className="my-4">
-							{postDetails ? (
-								postDetails.comments.length === 0 ? (
+						<details>
+							<summary>view more</summary>
+							<hr className="dark:border-gray-800 my-4" />
+							<ul className="my-4">
+								{data.comments.length === 0 ? (
 									<li className="my-4">
 										<span>Be first one to post a comment</span>
 									</li>
 								) : (
-									postDetails.comments.map((details) => (
+									data.comments.map((details) => (
 										<Comment
 											userId={details.authorId}
 											value={details.value}
 											key={details.id}
 										/>
 									))
-								)
-							) : null}
-						</ul>
-						<form className="flex w-full" onSubmit={handleSubmit}>
-							<Textfield
-								parentClassName="flex-grow rounded-r-none"
-								label="Your comment"
-								placeholder="e.g. Nice photos"
-								onChange={(e) => setCommentValue(e.currentTarget.value)}
-							/>
-							<Button
-								disabled={!commentValue}
-								className="rounded-l-none"
-								type="submit"
-								buttonColor="primary"
-							>
-								post
-							</Button>
-						</form>
+								)}
+							</ul>
+							<form className="flex w-full" onSubmit={handleSubmit}>
+								<Textfield
+									id="comment"
+									parentClassName="flex-grow rounded-r-none"
+									label="Your comment"
+									placeholder="e.g. Nice photos"
+									value={commentValue}
+									onChange={(e) => setCommentValue(e.currentTarget.value)}
+								/>
+								<Button
+									disabled={!commentValue}
+									className="rounded-l-none"
+									type="submit"
+									buttonColor="primary"
+								>
+									post
+								</Button>
+							</form>
+						</details>
 					</article>
 				)}
 			</main>
 		</section>
+	);
+}
+
+interface DotMenuProps {
+	isOpen?: boolean;
+	children: ReactNode;
+}
+
+function DotMenu(props: DotMenuProps) {
+	const { isOpen, children } = props;
+	const [isActive, setIsActive] = useState<boolean>(isOpen ?? false);
+
+	return (
+		<div className="relative">
+			<button
+				className={`group ${!isActive ? 'hover:animate-pulse' : 'hover:animate-none'}`}
+				onClick={() => setIsActive((prev) => !prev)}
+			>
+				<div
+					className={`inline-block transition-all w-[8px] h-[8px] ${
+						isActive ? 'mx-0' : 'mx-[2px]'
+					} rounded-full bg-sky-500`}
+				/>
+				<div
+					className={`inline-block transition-all w-[8px] h-[8px] ${
+						isActive ? 'mx-0' : 'mx-[2px]'
+					} rounded-full bg-sky-500`}
+				/>
+				<div
+					className={`inline-block transition-all w-[8px] h-[8px] ${
+						isActive ? 'mx-0' : 'mx-[2px]'
+					} rounded-full bg-sky-500`}
+				/>
+			</button>
+			<div
+				className={`${
+					isActive ? 'block' : 'hidden'
+				} animate-ping-once absolute top-full right-0 z-20 w-fit h-fit p-2 rounded-md shadow-md bg-white dark:bg-gray-800`}
+			>
+				{children}
+			</div>
+		</div>
 	);
 }

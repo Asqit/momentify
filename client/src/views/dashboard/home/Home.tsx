@@ -17,6 +17,7 @@ export function Home() {
 									author={post.author!}
 									body={post.body!}
 									createdAt={post.createdAt!}
+									comments={post.comments!}
 									id={post.id!}
 								/>
 							</div>

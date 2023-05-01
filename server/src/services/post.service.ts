@@ -171,30 +171,31 @@ export const getAuthorPosts = asyncHandler(async (req: Request, res: Response) =
 export const deletePost = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
 
-	// Remove post alone
-	const post = await prisma.post.delete({
-		where: {
-			id,
-		},
-	});
+	const post = await prisma.post.findUnique({ where: { id } });
 
-	// Remove post's images (body)
-	post.body.forEach((imageUrl: string) => {
-		unlink(`public/${imageUrl}`, (err) => {
-			if (err) {
-				throw new HttpException(500, "Cannot delete post's image");
-			}
+	if (!post) {
+		throw new HttpException(404, 'Not found');
+	}
+
+	try {
+		const deleteComments = prisma.comment.deleteMany({ where: { postId: id } });
+		const deletePost = prisma.post.delete({ where: { id } });
+
+		await prisma.$transaction([deleteComments, deletePost]);
+
+		post.body.forEach((imageUrl: string) => {
+			unlink(`public/${imageUrl}`, (err) => {
+				if (err) {
+					throw new HttpException(500, "Cannot delete post's image");
+				}
+			});
 		});
-	});
 
-	// Remove all comments
-	await prisma.comment.deleteMany({
-		where: {
-			postId: post.id,
-		},
-	});
-
-	res.status(200).json(post.id);
+		res.status(200).json(post.id);
+	} catch (error) {
+		// TODO: Find more accurate exception to throw
+		throw new HttpException(500, 'Server failed');
+	}
 });
 
 // ------------------------------------------------------------------------------------> [PUT] /like/:id/:authorId

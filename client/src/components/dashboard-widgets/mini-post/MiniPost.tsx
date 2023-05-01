@@ -6,6 +6,7 @@ import { useLikePostMutation } from '~/setup/features/posts/posts.api';
 import { toast } from 'react-toastify';
 import { useMemo, useState } from 'react';
 import { useAppSelector } from '~/hooks';
+import { Comment } from '~/setup/features/comments/comments.types';
 
 interface MiniPostProps {
 	title: string;
@@ -14,6 +15,7 @@ interface MiniPostProps {
 	body: string[] | string;
 	createdAt: Date;
 	id: string;
+	comments: Comment[];
 	onClickCallback?: () => void;
 }
 
@@ -31,15 +33,6 @@ export function MiniPost(props: MiniPostProps) {
 				return;
 			}
 
-			let newLikedBy = details.likedBy.includes(userId)
-				? details.likedBy.filter((id) => id !== userId)
-				: [...details.likedBy, userId];
-
-			setDetails({
-				...details,
-				likedBy: newLikedBy,
-			});
-
 			const data = await likePost({
 				userId: userId,
 				id: details.id,
@@ -51,13 +44,6 @@ export function MiniPost(props: MiniPostProps) {
 			});
 		} catch (error) {
 			toast.error(String(error));
-
-			let newLikedBy = details.likedBy.filter((id) => id !== userId);
-
-			setDetails({
-				...details,
-				likedBy: newLikedBy,
-			});
 		}
 	};
 
@@ -95,7 +81,7 @@ export function MiniPost(props: MiniPostProps) {
 						isLiked={details.likedBy.includes(userId)}
 					/>
 					<span className="flex items-center text-lg gap-x-2">
-						<FaRegComment /> <span>{0}</span>
+						<FaRegComment /> <span>{details.comments.length}</span>
 					</span>
 				</div>
 			</div>

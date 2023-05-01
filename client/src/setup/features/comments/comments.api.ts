@@ -5,6 +5,7 @@ const commentsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		// Create comment --------------------------------------------->
 		createComment: builder.mutation<Comment, CreateCommentPayload>({
+			invalidatesTags: ['Comments', 'Posts'],
 			query: (body: CreateCommentPayload) => ({
 				url: '/comments',
 				method: 'POST',
@@ -13,6 +14,7 @@ const commentsApi = baseApi.injectEndpoints({
 		}),
 		// Get post comments ------------------------------------------->
 		getPostComments: builder.query<Comment[], string>({
+			providesTags: ['Comments'],
 			query: (id) => ({
 				url: `/comments/post/${id}`,
 				method: 'GET',
@@ -20,6 +22,7 @@ const commentsApi = baseApi.injectEndpoints({
 		}),
 		// Delete comment ----------------------------------------------->
 		deleteComment: builder.mutation<string, string>({
+			invalidatesTags: ['Comments', 'Posts'],
 			query: (id) => ({
 				method: 'DELETE',
 				url: `/comments/${id}`,
@@ -27,6 +30,7 @@ const commentsApi = baseApi.injectEndpoints({
 		}),
 		// Update comment ----------------------------------------------->
 		updateComment: builder.mutation<Comment, UpdateCommentPayload>({
+			invalidatesTags: ['Comments', 'Posts'],
 			query: (body) => ({
 				method: 'PUT',
 				url: 'comments',

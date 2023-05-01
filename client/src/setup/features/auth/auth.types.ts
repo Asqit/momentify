@@ -12,6 +12,7 @@ export type User = {
 	verified: boolean;
 	followersIds: string[];
 	followingIds: string[];
+	posts: Post[];
 };
 
 /**
@@ -20,7 +21,6 @@ export type User = {
 export type UserWithReferences = User & {
 	followers: User[];
 	following: User[];
-	posts: Post[];
 };
 
 export interface ChangePasswordBody {

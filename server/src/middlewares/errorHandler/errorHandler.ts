@@ -13,7 +13,7 @@ function errorHandler(
 		err instanceof HttpException
 			? err.statusCode
 			: res.statusCode == 200
-			? 400
+			? 500
 			: res.statusCode;
 	const response = {
 		message: err.message,

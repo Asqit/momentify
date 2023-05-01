@@ -7,15 +7,7 @@ import { toast } from 'react-toastify';
 import { useAppDispatch } from '~/hooks';
 import { updateUser } from '~/setup/features/auth/auth.slice';
 
-type MiniProfileProps = {
-	id: string;
-	username: string;
-	email: string;
-	posts: Post[];
-	followingIds: string[];
-	followersIds: string[];
-	profilePicture?: string;
-};
+type MiniProfileProps = {} & User;
 
 /** This is a simple view of User account, it's not including posts, just User photo, amount of: followers, following and posts */
 export function MiniProfile(props: MiniProfileProps) {

@@ -4,7 +4,7 @@ import { LazyImage } from '../lazy-image/LazyImage';
 
 type SlideshowProps = {
 	images: string[];
-	onClickCallback: () => void;
+	onClickCallback?: () => void;
 };
 
 export function Slideshow(props: SlideshowProps) {
@@ -28,7 +28,9 @@ export function Slideshow(props: SlideshowProps) {
 			<div
 				className={`whitespace-nowrap transition-all duration-1000 cursor-pointer `}
 				style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
-				onClick={onClickCallback}
+				onClick={() => {
+					onClickCallback && onClickCallback();
+				}}
 			>
 				{images.map((filename) => {
 					return (

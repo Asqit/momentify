@@ -5,6 +5,7 @@ export const postsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		// get all posts --------------------------------------------------->
 		getGlobalFeed: builder.query<Partial<PostWithReferences>[], void>({
+			providesTags: ['Posts'],
 			query: () => ({
 				url: `/posts/`,
 				method: 'GET',
@@ -12,13 +13,14 @@ export const postsApi = baseApi.injectEndpoints({
 		}),
 		// Create post mutation -------------------------------------------->
 		createPost: builder.mutation<void, FormData>({
+			invalidatesTags: ['Posts', 'Users'],
 			query: (body: FormData) => ({
 				url: '/posts',
 				method: 'POST',
 				headers: {
 					// Let RTK-Query generate the content type.
 					// If we define it as "multipart/form-data" it fails
-					// And even if we manually set the boundary it fails
+					// And it also fails if we manually set boundary
 					'Content-Type': undefined,
 				},
 				body,
@@ -26,6 +28,7 @@ export const postsApi = baseApi.injectEndpoints({
 		}),
 		// Get post ------------------------------------------------------->
 		getPost: builder.query<PostWithReferences, string>({
+			providesTags: ['Posts'],
 			query: (id: string) => ({
 				url: `/posts/${id}`,
 				method: 'GET',
@@ -33,6 +36,7 @@ export const postsApi = baseApi.injectEndpoints({
 		}),
 		// Like post mutation --------------------------------------------->
 		likePost: builder.mutation<Post, { id: string; userId: string }>({
+			invalidatesTags: ['Posts'],
 			query: ({ id, userId }) => ({
 				url: `/posts/${id}/like/${userId}`,
 				method: 'PUT',
@@ -40,6 +44,7 @@ export const postsApi = baseApi.injectEndpoints({
 		}),
 		// Delete post mutation -------------------------------------------->
 		deletePost: builder.mutation<void, string>({
+			invalidatesTags: ['Posts', 'Comments', 'Users'],
 			query: (id) => ({
 				url: `/posts/${id}`,
 				method: 'DELETE',
@@ -53,6 +58,5 @@ export const {
 	useDeletePostMutation,
 	useLikePostMutation,
 	useCreatePostMutation,
-	// This Query will fetch every post available, including post author. (That's why it's partial, because comments are missing)
 	useGetGlobalFeedQuery,
 } = postsApi;

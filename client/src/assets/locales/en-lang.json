@@ -51,6 +51,15 @@
 		"missing_title": "Missing post title",
 		"missing_files": "Missing post pictures"
 	},
+	"settings_section": {
+		"title": "Settings",
+		"language": "Language",
+		"theme": "Dark Theme",
+		"password": "Change password",
+		"verify_email": "Verify Email",
+		"danger_zone": "Danger Zone",
+		"delete_account": "Delete Account"
+	},
 	"auth_nav": {
 		"home": "Home",
 		"login": "Log In",
