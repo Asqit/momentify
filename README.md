@@ -1,6 +1,8 @@
 # Momentify
 
-Momentify is my social-application project made with: `React`, `TypeScript`, `Tailwind CSS`, `i18Next`, `Redux-Toolkit`, `Prisma`, `Express.js`, `Node.js`, `JWT`. In applications, users should be able to: Create posts, like & comment posts, follow/unfollow other users.
+Momentify is a platform for sharing your moments with other people. User can: create / update / delete posts, create comments, follow / un-follow other users. 
+
+The application tech stack consists of: `react`, `Tailwind CSS`, `typescript`, `RTK`, `i18next`, `Joi, Yup, Formik`, `PrismaORM`, `Express.js`, `MongoDB`
 
 ![about](about.png)
 
@@ -22,21 +24,3 @@ Momentify is my social-application project made with: `React`, `TypeScript`, `Ta
 4. build - transpile all `TypeScript` sources into vanilla `JavaScript`
 </details>
 
-## TODO
-
-<details>
-
-### Client-side
-
-1. Add a way to use the app with valid refresh token without the need to re-login every page load
-2. Finish locales
-3. Create a post modal-box
-4. Feed & Explore grid of random-sized pictures (unsplash.com grid for <--x--> and each x col is made out of flex )
-5. dark mode
-
-### Server-side
-
-1. Add client-side serving
-2. Find a less expensive way of converting images to `.webp`
-
-</details>
