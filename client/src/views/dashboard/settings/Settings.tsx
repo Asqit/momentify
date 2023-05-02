@@ -26,13 +26,15 @@ export function Settings() {
 						<></>
 					</ListOption>
 				</ul>
-				<div className="border border-red-500 dark:border-red-700 rounded-md p-2">
+				<div className="border-2 border-red-500 dark:border-red-700 rounded-md p-2">
 					<h3 className="font-bold text-lg md:text-xl">
 						{t('settings_section.danger_zone')}
 					</h3>
 					<ul>
 						<ListOption label={t('settings_section.delete_account')}>
-							<Button buttonColor="danger">{t('settings_section.delete_account')}</Button>
+							<Button buttonColor="danger" className="hover:animate-shake">
+								{t('settings_section.delete_account')}
+							</Button>
 						</ListOption>
 					</ul>
 				</div>

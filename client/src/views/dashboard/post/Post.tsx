@@ -15,8 +15,8 @@ import {
 } from '~/setup/features/posts/posts.api';
 import { toast } from 'react-toastify';
 import { FaRegComment } from 'react-icons/fa';
-import { useAppSelector } from '~/hooks';
-import { FormEvent, ReactNode, useState } from 'react';
+import { useAppSelector, useGetRelativeTime } from '~/hooks';
+import { FormEvent, ReactNode, useState, useEffect } from 'react';
 import { useCreateCommentMutation } from '~/setup/features/comments/comments.api';
 
 interface PostProps {}
@@ -76,6 +76,7 @@ export function Post(props: PostProps) {
 		try {
 			await deletePost(postId!).unwrap();
 			toast.info('Post has been successfully deleted');
+			navigate('..');
 		} catch (error) {
 			toast.error('Failed to delete post');
 		}
@@ -114,7 +115,11 @@ export function Post(props: PostProps) {
 								<DotMenu>
 									<ul className="w-[120px] flex flex-col gap-2">
 										<li>
-											<Button buttonColor="danger" onClick={handleDeletePost}>
+											<Button
+												buttonColor="danger"
+												className="hover:animate-shake-once p-1 w-full"
+												onClick={handleDeletePost}
+											>
 												delete post
 											</Button>
 										</li>
@@ -127,7 +132,7 @@ export function Post(props: PostProps) {
 								<img
 									crossOrigin="anonymous"
 									className={
-										'w-full max-h-[500px] aspect-square object-cover rounded-md dark:brightness-75'
+										'h-full aspect-square object-cover rounded-md dark:brightness-75'
 									}
 									src={`http://localhost:8080/${data.body[0]}`}
 									alt=""
@@ -139,19 +144,22 @@ export function Post(props: PostProps) {
 								/>
 							)}
 						</figure>
-						<div className="flex gap-x-3 my-4">
-							<div className="flex items-center gap-x-2">
-								<HeartButton
-									isLiked={data.likedBy.includes(userId)}
-									onClick={handleLike}
-									likes={data.likedBy.length}
-								/>
+						<div className="flex justify-between items-center my-4">
+							<div className="flex gap-x-3">
+								<div className="flex items-center gap-x-2">
+									<HeartButton
+										isLiked={data.likedBy.includes(userId)}
+										onClick={handleLike}
+										likes={data.likedBy.length}
+									/>
+								</div>
+								<a href="#comment">
+									<span className="flex items-center text-lg gap-x-2">
+										<FaRegComment /> {data.comments.length}
+									</span>
+								</a>
 							</div>
-							<a href="#comment">
-								<span className="flex items-center text-lg gap-x-2">
-									<FaRegComment /> {data.comments.length}
-								</span>
-							</a>
+							{useGetRelativeTime(Date.now(), new Date(data.createdAt).getTime())}
 						</div>
 						<p>
 							<span className="font-bold capitalize">{data.author.username}: </span>
@@ -166,13 +174,7 @@ export function Post(props: PostProps) {
 										<span>Be first one to post a comment</span>
 									</li>
 								) : (
-									data.comments.map((details) => (
-										<Comment
-											userId={details.authorId}
-											value={details.value}
-											key={details.id}
-										/>
-									))
+									data.comments.map((details) => <Comment {...details} />)
 								)}
 							</ul>
 							<form className="flex w-full" onSubmit={handleSubmit}>

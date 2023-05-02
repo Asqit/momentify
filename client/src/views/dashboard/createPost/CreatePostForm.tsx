@@ -5,6 +5,7 @@ import { Button, DragAndDrop, Slideshow, Spinner, Textfield } from '~/components
 import { useCreatePostMutation } from '~/setup/features/posts/posts.api';
 import { useAppDispatch, useAppSelector } from '~/hooks';
 import { logout } from '~/setup/features/auth/auth.slice';
+import { useNavigate } from 'react-router-dom';
 
 export function CreatePostForm() {
 	const [files, setFiles] = useState<FileList | null>(null);
@@ -14,6 +15,7 @@ export function CreatePostForm() {
 	const { user } = useAppSelector((state) => state.auth);
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 
 	const handlePostCreation = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -44,7 +46,11 @@ export function CreatePostForm() {
 			formData.append('title', title);
 			formData.append('authorId', user.id);
 
-			await createPost(formData).unwrap();
+			const postId = await createPost(formData).unwrap();
+
+			toast.info('Post has been created');
+
+			navigate(`/post/${postId}`);
 		} catch (error) {
 			toast.error('Failed to create post');
 		}

@@ -7,6 +7,14 @@ export function Account() {
 	const { id } = useParams();
 	const { data: user, isLoading } = useGetUserQuery(id!);
 
+	if (!user) {
+		return (
+			<section className="w-full h-full flex flex-col gap-1">
+				<h1>Account could not be loaded</h1>
+			</section>
+		);
+	}
+
 	return (
 		<section className="w-full h-full">
 			{isLoading ? (
@@ -14,22 +22,36 @@ export function Account() {
 			) : (
 				<div className="px-4">
 					<div className="py-8">
-						<ProfileDetails {...user} />
+						<ProfileDetails
+							username={user.username}
+							email={user.email}
+							id={user.id}
+							profilePicture={user.profilePicture}
+							posts={user.posts}
+							followersIds={user.followersIds}
+							followingIds={user.followingIds}
+						/>
 					</div>
 					<hr className="dark:border-gray-800" />
-					<div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 justify-center">
+					<div
+						className={
+							'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-4 gap-4'
+						}
+					>
 						{user && user.posts && user.posts.length > 0
 							? user.posts.map((post: Post) => {
 									return (
-										<MiniPost
-											title={post.title}
-											author={user}
-											body={post.body}
-											likedBy={post.likedBy}
-											createdAt={post.createdAt}
-											key={post.id}
-											id={post.id}
-										/>
+										<div className="w-full md:max-w-sm" key={post.id}>
+											<MiniPost
+												title={post.title!}
+												likedBy={post.likedBy!}
+												author={user}
+												body={post.body!}
+												createdAt={post.createdAt!}
+												comments={post.comments!}
+												id={post.id!}
+											/>
+										</div>
 									);
 							  })
 							: null}

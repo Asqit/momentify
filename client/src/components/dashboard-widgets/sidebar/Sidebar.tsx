@@ -32,12 +32,8 @@ const SidebarLink = (props: SidebarLinkProps) => {
 				to={to}
 				state={state ? state : null}
 				className={({ isActive, isPending }) => {
-					if (!isPending) {
-						setIsActive(isActive);
-					}
-
 					return `group relative  flex my-4 items-center gap-x-4 text-lg font-medium transition-all hover:gap-x-3 cursor-pointer hover:text-sky-500 ${
-						isActive ? 'text-sky-500 gap-x-3' : 'text-gray-700'
+						isActive ? 'text-sky-500 gap-x-3 pointer-events-none' : 'text-gray-700'
 					}`;
 				}}
 			>
@@ -57,14 +53,10 @@ export function Sidebar() {
 	const { user } = useAppSelector((st) => st.auth);
 
 	if (!user) {
-		return;
+		return null;
 	}
 
 	const { data } = useGetUserQuery(user.id);
-
-	if (!data) {
-		return <p>no data</p>;
-	}
 
 	const dispatch = useAppDispatch();
 
@@ -79,9 +71,7 @@ export function Sidebar() {
 					<div className="mb-4">
 						<Brand />
 					</div>
-					<div className="my-4 mt-8">
-						<MiniProfile {...data} />
-					</div>
+					<div className="my-4 mt-8">{data ? <MiniProfile {...data} /> : null}</div>
 				</header>
 				<nav className="flex-grow">
 					<ul className="h-full">

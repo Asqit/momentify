@@ -66,7 +66,7 @@ const baseQueryWithReAuth: BaseQueryFn<
 export const baseApi = createApi({
 	reducerPath: 'api',
 	keepUnusedDataFor: 120, // Doubling the default time, before data are released
-	tagTypes: ['Comments', 'Users', 'Posts'],
+	tagTypes: ['Comments', 'Users', 'Posts'], // Tags for invalidating cached data
 	baseQuery: baseQueryWithReAuth,
 	endpoints: () => ({}),
 });

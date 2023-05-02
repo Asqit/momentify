@@ -1,6 +1,7 @@
 export * from './createPost/CreatePost';
 export * from './settings/Settings';
 export * from './account/Account';
+export * from './explore/Explore';
 export * from './home/Home';
 export * from './post/Post';
 

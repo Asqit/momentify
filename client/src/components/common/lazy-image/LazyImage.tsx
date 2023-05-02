@@ -13,9 +13,12 @@ export function LazyImage(props: LazyImageProps) {
 			const handleLoad = () => {
 				setLoadedSrc(props.src);
 			};
+
 			const image = new Image();
+
 			image.addEventListener('load', handleLoad);
 			image.src = props.src;
+
 			return () => {
 				image.removeEventListener('load', handleLoad);
 			};
@@ -27,6 +30,6 @@ export function LazyImage(props: LazyImageProps) {
 	}
 
 	return (
-		<div className="w-full min-w-[366px] aspect-square bg-gray-300 animate-pulse rounded-md inline-block dark:brightness-75" />
+		<div className="min-w-[295px] w-full aspect-square bg-gray-300 animate-pulse rounded-md inline-block dark:brightness-75" />
 	);
 }

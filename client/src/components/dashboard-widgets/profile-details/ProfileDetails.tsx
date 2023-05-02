@@ -9,7 +9,7 @@ interface ProfileDetailsProps {
 	username: string;
 	email: string;
 	id: string;
-	profilePicture: string;
+	profilePicture?: string;
 	posts: Post[];
 	followersIds: string[];
 	followingIds: string[];
@@ -20,11 +20,11 @@ export function ProfileDetails(props: ProfileDetailsProps) {
 	const { id: followerId, followingIds: userFollowingIds } = useAppSelector(
 		(st) => st.auth.user!,
 	);
-	const [toggleFollow, {}] = useToggleFollowUserMutation();
+	const [toggleFollow] = useToggleFollowUserMutation();
 
 	const handleFollowToggle = async () => {
 		try {
-			const result = await toggleFollow({
+			await toggleFollow({
 				userId: id,
 				followerId,
 			}).unwrap();
@@ -34,7 +34,7 @@ export function ProfileDetails(props: ProfileDetailsProps) {
 	};
 
 	return (
-		<header className="flex justify-center items-center dark:text-gray-200">
+		<header className="flex flex-wrap justify-center items-center dark:text-gray-200">
 			<div className="mr-8">
 				<img
 					src={profilePicture ? `http://localhost:8080/${profilePicture}` : userPhoto}

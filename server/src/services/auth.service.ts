@@ -197,7 +197,7 @@ export const refreshToken = asyncHandler(async (req: Request, res: Response) => 
 	const NEW_ACCESS_TOKEN = Jwt.createAccessToken(user.id);
 	const NEW_REFRESH_TOKEN = Jwt.createRefreshToken(user.id);
 
-	res.cookie('auth', NEW_REFRESH_TOKEN, { httpOnly: true });
+	res.cookie('auth', REFRESH_TOKEN, { httpOnly: true, sameSite: 'strict' });
 
 	const responseUser: Partial<User> = user;
 

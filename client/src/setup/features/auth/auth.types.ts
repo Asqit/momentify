@@ -8,8 +8,9 @@ export type User = {
 	id: string;
 	email: string;
 	username: string;
-	profilePicture: string | null;
+	profilePicture?: string;
 	verified: boolean;
+	description?: string;
 	followersIds: string[];
 	followingIds: string[];
 	posts: Post[];

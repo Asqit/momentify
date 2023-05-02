@@ -56,9 +56,7 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
 		},
 	});
 
-	res.status(201).json({
-		id: post.id,
-	});
+	res.status(201).json(post.id);
 });
 
 // ------------------------------------------------------------------------------------> [GET] posts/:id
@@ -99,8 +97,15 @@ export const getPersonFeed = asyncHandler(async (req: Request, res: Response) =>
 	const user = await prisma.user.findUnique({
 		where: { id },
 		include: {
-			followers: {
-				include: { posts: true },
+			following: {
+				include: {
+					posts: {
+						include: {
+							author: true,
+							comments: true,
+						},
+					},
+				},
 			},
 		},
 	});
@@ -109,16 +114,17 @@ export const getPersonFeed = asyncHandler(async (req: Request, res: Response) =>
 		throw new HttpException(404, 'User not found');
 	}
 
-	const FOLLOWERS_LENGTH = user.followers.length;
+	const FOLLOWERS_LENGTH = user.following.length;
 	let posts: Post[] = [];
 
 	// Append all posts into single array
 	for (let i = 0; i < FOLLOWERS_LENGTH; i++) {
-		const follower = user.followers[i];
+		const follower = user.following[i];
 
 		const FOLLOWER_POSTS_LENGTH = follower.posts.length;
 		for (let j = 0; j < FOLLOWER_POSTS_LENGTH; j++) {
 			const post = follower.posts[j];
+
 			posts.push(post);
 		}
 	}
@@ -126,14 +132,11 @@ export const getPersonFeed = asyncHandler(async (req: Request, res: Response) =>
 	// Shuffle the array
 	posts = shuffle(posts);
 
-	res.status(200).json({
-		results: posts,
-	});
+	res.status(200).json(posts);
 });
 
-// ------------------------------------------------------------------------------------> [GET] posts/feed/global/:lastId
+// ------------------------------------------------------------------------------------> [GET] posts/feed/global/
 export const getGlobalFeed = asyncHandler(async (req: Request, res: Response) => {
-	// Find first 30 posts, that has id > lastId
 	let posts = await prisma.post.findMany({
 		take: 30,
 		include: {
@@ -144,9 +147,7 @@ export const getGlobalFeed = asyncHandler(async (req: Request, res: Response) =>
 
 	posts = shuffle(posts);
 
-	res.status(200).json({
-		results: posts,
-	});
+	res.status(200).json(posts);
 });
 
 // ------------------------------------------------------------------------------------> [GET] post/posts/:authorId
@@ -194,7 +195,7 @@ export const deletePost = asyncHandler(async (req: Request, res: Response) => {
 		res.status(200).json(post.id);
 	} catch (error) {
 		// TODO: Find more accurate exception to throw
-		throw new HttpException(500, 'Server failed');
+		throw new HttpException(500, 'Server error');
 	}
 });
 
@@ -202,9 +203,10 @@ export const deletePost = asyncHandler(async (req: Request, res: Response) => {
 export const likePost = asyncHandler(async (req: Request, res: Response) => {
 	const { id, userId } = req.params;
 	const post = await prisma.post.findUnique({ where: { id } });
+	const user = await prisma.user.findUnique({ where: { id: userId } });
 
-	if (!post) {
-		throw new HttpException(404, 'No post was found');
+	if (!post || !user) {
+		throw new HttpException(404, 'Not found');
 	}
 
 	const isAlreadyLiked = post.likedBy.includes(userId);

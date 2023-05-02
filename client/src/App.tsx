@@ -10,6 +10,7 @@ import {
 	CreatePost,
 	Home,
 	Settings,
+	Explore,
 } from '~/views';
 import { ToastContainer } from 'react-toastify';
 import { ProtectedRoute } from './components';
@@ -34,6 +35,7 @@ export default function App() {
 				<Route element={<ProtectedRoute />}>
 					<Route path="" element={<Dashboard />}>
 						<Route index element={<Home />} />
+						<Route path="explore" element={<Explore />} />
 						<Route path="account/:id" element={<Account />} />
 						<Route path="post/:id" element={<Post />} />
 						<Route path="post/create" element={<CreatePost />} />

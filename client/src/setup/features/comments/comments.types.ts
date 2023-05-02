@@ -15,8 +15,10 @@ export type UpdateCommentPayload = {
 export type Comment = {
 	id: string;
 	createdAt: Date;
+	updatedAt?: Date;
 	value: string;
 	authorId: string;
+	likedBy: string[];
 	postId: string;
 };
 

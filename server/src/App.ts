@@ -4,7 +4,7 @@ import { cpus } from 'node:os';
 import { PrismaConnector } from './utils/PrismaConnector';
 import { logger } from './utils/logger';
 import { serverConfig } from '~/config/server.config';
-// I am using 'as' imports for barrel imports, don't be confused <-------------------------------- Read me
+// I am using 'as' imports for barrel imports, don't be confused
 import * as middleware from '~/middlewares';
 import * as routes from '~/routes';
 import express from 'express';

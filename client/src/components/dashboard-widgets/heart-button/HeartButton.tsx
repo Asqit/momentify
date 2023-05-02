@@ -18,7 +18,7 @@ export function HeartButton(props: HeartButtonProps) {
 				onClick();
 			}}
 			className={`flex items-center text-lg gap-x-2 ${
-				like ? 'animate-ping-once' : 'animate-none'
+				like ? 'animate-ping-once' : 'animate-shake-once'
 			}`}
 		>
 			{like ? <FaHeart className="text-red-500" /> : <FaRegHeart />}

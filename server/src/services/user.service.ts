@@ -4,6 +4,9 @@ import { PrismaConnector } from '~/utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
 import fs from 'node:fs/promises';
 import sharp from 'sharp';
+import path from 'node:path';
+import { unlink } from 'node:fs';
+import { logger } from '~/utils/logger';
 
 const prisma = PrismaConnector.client;
 
@@ -50,29 +53,28 @@ export const toggleFollowUser = asyncHandler(async (req: Request, res: Response)
 		follower.followingIds.push(userId);
 	}
 
-	const updatedUser = await prisma.user.update({
+	await prisma.user.update({
 		where: { id: userId },
 		data: {
 			followersIds: user.followersIds,
 		},
 	});
 
-	const updatedFollower = await prisma.user.update({
+	await prisma.user.update({
 		where: { id: followerId },
 		data: {
 			followingIds: follower.followingIds,
 		},
 	});
 
-	res.status(200).json({
-		results: 'OK',
-	});
+	res.sendStatus(200);
 });
 // ------------------------------------------------------------------------------------> [PUT] /:id/image
 export const changeProfilePicture = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const image = req.file;
 	const user = await prisma.user.findUnique({ where: { id } });
+	let filename: string;
 
 	if (!image) {
 		throw new HttpException(400, 'Missing image');
@@ -82,19 +84,30 @@ export const changeProfilePicture = asyncHandler(async (req: Request, res: Respo
 		throw new HttpException(404, 'No user was found');
 	}
 
-	// `req.file` does not actually contain buffer, so instead we are reading it from storage.
-	const imageBuffer = await fs.readFile(image.path);
-	const webpBuffer = await sharp(imageBuffer).webp().toBuffer();
-	const NEW_FILENAME = image.filename.split('.')[0] + '.webp';
+	if (user.profilePicture) {
+		fs.rm(`public/${user.profilePicture}`).catch((error) => {
+			logger.warn('Image could not be deleted');
+		});
+	}
 
-	await sharp(webpBuffer).toFile(`public/${NEW_FILENAME}`);
+	if (path.extname(image.filename) !== '.webp') {
+		// `req.file` does not actually contain buffer, so instead we are reading it from storage.
+		const imageBuffer = await fs.readFile(image.path);
+		const webpBuffer = await sharp(imageBuffer).webp().toBuffer();
 
-	// delete the original uploaded file, since we don't need it anymore.
-	await fs.rm(image.path);
+		filename = image.filename.split('.')[0] + '.webp';
 
-	const updatedUser = await prisma.user.update({
+		await sharp(webpBuffer).toFile(`public/${filename}`);
+
+		// delete the original uploaded file, since we don't need it anymore.
+		await fs.rm(image.path);
+	} else {
+		filename = image.filename;
+	}
+
+	await prisma.user.update({
 		where: { id },
-		data: { profilePicture: NEW_FILENAME },
+		data: { profilePicture: filename },
 	});
 
 	const responseUser: any = user;
@@ -104,4 +117,35 @@ export const changeProfilePicture = asyncHandler(async (req: Request, res: Respo
 	res.status(200).json({
 		user: responseUser,
 	});
+});
+// ------------------------------------------------------------------------------------> [DELETE] /:id
+export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const user = await prisma.user.findUnique({ where: { id }, include: { posts: true } });
+
+	if (!user) {
+		throw new HttpException(404, 'Not found');
+	}
+
+	try {
+		const deleteComments = prisma.comment.deleteMany({ where: { authorId: id } });
+		const deletePosts = prisma.post.deleteMany({ where: { authorId: id } });
+		const deleteAccount = prisma.user.delete({ where: { id } });
+
+		for (const post of user.posts) {
+			for (const body of post.body) {
+				await fs.unlink(`public/${body}`);
+			}
+		}
+
+		if (user.profilePicture) {
+			await fs.unlink(user.profilePicture);
+		}
+
+		await prisma.$transaction([deleteComments, deletePosts, deleteAccount]);
+
+		res.status(200).json(user.id);
+	} catch (error) {
+		throw new HttpException(500, 'Server error');
+	}
 });

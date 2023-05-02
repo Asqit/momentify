@@ -34,4 +34,7 @@ commentRoutes.get('/:id', Jwt.protectedRoute(), services.getComment);
 // User deletes a comment
 commentRoutes.delete('/:id', Jwt.protectedRoute(), services.deleteComment);
 
+// Like comment
+commentRoutes.put('/:id/like/:userId', Jwt.protectedRoute(), services.likeComment);
+
 export { commentRoutes };

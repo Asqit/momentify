@@ -1,15 +1,55 @@
 import { useGetUserQuery } from '~/setup/features/users/users.api';
 import { InlineProfile } from '../inline-profile/InlineProfile';
-import sampleUser from '~/assets/images/sample_user.png';
+import { Comment } from '~/setup/features/comments/comments.types';
+import { HeartButton } from '../heart-button/HeartButton';
+import { useAppSelector, useGetRelativeTime } from '~/hooks';
+import {
+	useLikeCommentMutation,
+	useUpdateCommentMutation,
+} from '~/setup/features/comments/comments.api';
+import { useState } from 'react';
+import { Button } from '~/components/common';
+import { toast } from 'react-toastify';
 
-interface CommentProps {
-	userId: string;
-	value: string;
-}
+type CommentProps = {} & Comment;
 
 export function Comment(props: CommentProps) {
-	const { userId, value } = props;
-	const { data, isLoading } = useGetUserQuery(userId);
+	const { authorId, value, likedBy, id, createdAt, updatedAt } = props;
+	const { user } = useAppSelector((st) => st.auth);
+	const { data, isLoading } = useGetUserQuery(authorId);
+	const [likeComment] = useLikeCommentMutation();
+	const time = useGetRelativeTime(
+		Date.now(),
+		new Date(updatedAt ? updatedAt : createdAt).getTime(),
+	);
+	const [isEditing, setIsEditing] = useState<boolean>(false);
+	const [editValue, setEditValue] = useState<string>(value);
+	const [updateComment] = useUpdateCommentMutation();
+
+	const handleLike = async () => {
+		try {
+			if (!user) {
+				return;
+			}
+
+			await likeComment({
+				id,
+				userId: user.id,
+			}).unwrap();
+		} catch (error) {}
+	};
+
+	const handleUpdate = async () => {
+		setIsEditing(false);
+		try {
+			await updateComment({
+				id,
+				value: editValue,
+			}).unwrap();
+		} catch (error) {
+			toast.error('Failed to update comment');
+		}
+	};
 
 	if (isLoading) {
 		return (
@@ -28,14 +68,50 @@ export function Comment(props: CommentProps) {
 		return null;
 	}
 
+	if (!user) {
+		return null;
+	}
+
 	return (
-		<li className="my-4 flex items-center justify-start flex-wrap gap-x-3 ">
-			<InlineProfile
-				id={data.id}
-				username={data.username}
-				profilePicture={data.profilePicture}
-			/>
-			-<p>{value}</p>
+		<li className="my-4">
+			<div className="flex my-2 items-center justify-start gap-x-2">
+				<InlineProfile
+					id={data.id}
+					username={data.username}
+					profilePicture={data.profilePicture}
+				/>
+				<p>{time}</p>
+			</div>
+			<div className="pl-2 border-l">
+				{isEditing ? (
+					<input
+						type="text"
+						value={editValue}
+						className="w-full rounded-sm p-1 outline outline-sky-500"
+						onChange={(e) => setEditValue(e.currentTarget.value)}
+					/>
+				) : (
+					<p>{value}</p>
+				)}
+				<div className="flex gap-x-2 items-center">
+					<HeartButton
+						isLiked={likedBy.includes(user.id)}
+						onClick={handleLike}
+						likes={likedBy.length}
+					/>
+					{user && user.id === authorId ? (
+						isEditing ? (
+							<Button className="py-0 px-1" buttonColor="primary" onClick={handleUpdate}>
+								submit
+							</Button>
+						) : (
+							<Button className="py-0 px-1" onClick={() => setIsEditing((prev) => !prev)}>
+								edit
+							</Button>
+						)
+					) : null}
+				</div>
+			</div>
 		</li>
 	);
 }

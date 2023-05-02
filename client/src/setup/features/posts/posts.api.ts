@@ -3,16 +3,24 @@ import { Post, PostWithReferences } from './posts.types';
 
 export const postsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
-		// get all posts --------------------------------------------------->
+		// Get global feed ------------------------------------------------>
 		getGlobalFeed: builder.query<Partial<PostWithReferences>[], void>({
 			providesTags: ['Posts'],
 			query: () => ({
-				url: `/posts/`,
+				url: `/posts/feed/global/`,
+				method: 'GET',
+			}),
+		}),
+		// Get personal feed ----------------------------------------------->
+		getPersonalFeed: builder.query<Partial<PostWithReferences>[], void>({
+			providesTags: ['Posts'],
+			query: () => ({
+				url: '/posts/feed/person',
 				method: 'GET',
 			}),
 		}),
 		// Create post mutation -------------------------------------------->
-		createPost: builder.mutation<void, FormData>({
+		createPost: builder.mutation<string, FormData>({
 			invalidatesTags: ['Posts', 'Users'],
 			query: (body: FormData) => ({
 				url: '/posts',
@@ -59,4 +67,5 @@ export const {
 	useLikePostMutation,
 	useCreatePostMutation,
 	useGetGlobalFeedQuery,
+	useGetPersonalFeedQuery,
 } = postsApi;

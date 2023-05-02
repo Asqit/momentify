@@ -33,8 +33,16 @@ const commentsApi = baseApi.injectEndpoints({
 			invalidatesTags: ['Comments', 'Posts'],
 			query: (body) => ({
 				method: 'PUT',
-				url: 'comments',
+				url: '/comments',
 				body,
+			}),
+		}),
+		// Like comment ----------------------------------------------->
+		likeComment: builder.mutation<Comment, { id: string; userId: string }>({
+			invalidatesTags: ['Comments', 'Posts'],
+			query: ({ id, userId }) => ({
+				url: `/comments/${id}/like/${userId}`,
+				method: 'PUT',
 			}),
 		}),
 	}),
@@ -45,4 +53,5 @@ export const {
 	useGetPostCommentsQuery,
 	useUpdateCommentMutation,
 	useDeleteCommentMutation,
+	useLikeCommentMutation,
 } = commentsApi;

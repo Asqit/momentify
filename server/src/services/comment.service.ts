@@ -63,3 +63,27 @@ export const deleteComment = asyncHandler(async (req: Request, res: Response) =>
 
 	res.status(200).json({ id: deleteResult.id });
 });
+// ------------------------------------------------------------------------------------> [PUT] /:id/like/:userId
+export const likeComment = asyncHandler(async (req: Request, res: Response) => {
+	const { id, userId } = req.params;
+	const comment = await prisma.comment.findUnique({ where: { id } });
+	const user = await prisma.user.findUnique({ where: { id: userId } });
+
+	if (!comment || !user) {
+		throw new HttpException(404, 'Not found');
+	}
+
+	const isAlreadyLiked = comment.likedBy.includes(userId);
+
+	const updatedComment = await prisma.comment.update({
+		where: { id },
+		data: {
+			updatedAt: new Date().toISOString(),
+			likedBy: isAlreadyLiked
+				? comment.likedBy.filter((id) => id !== userId)
+				: [...comment.likedBy, userId],
+		},
+	});
+
+	res.status(200).json(updatedComment);
+});
