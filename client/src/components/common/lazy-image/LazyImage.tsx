@@ -29,7 +29,5 @@ export function LazyImage(props: LazyImageProps) {
 		return <img {...props} />;
 	}
 
-	return (
-		<div className="min-w-[295px] w-full aspect-square bg-gray-300 animate-pulse rounded-md inline-block dark:brightness-75" />
-	);
+	return null;
 }

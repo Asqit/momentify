@@ -42,8 +42,6 @@ export class App {
 		router.use('/api/posts', routes.postRoutes);
 		router.use('/api/users', routes.userRoutes);
 		router.use('/api/comments', routes.commentRoutes);
-
-		//TODO: Add client-side serving
 	}
 
 	/**
@@ -65,8 +63,6 @@ export class App {
 		router.use(express.json());
 		router.use(cookieParser());
 		router.use(cors({ origin: ['http://localhost:8080', 'http://localhost:5173'] }));
-
-		//TODO: Fix cors errors with helmet
 		//router.use(helmet());
 
 		// Logging every request and response

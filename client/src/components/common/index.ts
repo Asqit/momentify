@@ -13,6 +13,7 @@ export * from './slideshow/Slideshow';
 export * from './textfield/Textfield';
 export * from './textarea/TextArea';
 export * from './spinner/Spinner';
+export * from './modal/Modal';
 export * from './button/Button';
 export * from './emoji/Emoji';
 export * from './brand/Brand';

@@ -36,7 +36,7 @@ const authSlice = createSlice({
 				},
 			)
 			// Change password ---------------->
-			.addMatcher(api.endpoints.changePassword.matchFulfilled, (state, action) => {
+			.addMatcher(api.endpoints.changePassword.matchFulfilled, (state) => {
 				state.accessToken = '';
 				state.user = null;
 			})
@@ -47,7 +47,17 @@ const authSlice = createSlice({
 					state.accessToken = action.payload.accessToken;
 					state.user = action.payload.user;
 				},
-			);
+			)
+			// Delete account ----------------->
+			.addMatcher(api.endpoints.deleteAccount.matchFulfilled, (state) => {
+				state.accessToken = '';
+				state.user = null;
+			})
+			// Change password ---------------->
+			.addMatcher(api.endpoints.changePassword.matchFulfilled, (state) => {
+				state.accessToken = '';
+				state.user = null;
+			});
 	},
 });
 

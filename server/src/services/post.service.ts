@@ -194,7 +194,6 @@ export const deletePost = asyncHandler(async (req: Request, res: Response) => {
 
 		res.status(200).json(post.id);
 	} catch (error) {
-		// TODO: Find more accurate exception to throw
 		throw new HttpException(500, 'Server error');
 	}
 });

@@ -1,0 +1,4 @@
+TODO: finish profile deletion
+TODO: Fix server cors errors with helmet
+TODO: Add client-side serving
+TODO: Add more accurate exception to throw on post deletion fail

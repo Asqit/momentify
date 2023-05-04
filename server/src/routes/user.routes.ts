@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { changeProfilePicture, getUser, toggleFollowUser } from '~/services/user.service';
+import {
+	changeProfilePicture,
+	deleteUser,
+	getUser,
+	toggleFollowUser,
+} from '~/services/user.service';
 import { Jwt } from '~/utils/Jwt';
 import { upload } from '~/utils/multer';
 
@@ -18,5 +23,7 @@ userRoutes.put(
 	upload.single('file'),
 	changeProfilePicture,
 );
+
+userRoutes.delete('/:id', Jwt.protectedRoute(), deleteUser);
 
 export { userRoutes };

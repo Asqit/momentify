@@ -29,7 +29,7 @@ export const authApi = baseApi.injectEndpoints({
 		changePassword: builder.mutation({
 			query: (credentials: ChangePasswordBody) => ({
 				url: '/auth/issue/password',
-				method: 'GET',
+				method: 'PUT',
 				body: credentials,
 			}),
 		}),
@@ -40,7 +40,19 @@ export const authApi = baseApi.injectEndpoints({
 				url: '/auth/refresh',
 			}),
 		}),
+		deleteAccount: builder.mutation<void, string>({
+			query: (id) => ({
+				method: 'DELETE',
+				url: `/users/${id}`,
+			}),
+		}),
 	}),
 });
 
-export const { useLoginMutation, useRegisterMutation, useRefreshLoginMutation } = authApi;
+export const {
+	useLoginMutation,
+	useRegisterMutation,
+	useRefreshLoginMutation,
+	useChangePasswordMutation,
+	useDeleteAccountMutation,
+} = authApi;

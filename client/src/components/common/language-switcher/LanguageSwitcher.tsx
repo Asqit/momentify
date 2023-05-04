@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { Emoji } from '../emoji/Emoji';
 
 const langs = [
 	{ emoji: '🇬🇧', id: 0, shortCut: 'en', name: 'English' },
@@ -10,10 +9,7 @@ export function LanguageSwitcher() {
 	const { i18n } = useTranslation();
 
 	return (
-		<select
-			className="inline-flex items-center justify-center gap-x-2 bg-transparent"
-			defaultValue={'cz'}
-		>
+		<select className="inline-flex items-center justify-center gap-x-2 bg-transparent">
 			{langs.map((lang) => {
 				return (
 					<option

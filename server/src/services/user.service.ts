@@ -119,8 +119,34 @@ export const changeProfilePicture = asyncHandler(async (req: Request, res: Respo
 	});
 });
 // ------------------------------------------------------------------------------------> [DELETE] /:id
+// Define a function to delete a user's posts and comments
+async function deleteUserData(userId: string) {
+	const posts = await prisma.post.findMany({ where: { authorId: userId } });
+
+	for (const post of posts) {
+		// Delete comments on the post
+		await prisma.comment.deleteMany({ where: { postId: post.id } });
+
+		// Delete the post's body files
+		for (const body of post.body) {
+			try {
+				await fs.unlink(`public/${body}`);
+			} catch (error) {
+				logger.error(`Error deleting file ${body}: ${error}`);
+			}
+		}
+	}
+
+	// Delete the user's comments and posts
+	await prisma.comment.deleteMany({ where: { authorId: userId } });
+	await prisma.post.deleteMany({ where: { authorId: userId } });
+}
+
+// Define the main delete user function
 export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
+
+	// Find the user and their posts
 	const user = await prisma.user.findUnique({ where: { id }, include: { posts: true } });
 
 	if (!user) {
@@ -128,24 +154,24 @@ export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
 	}
 
 	try {
-		const deleteComments = prisma.comment.deleteMany({ where: { authorId: id } });
-		const deletePosts = prisma.post.deleteMany({ where: { authorId: id } });
-		const deleteAccount = prisma.user.delete({ where: { id } });
+		// Delete the user's data
+		await deleteUserData(id);
 
-		for (const post of user.posts) {
-			for (const body of post.body) {
-				await fs.unlink(`public/${body}`);
+		// Delete the user's account
+		await prisma.user.delete({ where: { id } });
+
+		// Delete the user's profile picture
+		if (user.profilePicture) {
+			try {
+				await fs.unlink(user.profilePicture);
+			} catch (error) {
+				logger.error(`Error deleting profile picture: ${error}`);
 			}
 		}
 
-		if (user.profilePicture) {
-			await fs.unlink(user.profilePicture);
-		}
-
-		await prisma.$transaction([deleteComments, deletePosts, deleteAccount]);
-
-		res.status(200).json(user.id);
+		res.status(200).json({ message: `User ${id} deleted` });
 	} catch (error) {
+		logger.error(JSON.stringify(error));
 		throw new HttpException(500, 'Server error');
 	}
 });
