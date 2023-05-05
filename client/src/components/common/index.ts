@@ -11,6 +11,7 @@ export * from './lazy-image/LazyImage';
 export * from './hamburger/Hamburger';
 export * from './slideshow/Slideshow';
 export * from './textfield/Textfield';
+export * from './dot-menu/DotMenu';
 export * from './textarea/TextArea';
 export * from './spinner/Spinner';
 export * from './modal/Modal';

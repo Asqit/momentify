@@ -48,7 +48,7 @@ export function Account() {
 												author={user}
 												body={post.body!}
 												createdAt={post.createdAt!}
-												comments={post.comments!}
+												comments={post.comments ? post.comments : []}
 												id={post.id!}
 											/>
 										</div>

@@ -6,10 +6,11 @@ interface ModalProps {
 	isOpen: boolean;
 	callback: () => void;
 	className?: string;
+	showClose?: boolean;
 }
 
 export function Modal(props: ModalProps) {
-	const { children, isOpen, callback, className } = props;
+	const { children, isOpen, callback, className, showClose } = props;
 
 	return (
 		<div className={`fixed inset-0 ${isOpen ? '' : 'pointer-events-none'}`}>
@@ -24,10 +25,12 @@ export function Modal(props: ModalProps) {
 					isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
 				} ${className ?? ''}`}
 			>
-				<GrFormClose
-					onClick={callback}
-					className={`absolute right-4 top-4 text-3xl cursor-pointer`}
-				/>
+				{showClose ? (
+					<GrFormClose
+						onClick={callback}
+						className={`absolute right-4 top-4 text-3xl cursor-pointer`}
+					/>
+				) : null}
 
 				{children}
 			</div>

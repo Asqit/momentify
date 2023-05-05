@@ -105,7 +105,7 @@ export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
 
 	const user = await prisma.user.findUnique({
 		where: {
-			email: decoded.email,
+			id: decoded.userId,
 		},
 	});
 
