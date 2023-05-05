@@ -17,7 +17,7 @@ import {
 	useLikePostMutation,
 } from '~/setup/features/posts/posts.api';
 import { toast } from 'react-toastify';
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useMemo, useRef, useState } from 'react';
 import { useAppSelector, useGetRelativeTime } from '~/hooks';
 import { Comment } from '~/setup/features/comments/comments.types';
 import { useMediaQuery } from 'usehooks-ts';
@@ -38,13 +38,13 @@ interface MiniPostProps {
 export function MiniPost(props: MiniPostProps) {
 	const { title, likedBy, body, author, createdAt, id, comments, onClickCallback } = props;
 	const [likePost] = useLikePostMutation();
-	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [commentValue, setCommentValue] = useState<string>('');
 	const { id: userId } = useAppSelector((st) => st.auth.user!);
 	const [postComment] = useCreateCommentMutation();
 	const [deletePost] = useDeletePostMutation();
 	const isDesktop = useMediaQuery('(min-width: 768px)');
 	const navigate = useNavigate();
+	const modalRef = useRef<HTMLDialogElement | null>(null);
 
 	const handleLike = async () => {
 		try {
@@ -68,7 +68,7 @@ export function MiniPost(props: MiniPostProps) {
 			return;
 		}
 
-		setIsModalOpen((prev) => !prev);
+		modalRef.current?.showModal();
 	};
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -130,13 +130,12 @@ export function MiniPost(props: MiniPostProps) {
 					</span>
 				</div>
 			</div>
-			<Modal
-				isOpen={isModalOpen}
-				callback={() => setIsModalOpen((prev) => !prev)}
-				className="mt-4 rounded-md max-w-screen-lg w-full"
+			<dialog
+				ref={modalRef}
+				className="mt-4 rounded-md max-w-screen-lg w-full animate-ping-once h-fit"
 			>
-				<div className="grid grid-cols-2 gap-2">
-					<figure className="h-full">
+				<div className="grid grid-cols-2 gap-3">
+					<figure className="h-full w-full">
 						{Array.isArray(body) && body.length > 1 ? (
 							<MemoizedSlideshow
 								callback={navigateToPost}
@@ -145,9 +144,7 @@ export function MiniPost(props: MiniPostProps) {
 						) : (
 							<LazyImage
 								crossOrigin="anonymous"
-								className={
-									'max-w-2xl w-full aspect-square object-cover rounded-md cursor-pointer'
-								}
+								className={'w-full rounded-md cursor-pointer'}
 								src={`http://localhost:8080/${body}`}
 								alt=""
 								onClick={navigateToPost}
@@ -233,7 +230,7 @@ export function MiniPost(props: MiniPostProps) {
 						</div>
 					</article>
 				</div>
-			</Modal>
+			</dialog>
 		</div>
 	);
 }

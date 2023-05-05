@@ -24,9 +24,9 @@ export function Slideshow(props: SlideshowProps) {
 	};
 
 	return (
-		<div className="w-full max-w-2xl overflow-hidden mx-auto relative rounded-md group">
+		<div className="w-full max-w-2xl overflow-hidden mx-auto relative rounded-md group bg-black">
 			<div
-				className={`whitespace-nowrap transition-all duration-1000 cursor-pointer `}
+				className={`whitespace-nowrap transition-all duration-1000 cursor-pointer`}
 				style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
 				onClick={() => {
 					onClickCallback && onClickCallback();
@@ -35,7 +35,7 @@ export function Slideshow(props: SlideshowProps) {
 				{images.map((filename) => {
 					return (
 						<LazyImage
-							className="w-full aspect-square object-cover inline-block dark:brightness-75"
+							className="h-full aspect-square object-cover inline-block dark:brightness-75"
 							src={filename}
 							key={filename}
 							alt={filename}
