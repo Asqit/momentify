@@ -4,6 +4,7 @@ import { Comment } from '~/setup/features/comments/comments.types';
 import { HeartButton } from '../heart-button/HeartButton';
 import { useAppSelector, useGetRelativeTime } from '~/hooks';
 import {
+	useDeleteCommentMutation,
 	useLikeCommentMutation,
 	useUpdateCommentMutation,
 } from '~/setup/features/comments/comments.api';
@@ -18,6 +19,7 @@ export function Comment(props: CommentProps) {
 	const { user } = useAppSelector((st) => st.auth);
 	const { data, isLoading } = useGetUserQuery(authorId);
 	const [likeComment] = useLikeCommentMutation();
+	const [deleteComment] = useDeleteCommentMutation();
 	const time = useGetRelativeTime(
 		Date.now(),
 		new Date(updatedAt ? updatedAt : createdAt).getTime(),
@@ -48,6 +50,14 @@ export function Comment(props: CommentProps) {
 			}).unwrap();
 		} catch (error) {
 			toast.error('Failed to update comment');
+		}
+	};
+
+	const handleDelete = async () => {
+		try {
+			await deleteComment(id).unwrap();
+		} catch (error) {
+			toast.error('Failed to delete comment');
 		}
 	};
 
@@ -100,15 +110,20 @@ export function Comment(props: CommentProps) {
 						likes={likedBy.length}
 					/>
 					{user && user.id === authorId ? (
-						isEditing ? (
-							<Button className="py-0 px-1" buttonColor="primary" onClick={handleUpdate}>
-								submit
+						<>
+							{isEditing ? (
+								<Button className="py-0 px-1" buttonColor="primary" onClick={handleUpdate}>
+									submit
+								</Button>
+							) : (
+								<Button className="py-0 px-1" onClick={() => setIsEditing((prev) => !prev)}>
+									edit
+								</Button>
+							)}
+							<Button className="py-0 px-1" buttonColor="danger" onClick={handleDelete}>
+								delete
 							</Button>
-						) : (
-							<Button className="py-0 px-1" onClick={() => setIsEditing((prev) => !prev)}>
-								edit
-							</Button>
-						)
+						</>
 					) : null}
 				</div>
 			</div>

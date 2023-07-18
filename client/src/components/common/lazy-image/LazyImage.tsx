@@ -29,5 +29,11 @@ export function LazyImage(props: LazyImageProps) {
 		return <img {...props} />;
 	}
 
-	return null;
+	return (
+		<div
+			className={`"bg-slate-400 animate-pulse rounded-md" ${
+				props.className ? props.className : ''
+			}`}
+		/>
+	);
 }

@@ -13,11 +13,13 @@ export function Modal(props: ModalProps) {
 	const { children, isOpen, callback, className, showClose } = props;
 
 	return (
-		<div className={`fixed inset-0 ${isOpen ? '' : 'pointer-events-none'}`}>
+		<div className={`fixed z-50 inset-0 ${isOpen ? '' : 'pointer-events-none'}`}>
 			<div
 				onClick={callback}
-				className={`fixed inset-0 bg-black ${
-					isOpen ? 'opacity-50' : 'pointer-events-none opacity-0'
+				className={`fixed inset-0 ${
+					isOpen
+						? 'bg-black/50 backdrop-blur-md'
+						: 'bg-transparent pointer-events-none opacity-0'
 				}`}
 			/>
 			<div

@@ -10,6 +10,7 @@ import {
 	Textfield,
 	Comment as CommentComponent,
 	DotMenu,
+	MemoizedSlideshow,
 } from '~/components';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -44,7 +45,7 @@ export function MiniPost(props: MiniPostProps) {
 	const [deletePost] = useDeletePostMutation();
 	const isDesktop = useMediaQuery('(min-width: 768px)');
 	const navigate = useNavigate();
-	const modalRef = useRef<HTMLDialogElement | null>(null);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 	const handleLike = async () => {
 		try {
@@ -68,7 +69,7 @@ export function MiniPost(props: MiniPostProps) {
 			return;
 		}
 
-		modalRef.current?.showModal();
+		setIsModalOpen((p) => !p);
 	};
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -130,29 +131,30 @@ export function MiniPost(props: MiniPostProps) {
 					</span>
 				</div>
 			</div>
-			<dialog
-				ref={modalRef}
-				className="mt-4 rounded-md max-w-screen-lg w-full animate-ping-once h-fit"
+			{/* ------------------------------------------------------------ MODAL ------------------------------------------------------------------ */}
+
+			<Modal
+				isOpen={isModalOpen}
+				callback={() => setIsModalOpen((p) => !p)}
+				className="mt-4 rounded-md h-[90%] w-[90%] max-w-7xl animate-ping-once dark:bg-slate-950 dark:text-slate-200"
 			>
-				<div className="grid grid-cols-2 gap-3">
-					<figure className="h-full w-full">
+				<div className="w-full h-full grid grid-cols-3 gap-x-8 items-center">
+					<figure className="col-start-1 col-end-3">
 						{Array.isArray(body) && body.length > 1 ? (
 							<MemoizedSlideshow
-								callback={navigateToPost}
 								images={body.map((filename) => `http://localhost:8080/${filename}`)}
 							/>
 						) : (
 							<LazyImage
 								crossOrigin="anonymous"
-								className={'w-full rounded-md cursor-pointer'}
+								className={'w-full rounded-md'}
 								src={`http://localhost:8080/${body}`}
 								alt=""
-								onClick={navigateToPost}
 								loading="eager"
 							/>
 						)}
 					</figure>
-					<article className="flex flex-col">
+					<article className="flex flex-col col-start-3 col-end-3 h-full">
 						<div className="flex justify-between">
 							<InlineProfile
 								id={author.id}
@@ -163,7 +165,10 @@ export function MiniPost(props: MiniPostProps) {
 								<DotMenu>
 									<ul className="w-[120px] flex flex-col gap-2">
 										<li>
-											<Button className="p-1 w-full mb-2" onClick={() => {}}>
+											<Button
+												className="p-1 w-full mb-2"
+												onClick={() => setIsModalOpen((p) => !p)}
+											>
 												close
 											</Button>
 											<Button
@@ -178,7 +183,7 @@ export function MiniPost(props: MiniPostProps) {
 								</DotMenu>
 							) : null}
 						</div>
-						<hr className="my-4" />
+						<hr className="my-4 dark:border-slate-800" />
 						<p>
 							<span className="font-bold capitalize">{author.username}: </span>
 							{title}
@@ -230,22 +235,7 @@ export function MiniPost(props: MiniPostProps) {
 						</div>
 					</article>
 				</div>
-			</dialog>
+			</Modal>
 		</div>
 	);
-}
-
-type MemoizedSlideshowProps = {
-	images: string[];
-	callback: () => void;
-};
-
-function MemoizedSlideshow(props: MemoizedSlideshowProps) {
-	const { images, callback } = props;
-
-	const memoizedSlideshow = useMemo(() => {
-		return <Slideshow images={images} onClickCallback={callback} />;
-	}, [images]);
-
-	return memoizedSlideshow;
 }

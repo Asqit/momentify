@@ -16,19 +16,13 @@ export function DotMenu(props: DotMenuProps) {
 				onClick={() => setIsActive((prev) => !prev)}
 			>
 				<div
-					className={`inline-block transition-all w-[8px] h-[8px] ${
-						isActive ? 'mx-0' : 'mx-[2px]'
-					} rounded-full bg-sky-500`}
+					className={`inline-block transition-all group-hover:bg-sky-700 mx-[2px] w-[3px] h-[3px] rounded-full bg-sky-500`}
 				/>
 				<div
-					className={`inline-block transition-all w-[8px] h-[8px] ${
-						isActive ? 'mx-0' : 'mx-[2px]'
-					} rounded-full bg-sky-500`}
+					className={`inline-block transition-all group-hover:bg-sky-700 mx-[2px] w-[3px] h-[3px] rounded-full bg-sky-500`}
 				/>
 				<div
-					className={`inline-block transition-all w-[8px] h-[8px] ${
-						isActive ? 'mx-0' : 'mx-[2px]'
-					} rounded-full bg-sky-500`}
+					className={`inline-block transition-all group-hover:bg-sky-700 mx-[2px] w-[3px] h-[3px] rounded-full bg-sky-500`}
 				/>
 			</button>
 			<div
