@@ -5,7 +5,7 @@ function wrapper() {
 	if (serverConfig.NODE_ENV === 'development') {
 		return new App().listen();
 	}
-
+	
 	App.initCluster();
 }
 

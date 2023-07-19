@@ -1,4 +1,4 @@
-import { Server, createServer } from 'node:http';
+import http from 'node:http';
 import { join } from 'node:path';
 import { cpus } from 'node:os';
 import { PrismaConnector } from './utils/PrismaConnector';
@@ -10,7 +10,6 @@ import * as routes from '~/routes';
 import express from 'express';
 import cluster, { Worker } from 'cluster';
 import compression from 'compression';
-import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -18,11 +17,11 @@ import cookieParser from 'cookie-parser';
 export class App {
 	private readonly router: express.Application;
 	private readonly PUBLIC_PATH: string;
-	private readonly server: Server;
+	private readonly server: http.Server;
 
 	constructor() {
 		this.router = express();
-		this.server = createServer(this.router);
+		this.server = http.createServer(this.router);
 		this.PUBLIC_PATH = join(__dirname, 'public');
 
 		this.initMiddleware();
@@ -64,8 +63,7 @@ export class App {
 		router.use(cookieParser());
 		router.use(cors({ origin: ['http://localhost:8080', 'http://localhost:5173'] }));
 		//router.use(helmet());
-
-		// Logging every request and response
+		router.use(middleware.gatekeeper);
 		router.use(middleware.requestLogger);
 
 		this.initRoutes();

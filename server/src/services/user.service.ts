@@ -77,6 +77,7 @@ export const toggleFollowUser = asyncHandler(async (req: Request, res: Response)
 
 	res.sendStatus(200);
 });
+
 // ------------------------------------------------------------------------------------> [PUT] /:id/image
 export const changeProfilePicture = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
@@ -126,16 +127,14 @@ export const changeProfilePicture = asyncHandler(async (req: Request, res: Respo
 		user: responseUser,
 	});
 });
+
 // ------------------------------------------------------------------------------------> [DELETE] /:id
-// Define a function to delete a user's posts and comments
 async function deleteUserData(userId: string) {
 	const posts = await prisma.post.findMany({ where: { authorId: userId } });
 
 	for (const post of posts) {
-		// Delete comments on the post
 		await prisma.comment.deleteMany({ where: { postId: post.id } });
 
-		// Delete the post's body files
 		for (const body of post.body) {
 			try {
 				await fs.unlink(`public/${body}`);
@@ -145,16 +144,13 @@ async function deleteUserData(userId: string) {
 		}
 	}
 
-	// Delete the user's comments and posts
 	await prisma.comment.deleteMany({ where: { authorId: userId } });
 	await prisma.post.deleteMany({ where: { authorId: userId } });
 }
 
-// Define the main delete user function
 export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
 	const { id } = req.params;
 
-	// Find the user and their posts
 	const user = await prisma.user.findUnique({ where: { id }, include: { posts: true } });
 
 	if (!user) {
@@ -162,13 +158,10 @@ export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
 	}
 
 	try {
-		// Delete the user's data
 		await deleteUserData(id);
 
-		// Delete the user's account
 		await prisma.user.delete({ where: { id } });
 
-		// Delete the user's profile picture
 		if (user.profilePicture) {
 			try {
 				await fs.unlink(user.profilePicture);
@@ -184,6 +177,7 @@ export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
 	}
 });
 
+// ------------------------------------------------------------------------------------> [PUT] /:id/bio
 export const changeBio = asyncHandler(async (req: Request, res: Response) => {
 	const { userId } = req.params;
 	const { bio } = req.body;
