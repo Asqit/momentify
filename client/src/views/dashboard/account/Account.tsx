@@ -22,15 +22,7 @@ export function Account() {
 			) : (
 				<div className="px-4">
 					<div className="py-8">
-						<ProfileDetails
-							username={user.username}
-							email={user.email}
-							id={user.id}
-							profilePicture={user.profilePicture}
-							posts={user.posts}
-							followersIds={user.followersIds}
-							followingIds={user.followingIds}
-						/>
+						<ProfileDetails {...user} />
 					</div>
 					<hr className="dark:border-gray-800" />
 					<div

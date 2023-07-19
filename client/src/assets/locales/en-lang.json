@@ -76,5 +76,13 @@
 		"settings": "Settings",
 		"account": "Account",
 		"logout": "Logout"
+	},
+	"explore": {
+		"title": "Explore",
+		"subtitle": "Find a new person to follow"
+	},
+	"home": {
+		"title": "Home",
+		"subtitle": "Content for you, made by your choices"
 	}
 }

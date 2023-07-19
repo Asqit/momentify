@@ -25,7 +25,7 @@ export class App {
 		this.server = createServer(this.router);
 		this.PUBLIC_PATH = join(__dirname, 'public');
 
-		this.initMiddlewares();
+		this.initMiddleware();
 	}
 
 	/**
@@ -50,7 +50,7 @@ export class App {
 	 * and also executes `initRoutes`
 	 * method.
 	 */
-	private async initMiddlewares() {
+	private async initMiddleware() {
 		const router = this.router;
 
 		await PrismaConnector.connect();

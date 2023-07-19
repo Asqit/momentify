@@ -31,6 +31,15 @@ const usersApi = baseApi.injectEndpoints({
 				body: data,
 			}),
 		}),
+		// Change bio ------------------------------------------->
+		changeBio: builder.mutation<User, { bio: string; id: string }>({
+			invalidatesTags: ['Users'],
+			query: ({ id, bio }) => ({
+				method: 'PUT',
+				url: `/users/${id}/bio`,
+				body: { bio },
+			}),
+		}),
 	}),
 });
 
@@ -38,4 +47,5 @@ export const {
 	useGetUserQuery,
 	useToggleFollowUserMutation,
 	useChangeProfilePictureMutation,
+	useChangeBioMutation,
 } = usersApi;

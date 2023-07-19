@@ -116,7 +116,7 @@ export function Settings() {
 			<Modal
 				isOpen={isOpen}
 				callback={() => setIsOpen((prev) => !prev)}
-				className="p-4 rounded-md my-4"
+				className="p-4 rounded-md my-4 dark:bg-slate-950 dark:text-slate-200"
 			>
 				<h1 className="my-2 text-2xl">Change password</h1>
 				<hr />

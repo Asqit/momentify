@@ -77,5 +77,13 @@
 		"settings": "Nastavení",
 		"account": "Účet",
 		"logout": "Odhlásit se"
+	},
+	"explore": {
+		"title": "Badej",
+		"subtitle": "Najdi něco nového!"
+	},
+	"home": {
+		"title": "Domov",
+		"subtitle": "Obsaho přispůsobený jen tebou"
 	}
 }

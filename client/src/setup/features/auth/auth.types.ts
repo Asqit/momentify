@@ -14,6 +14,7 @@ export type User = {
 	followersIds: string[];
 	followingIds: string[];
 	posts: Post[];
+	bio: string | null;
 };
 
 /**
