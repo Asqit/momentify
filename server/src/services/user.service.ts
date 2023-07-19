@@ -5,8 +5,8 @@ import asyncHandler from 'express-async-handler';
 import fs from 'node:fs/promises';
 import sharp from 'sharp';
 import path from 'node:path';
-import { unlink } from 'node:fs';
 import { logger } from '~/utils/logger';
+import { User } from '@prisma/client';
 
 const prisma = PrismaConnector.client;
 
@@ -17,14 +17,22 @@ export const getUser = asyncHandler(async (req: Request, res: Response) => {
 		where: {
 			id,
 		},
-		include: { posts: true, followers: true, following: true },
+		include: {
+			posts: {
+				include: {
+					comments: true,
+				},
+			},
+			followers: true,
+			following: true,
+		},
 	});
 
 	if (!user) {
 		throw new HttpException(404, 'User not found');
 	}
 
-	const responseUser: any = user;
+	const responseUser: Partial<User> = user;
 
 	delete responseUser.hashPassword;
 
@@ -46,8 +54,8 @@ export const toggleFollowUser = asyncHandler(async (req: Request, res: Response)
 	const isFollowerFollowing = user.followersIds.includes(followerId);
 
 	if (isFollowerFollowing) {
-		user.followersIds = user.followersIds.filter((id) => id !== followerId);
-		follower.followingIds = follower.followingIds.filter((id) => id !== userId);
+		user.followersIds = user.followersIds.filter((id: string) => id !== followerId);
+		follower.followingIds = follower.followingIds.filter((id: string) => id !== userId);
 	} else {
 		user.followersIds.push(followerId);
 		follower.followingIds.push(userId);
@@ -174,4 +182,18 @@ export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
 		logger.error(JSON.stringify(error));
 		throw new HttpException(500, 'Server error');
 	}
+});
+
+export const changeBio = asyncHandler(async (req: Request, res: Response) => {
+	const { userId } = req.params;
+	const { bio } = req.body;
+	const user = await prisma.user.update({ where: { id: userId }, data: { bio } });
+
+	const responseUser: Partial<User> = user;
+
+	delete responseUser.hashPassword;
+
+	res.status(200).json({
+		user: responseUser,
+	});
 });

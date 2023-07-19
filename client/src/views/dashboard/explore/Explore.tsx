@@ -1,14 +1,16 @@
 import { useGetGlobalFeedQuery } from '~/setup/features/posts/posts.api';
 import { MiniPost, MiniPostSkeleton } from '~/components';
+import { useTranslation } from 'react-i18next';
 
 export function Explore() {
 	const { data, isLoading } = useGetGlobalFeedQuery();
+	const { t } = useTranslation();
 
 	return (
 		<section className={'w-full h-full p-4 dark:text-gray-200'}>
 			<div className="m-4">
-				<h1 className="font-bold text-3xl my-2 md:text-4xl">Explore</h1>
-				<p className="text-gray-400 my-2">Find a new person to follow</p>
+				<h1 className="font-bold text-3xl my-2 md:text-4xl">{t('explore.title')}</h1>
+				<p className="text-gray-400 my-2">{t('explore.subtitle')}</p>
 				<hr className="dark:border-gray-800" />
 			</div>
 			<div

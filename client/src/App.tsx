@@ -32,8 +32,8 @@ export default function App() {
 	return (
 		<>
 			<Routes>
-				<Route element={<ProtectedRoute />}>
-					<Route path="" element={<Dashboard />}>
+				<Route path="/" element={<ProtectedRoute />}>
+					<Route element={<Dashboard />}>
 						<Route index element={<Home />} />
 						<Route path="explore" element={<Explore />} />
 						<Route path="account/:id" element={<Account />} />

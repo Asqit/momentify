@@ -92,7 +92,7 @@ export function Comment(props: CommentProps) {
 				/>
 				<p>{time}</p>
 			</div>
-			<div className="pl-2 border-l">
+			<div className="pl-2 border-l dark:border-slate-800">
 				{isEditing ? (
 					<input
 						type="text"

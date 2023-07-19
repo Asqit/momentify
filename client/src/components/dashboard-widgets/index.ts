@@ -6,6 +6,7 @@
 // =============================================
 export * from './memoized-slideshow/MemoizedSlideshow';
 export * from './mini-post-skeleton/MiniPostSkeleton';
+export * from './profile-picture/ProfilePicture';
 export * from './profile-details/ProfileDetails';
 export * from './inline-profile/InlineProfile';
 export * from './post-skeleton/PostSkeleton';

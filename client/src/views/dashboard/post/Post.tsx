@@ -105,7 +105,7 @@ export function Post(props: PostProps) {
 				{isLoading ? (
 					<PostSkeleton />
 				) : (
-					<article className="w-full h-full p-4 dark:text-gray-200 overflow-y-auto dark:bg-gray-950">
+					<article className="w-full h-full p-4 dark:text-gray-200 overflow-y-auto dark:bg-gray-950 relative">
 						<div className="flex justify-between">
 							<InlineProfile
 								id={data.authorId}
@@ -166,37 +166,37 @@ export function Post(props: PostProps) {
 							<span className="font-bold capitalize">{data.author.username}: </span>
 							{data.title}
 						</p>
-						<details>
-							<summary>view more</summary>
-							<hr className="dark:border-gray-800 my-4" />
-							<ul className="my-4">
-								{data.comments.length === 0 ? (
-									<li className="my-4">
-										<span>Be first one to post a comment</span>
-									</li>
-								) : (
-									data.comments.map((details) => <Comment {...details} />)
-								)}
-							</ul>
-							<form className="flex w-full" onSubmit={handleSubmit}>
-								<Textfield
-									id="comment"
-									parentClassName="flex-grow rounded-r-none"
-									label="Your comment"
-									placeholder="e.g. Nice photos"
-									value={commentValue}
-									onChange={(e) => setCommentValue(e.currentTarget.value)}
-								/>
-								<Button
-									disabled={!commentValue}
-									className="rounded-l-none"
-									type="submit"
-									buttonColor="primary"
-								>
-									post
-								</Button>
-							</form>
-						</details>
+						<hr className="dark:border-gray-800 my-4" />
+						<ul className="my-4">
+							{data.comments.length === 0 ? (
+								<li className="my-4">
+									<span>Be first one to post a comment</span>
+								</li>
+							) : (
+								data.comments.map((details) => <Comment {...details} />)
+							)}
+						</ul>
+						<form
+							className="flex w-[calc(100%+16px)] sticky -bottom-4 right-0 z-10 bg-white dark:bg-slate-950 p-4"
+							onSubmit={handleSubmit}
+						>
+							<Textfield
+								id="comment"
+								parentClassName="flex-grow rounded-r-none"
+								label="Your comment"
+								placeholder="e.g. Nice photos"
+								value={commentValue}
+								onChange={(e) => setCommentValue(e.currentTarget.value)}
+							/>
+							<Button
+								disabled={!commentValue}
+								className="rounded-l-none"
+								type="submit"
+								buttonColor="primary"
+							>
+								post
+							</Button>
+						</form>
 					</article>
 				)}
 			</main>

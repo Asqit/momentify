@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Navbar, PostModal, Sidebar } from '~/components';
+import { Navbar, Sidebar } from '~/components';
 import { useMediaQuery } from '~/hooks';
 
 export function Dashboard() {

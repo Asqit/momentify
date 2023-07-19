@@ -1,10 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authApi as api } from './auth.api';
 import { AuthState, LoginResponse, User } from './auth.types';
+const ACCESS_TOKEN_KEY = 'momentify/access-token';
+
+function getAccessToken() {
+	if (!localStorage.getItem(ACCESS_TOKEN_KEY)) {
+		return '';
+	}
+
+	return JSON.parse(localStorage.getItem(ACCESS_TOKEN_KEY)!);
+}
 
 const initialState: AuthState = {
 	user: null,
-	accessToken: '',
+	accessToken: getAccessToken(),
 };
 
 const authSlice = createSlice({
@@ -14,6 +23,8 @@ const authSlice = createSlice({
 		logout: (state) => {
 			state.accessToken = '';
 			state.user = null;
+
+			localStorage.removeItem(ACCESS_TOKEN_KEY);
 		},
 		updateUser: (state, action: PayloadAction<User>) => {
 			state.user = {
@@ -33,6 +44,11 @@ const authSlice = createSlice({
 				(state, action: PayloadAction<LoginResponse>) => {
 					state.accessToken = action.payload.accessToken;
 					state.user = action.payload.user;
+
+					localStorage.setItem(
+						ACCESS_TOKEN_KEY,
+						JSON.stringify(action.payload.accessToken),
+					);
 				},
 			)
 			// Change password ---------------->
