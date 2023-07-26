@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { SignOptions, TokenExpiredError } from 'jsonwebtoken';
 import { JwtPayload } from 'jsonwebtoken';
-import { serverConfig } from '~/config/server.config';
+import { serverConfig } from '../config/server.config';
 import { HttpException } from './HttpException';
 import { PrismaConnector } from './PrismaConnector';
 import asyncHandler from 'express-async-handler';

@@ -1,12 +1,12 @@
-import * as service from '~/services/auth.service';
+import * as service from '../services/auth.service';
 import { Router } from 'express';
-import { Jwt } from '~/utils/Jwt';
-import { validateRequest } from '~/middlewares';
+import { Jwt } from '../utils/Jwt';
+import { validateRequest } from '../middlewares';
 import {
 	changePasswordSchema,
 	loginSchema,
 	registerSchema,
-} from '~/validation/auth.validation';
+} from '../validation/auth.validation';
 
 const authRoutes = Router();
 

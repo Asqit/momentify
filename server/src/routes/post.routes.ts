@@ -1,9 +1,9 @@
-import { validateRequest } from '~/middlewares';
-import * as service from '~/services/post.service';
-import { uploadPostBody } from '~/utils/multer';
+import { validateRequest } from '../middlewares';
+import * as service from '../services/post.service';
+import { uploadPostBody } from '../utils/multer';
 import { Router } from 'express';
-import { postCreationSchema } from '~/validation/post.validation';
-import { Jwt } from '~/utils/Jwt';
+import { postCreationSchema } from '../validation/post.validation';
+import { Jwt } from '../utils/Jwt';
 
 const postRoutes = Router();
 

@@ -4,13 +4,13 @@ import {
 	RegisterSchema,
 } from '../validation/auth.validation';
 import { Request, Response } from 'express';
-import { HttpException } from '~/utils/HttpException';
-import { serverConfig } from '~/config/server.config';
+import { HttpException } from '../utils/HttpException';
+import { serverConfig } from '../config/server.config';
 import { hash, verify } from 'argon2';
 import { verify as verifyJWT } from 'jsonwebtoken';
-import { Email } from '~/utils/Email';
-import { Jwt } from '~/utils/Jwt';
-import { PrismaConnector } from '~/utils/PrismaConnector';
+import { Email } from '../utils/Email';
+import { Jwt } from '../utils/Jwt';
+import { PrismaConnector } from '../utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import Joi from 'joi';

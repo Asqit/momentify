@@ -1,5 +1,6 @@
 import { SendMailOptions, createTransport } from 'nodemailer';
-import { serverConfig } from '~/config/server.config';
+import { serverConfig } from '../config/server.config';
+import { Attempt } from '../middlewares';
 
 /**
  * Class for email manipulation
@@ -42,6 +43,29 @@ export class Email {
 			const response = await this.transporter.sendMail(opts);
 
 			return response;
+		} catch (error) {
+			throw new Error(`Email could not be send\n\rDetails: ${error}`);
+		}
+	}
+
+	public static async sendLoginWarning(emailTo: string, attackDetails: Attempt) {
+		try {
+			const opts: SendMailOptions = {
+				from: serverConfig.SMTP_USER,
+				to: emailTo,
+				subject: 'Momentify - Login Warning',
+				html: `
+					<h1>Momentify - Account Security Warning</h1>
+					<p>Hello, we noticed multiple invalid login attempts with your credentials.</p>
+					<details>
+						<summary>Attack Details</summary>
+						<ul>
+							<li><b>Date</b>: ${new Date(attackDetails.timestamp).toUTCString()} UTC</li>
+							<li><b>Used Password</b>: ${attackDetails.credentials.password}</li>
+						</ul>
+					</details>
+				`,
+			};
 		} catch (error) {
 			throw new Error(`Email could not be send\n\rDetails: ${error}`);
 		}

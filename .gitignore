@@ -2,9 +2,9 @@
 server/*.env
 server/vscode
 server/.idea
-server/dist
 server/node_modules
 server/public/logs
 
+*/dist
 .vscode
 .idea

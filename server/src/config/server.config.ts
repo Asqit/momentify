@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { exit } from 'process';
-import { logger } from '~/utils/logger';
+import { logger } from '../utils/logger';
 
 dotenv.config();
 

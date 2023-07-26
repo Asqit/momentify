@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
-import { HttpException } from '~/utils/HttpException';
+import { HttpException } from '../../utils/HttpException';
 
 /** Custom error handler middleware */
 function errorHandler(

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ObjectSchema, ValidationResult } from 'joi';
-import { HttpException } from '~/utils/HttpException';
+import { HttpException } from '../..//utils/HttpException';
 
 interface ValidatedRequest<T> extends Request {
 	body: T;
