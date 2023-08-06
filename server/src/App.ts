@@ -1,6 +1,6 @@
-import { join } from 'node:path';
-import { cpus } from 'node:os';
-import http from 'node:http';
+import { join } from 'path';
+import { cpus } from 'os';
+import http from 'http';
 import express from 'express';
 import cluster from 'cluster';
 import compression from 'compression';

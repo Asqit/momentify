@@ -1,4 +1,4 @@
-import { exit } from 'node:process';
+import { exit } from 'process';
 import { App } from './App';
 
 async function main(): Promise<void> {
