@@ -8,7 +8,7 @@ export default defineConfig({
 		// cors: false,
 		proxy: {
 			'/api': {
-				target: 'http://localhost:8080/',
+				target: 'https://momentify-server.onrender.com',
 				// changeOrigin: true,
 			},
 		},
