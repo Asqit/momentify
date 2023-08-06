@@ -1,0 +1,7 @@
+# Ignore files in Server-side 
+*.env
+.vscode
+.idea
+node_modules
+public/logs
+dist

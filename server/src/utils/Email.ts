@@ -1,19 +1,15 @@
 import { SendMailOptions, createTransport } from 'nodemailer';
-import { serverConfig } from '../config/server.config';
 import { Attempt } from '../middlewares';
+import { env } from './env';
 
-/**
- * Class for email manipulation
- *
- * **Note**: class is not instantiable, just contains static methods.
- */
+/** Static class for emailing */
 export class Email {
 	private static readonly transporter = createTransport({
-		host: serverConfig.SMTP_SERVICE,
-		port: Number(serverConfig.SMTP_PORT),
+		host: env('SMTP_SERVICE'),
+		port: +env('SMTP_PORT'),
 		auth: {
-			user: serverConfig.SMTP_USER,
-			pass: serverConfig.SMTP_PASSWORD,
+			user: env('SMTP_USER'),
+			pass: env('SMTP_PASSWORD'),
 		},
 	});
 
@@ -26,7 +22,7 @@ export class Email {
 	public static async sendVerification(emailTo: string, token: string) {
 		try {
 			const opts: SendMailOptions = {
-				from: serverConfig.SMTP_USER,
+				from: env('SMTP_USER'),
 				to: emailTo,
 				subject: 'Momentify - Email verification',
 				html: `
@@ -34,7 +30,9 @@ export class Email {
                     <br/>
                     <p>To continue, please click the following link to verify your email address.</p>
                     <br/>
-                    <a href="http://localhost:${serverConfig.API_PORT}/api/auth/verify/email/${token}">click me</a>
+                    <a href="http://localhost:${env(
+											'PORT',
+										)}/api/auth/verify/email/${token}">click me</a>
                     <br/>
                     <i>Please note, that this email was automatically generated and thus responding to it makes no sense.<i>
                 `,
@@ -48,10 +46,16 @@ export class Email {
 		}
 	}
 
+	/**
+	 * A method used to notify our user about attack on his/her account
+	 * @param emailTo user's email address
+	 * @param attackDetails details about the attack (time and credentials)
+	 * @returns info about the email
+	 */
 	public static async sendLoginWarning(emailTo: string, attackDetails: Attempt) {
 		try {
 			const opts: SendMailOptions = {
-				from: serverConfig.SMTP_USER,
+				from: env('SMTP_USER'),
 				to: emailTo,
 				subject: 'Momentify - Login Warning',
 				html: `
@@ -66,6 +70,10 @@ export class Email {
 					</details>
 				`,
 			};
+
+			const resp = await this.transporter.sendMail(opts);
+
+			return resp;
 		} catch (error) {
 			throw new Error(`Email could not be send\n\rDetails: ${error}`);
 		}

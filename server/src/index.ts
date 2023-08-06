@@ -1,13 +1,12 @@
 import { exit } from 'node:process';
 import { App } from './App';
 
-/** Main entry point of my RESTful API application */
 async function main(): Promise<void> {
 	try {
 		const arg: string = process.argv[2];
 
 		if (arg === '--cluster') {
-			App.initCluster();
+			App.initAsCluster();
 			return;
 		}
 

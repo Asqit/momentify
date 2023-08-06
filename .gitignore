@@ -1,10 +1,2 @@
-# Ignore files in Server-side 
-server/*.env
-server/vscode
-server/.idea
-server/node_modules
-server/public/logs
-
-*/dist
 .vscode
 .idea

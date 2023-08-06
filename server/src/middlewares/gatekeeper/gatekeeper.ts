@@ -21,7 +21,6 @@ interface BlackListRecord {
 
 const heap: string[] = [];
 
-// RAM-like blacklist. (Once out-of-juice it's empty)
 const blackList: Map<string, BlackListRecord> = new Map();
 
 /** Middleware serving as gatekeeper for login endpoint.

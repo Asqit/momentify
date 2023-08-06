@@ -45,8 +45,8 @@ export function MiniPost(props: MiniPostProps) {
 	};
 
 	return (
-		<div className="w-fit h-fit p-2 pb-3 border border-transparent dark:bg-gray-950  hover:border-gray-200 dark:text-gray-200 dark:hover:border-gray-800 transition-colors rounded-xl">
-			<div className="mb-2">
+		<article className="w-fit p-2 pb-3 border border-transparent dark:bg-gray-950  hover:border-gray-200 dark:text-gray-200 dark:hover:border-gray-800 transition-colors rounded-xl">
+			<figure className="max-w-[500px]">
 				{Array.isArray(body) && body.length > 1 ? (
 					<MemoizedSlideshow
 						callback={navigateToPost}
@@ -55,17 +55,15 @@ export function MiniPost(props: MiniPostProps) {
 				) : (
 					<LazyImage
 						crossOrigin="anonymous"
-						className={
-							'max-w-2xl w-full aspect-square object-cover rounded-md cursor-pointer'
-						}
+						className={'object-cover rounded-md cursor-pointer'}
 						src={`http://localhost:8080/${body}`}
 						alt=""
 						onClick={navigateToPost}
 						loading="eager"
 					/>
 				)}
-			</div>
-			<div className="mt-4 flex items-center justify-between px-4">
+			</figure>
+			<header className="mt-4 flex items-center justify-between px-4">
 				<InlineProfile {...author} />
 				<div className="flex gap-x-3">
 					<HeartButton
@@ -77,7 +75,7 @@ export function MiniPost(props: MiniPostProps) {
 						<FaRegComment /> <span>{comments ? comments.length : 0}</span>
 					</span>
 				</div>
-			</div>
-		</div>
+			</header>
+		</article>
 	);
 }

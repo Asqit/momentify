@@ -2,7 +2,7 @@ import { join } from 'node:path';
 import { cpus } from 'node:os';
 import http from 'node:http';
 import express from 'express';
-import cluster, { Worker } from 'cluster';
+import cluster from 'cluster';
 import compression from 'compression';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -12,7 +12,6 @@ import { logger } from './utils/logger';
 import * as middleware from './middlewares';
 import * as routes from './routes';
 
-/** Main application class. Can be used to create cluster. */
 export class App {
 	private readonly router: express.Application;
 	private readonly PUBLIC_PATH: string;
@@ -26,10 +25,6 @@ export class App {
 		this.initMiddleware();
 	}
 
-	/**
-	 * This method will serve every possible
-	 * endpoint needed by client
-	 */
 	private initRoutes() {
 		const router = this.router;
 
@@ -42,12 +37,6 @@ export class App {
 		router.use('/api/comments', routes.commentRoutes);
 	}
 
-	/**
-	 * This method will initialize
-	 * every middleware used in the app
-	 * and also executes `initRoutes`
-	 * method.
-	 */
 	private async initMiddleware() {
 		const router = this.router;
 
@@ -70,10 +59,6 @@ export class App {
 		router.use(middleware.errorHandler);
 	}
 
-	/**
-	 * This methods starts the application.
-	 * Check console for output
-	 */
 	public listen() {
 		logger.info(
 			`A new momentify API has now started 🚀\n\tLocal Machine: http://localhost:8080`,
@@ -81,11 +66,7 @@ export class App {
 		this.server.listen(process.env.PORT || 8080);
 	}
 
-	/**
-	 * Static method, that will create a new cluster application
-	 * @returns Either array of `cluster.Worker` if needed or `undefined`.
-	 */
-	public static initCluster() {
+	public static initAsCluster() {
 		if (cluster.isPrimary) {
 			const CPUS = cpus().length;
 			logger.info(`Creating a new node cluster with ${CPUS} workers`);

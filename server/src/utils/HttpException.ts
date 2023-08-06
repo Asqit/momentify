@@ -1,17 +1,9 @@
-/**
- * Specialized error class for Http errors.
- */
+/** Class representing the Http error response */
 export class HttpException extends Error {
-	/**
-	 * A status code of the request.
-	 *
-	 * By default is `500` which means server error
-	 */
+	/** Http Status code of the operation (default = 500) */
 	public statusCode: number = 500;
 
-	/**
-	 * A localization key for translating errors on client-side
-	 */
+	/** (**experimental**) localization key for translating errors on client-side */
 	public i18ClientKey?: string = '';
 
 	constructor(statusCode: number, message: string, i18ClientKey?: string) {

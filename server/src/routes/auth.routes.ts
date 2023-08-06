@@ -27,9 +27,10 @@ authRoutes.put(
 	service.issuePassword,
 );
 
-// User manually wants to verify his/her email
+// User wants to manually verify his/her email
 authRoutes.get('/issue/email/:email', Jwt.protectedRoute(), service.issueEmail);
 
+// Client requests token refresh (both access and refresh)
 authRoutes.get('/refresh', service.refreshToken);
 
 export { authRoutes };
