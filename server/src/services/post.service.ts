@@ -1,9 +1,9 @@
-import { HttpException } from '~/utils/HttpException';
+import { HttpException } from '../utils/HttpException';
 import { Request, Response } from 'express';
 import { unlink } from 'node:fs';
 import { Post } from '@prisma/client';
-import { shuffle } from '~/utils/shuffle';
-import { PrismaConnector } from '~/utils/PrismaConnector';
+import { shuffle } from '../utils/shuffle';
+import { PrismaConnector } from '../utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
 import fs from 'node:fs/promises';
 import path from 'node:path';

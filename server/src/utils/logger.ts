@@ -3,7 +3,9 @@ import { format, createLogger, transports } from 'winston';
 const getTimestamp = () => new Date().toISOString().toUpperCase();
 
 const customFormat = format.printf((info) => {
-	return `[${getTimestamp()}] [${info.level.toUpperCase()}] ${info.message}`;
+	return `[${getTimestamp()}] [PID:${process.pid}] [${info.level.toUpperCase()}] ${
+		info.message
+	}`;
 });
 
 export const logger = createLogger({

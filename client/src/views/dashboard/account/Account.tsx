@@ -25,15 +25,11 @@ export function Account() {
 						<ProfileDetails {...user} />
 					</div>
 					<hr className="dark:border-gray-800" />
-					<div
-						className={
-							'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-4 gap-4'
-						}
-					>
+					<div className={'masonry sm:masonry-sm md:masonry-md p-4'}>
 						{user && user.posts && user.posts.length > 0
 							? user.posts.map((post: Post) => {
 									return (
-										<div className="w-full md:max-w-sm" key={post.id}>
+										<div className="break-inside my-2" key={post.id}>
 											<MiniPost
 												title={post.title!}
 												likedBy={post.likedBy!}

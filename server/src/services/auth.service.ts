@@ -4,17 +4,16 @@ import {
 	RegisterSchema,
 } from '../validation/auth.validation';
 import { Request, Response } from 'express';
-import { HttpException } from '~/utils/HttpException';
-import { serverConfig } from '~/config/server.config';
+import { HttpException } from '../utils/HttpException';
 import { hash, verify } from 'argon2';
 import { verify as verifyJWT } from 'jsonwebtoken';
-import { Email } from '~/utils/Email';
-import { Jwt } from '~/utils/Jwt';
-import { PrismaConnector } from '~/utils/PrismaConnector';
+import { Email } from '../utils/Email';
+import { Jwt } from '../utils/Jwt';
+import { PrismaConnector } from '../utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
-import jwt from 'jsonwebtoken';
 import Joi from 'joi';
 import { User } from '@prisma/client';
+import { env } from '../utils/env';
 
 const prisma = PrismaConnector.client;
 
@@ -71,7 +70,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 	}
 
 	if (!user.verified) {
-		res.redirect(`http://localhost:${serverConfig.API_PORT}/api/auth/issue/email/${email}`);
+		res.redirect(`http://localhost:${env('PORT')}/api/auth/issue/email/${email}`);
 	}
 
 	if (!(await verify(user.hashPassword, password))) {
@@ -97,7 +96,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
 	const { token } = req.params;
 
-	const decoded = verifyJWT(token, serverConfig.EMAIL_TOKEN_SECRET);
+	const decoded = verifyJWT(token, env('EMAIL_TOKEN_SECRET'));
 
 	if (!Jwt.isMomentifyToken(decoded)) {
 		throw new HttpException(401, 'Invalid token');

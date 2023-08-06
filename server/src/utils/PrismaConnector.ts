@@ -2,21 +2,17 @@ import { PrismaClient } from '@prisma/client';
 import { exit } from 'process';
 import { logger } from './logger';
 
-/**
- * Class used manipulation with Prisma
- *
- * **Note:** This class is not instantiable, just use it's static methods and props.
- */
+/** Static class used to manage prisma client */
 export class PrismaConnector {
 	public static readonly client: PrismaClient = new PrismaClient();
 
 	/**
-	 * Method used for initiating database connection. It is not really needed,
-	 * because of prisma's `lazy connection`.
+	 * This method is used for initiating a new database connection.
+	 * By default prisma uses it's `lazy connection`, but for our purposes, it's better to actually check the connection.
 	 *
-	 * **Note:** If operations fails, the entire application will fail with code 1
+	 * **Warning:** This method may fail and with it the entire service will exit with code 1
 	 */
-	public static async connect() {
+	public static async connect(): Promise<void> {
 		try {
 			logger.info('PrismaClient is now initiating connection with database');
 			await this.client.$connect();
@@ -30,9 +26,9 @@ export class PrismaConnector {
 	}
 
 	/**
-	 * Method used for canceling database connection.
+	 * A method used for destroying the database connection.
 	 *
-	 * **Note:** If operations fails, the entire application will fail with code 1
+	 * **Warning:** If this method fail, the entire service will exit with code 1
 	 */
 	public static async disconnect() {
 		try {

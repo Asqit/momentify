@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+	@variants responsive {
+		.masonry {
+			column-gap: 1.5em;
+			column-count: 1;
+		}
+		.masonry-sm {
+			column-gap: 1.5em;
+			column-count: 2;
+		}
+		.masonry-md {
+			column-gap: 1.5em;
+			column-count: 3;
+		}
+		.break-inside {
+			break-inside: avoid;
+		}
+	}
+}
+
 @layer components {
 	.btn {
 		@apply disabled:cursor-not-allowed disabled:opacity-50 py-3 px-6 rounded-md bg-gray-500 text-white hover:bg-gray-600 active:bg-gray-700 transition-colors shadow-sm shadow-gray-700 font-semibold capitalize;

@@ -1,11 +1,11 @@
-import * as services from '~/services/comment.service';
-import { validateRequest } from '~/middlewares';
+import * as services from '../services/comment.service';
+import { validateRequest } from '../middlewares';
 import {
 	commentCreationSchema,
 	commentUpdateSchema,
-} from '~/validation/comment.validation';
+} from '../validation/comment.validation';
 import { Router } from 'express';
-import { Jwt } from '~/utils/Jwt';
+import { Jwt } from '../utils/Jwt';
 
 const commentRoutes = Router();
 

@@ -1,19 +1,17 @@
-import http from 'node:http';
 import { join } from 'node:path';
 import { cpus } from 'node:os';
-import { PrismaConnector } from './utils/PrismaConnector';
-import { logger } from './utils/logger';
-import { serverConfig } from '~/config/server.config';
-// I am using 'as' imports for barrel imports, don't be confused
-import * as middleware from '~/middlewares';
-import * as routes from '~/routes';
+import http from 'node:http';
 import express from 'express';
-import cluster, { Worker } from 'cluster';
+import cluster from 'cluster';
 import compression from 'compression';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-/** Main application class. Can be used to create cluster. */
+import { PrismaConnector } from './utils/PrismaConnector';
+import { logger } from './utils/logger';
+import * as middleware from './middlewares';
+import * as routes from './routes';
+
 export class App {
 	private readonly router: express.Application;
 	private readonly PUBLIC_PATH: string;
@@ -27,10 +25,6 @@ export class App {
 		this.initMiddleware();
 	}
 
-	/**
-	 * This method will serve every possible
-	 * endpoint needed by client
-	 */
 	private initRoutes() {
 		const router = this.router;
 
@@ -43,12 +37,6 @@ export class App {
 		router.use('/api/comments', routes.commentRoutes);
 	}
 
-	/**
-	 * This method will initialize
-	 * every middleware used in the app
-	 * and also executes `initRoutes`
-	 * method.
-	 */
 	private async initMiddleware() {
 		const router = this.router;
 
@@ -62,7 +50,6 @@ export class App {
 		router.use(express.json());
 		router.use(cookieParser());
 		router.use(cors({ origin: ['http://localhost:8080', 'http://localhost:5173'] }));
-		//router.use(helmet());
 		router.use(middleware.gatekeeper);
 		router.use(middleware.requestLogger);
 
@@ -72,47 +59,30 @@ export class App {
 		router.use(middleware.errorHandler);
 	}
 
-	/**
-	 * This methods starts the application.
-	 * Check console for output
-	 */
 	public listen() {
-		const { API_HOSTNAME, API_PORT } = serverConfig;
-
-		this.server.listen(API_PORT, () => {
-			logger.info(
-				`New express application with pid of ${process.pid} is now available at http://${API_HOSTNAME}:${API_PORT}`,
-			);
-		});
+		logger.info(
+			`A new momentify API has now started 🚀\n\tLocal Machine: http://localhost:8080`,
+		);
+		this.server.listen(process.env.PORT || 8080);
 	}
 
-	/**
-	 * Static method, that will create a new cluster application
-	 * @returns Either array of `cluster.Worker` if needed or `undefined`.
-	 */
-	public static initCluster() {
-		let workers: Worker[] = [];
-
+	public static initAsCluster() {
 		if (cluster.isPrimary) {
 			const CPUS = cpus().length;
 			logger.info(`Creating a new node cluster with ${CPUS} workers`);
 
 			for (let i = 0; i < CPUS; i++) {
-				workers.push(cluster.fork());
+				cluster.fork();
 			}
 
 			cluster.on('exit', (worker, code, signal) => {
-				workers = workers.filter((wk) => wk.id != worker.id);
-
 				logger.error(
 					`Worker (${worker.process.pid}) died with code ${code} and signal ${signal}`,
 				);
 				logger.info('Replacement worker is being created');
 
-				workers.push(cluster.fork());
+				cluster.fork();
 			});
-
-			return workers;
 		}
 
 		new App().listen();

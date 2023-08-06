@@ -1,7 +1,4 @@
 {
-	"ts-node": {
-		"require": ["tsconfig-paths/register"]
-	},
 	"compilerOptions": {
 		"experimentalDecorators": true,
 		"target": "es2016",

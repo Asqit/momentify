@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { HttpException } from '~/utils/HttpException';
-import { PrismaConnector } from '~/utils/PrismaConnector';
+import { HttpException } from '../utils/HttpException';
+import { PrismaConnector } from '../utils/PrismaConnector';
 import asyncHandler from 'express-async-handler';
 
 const prisma = PrismaConnector.client;

@@ -1,12 +1,20 @@
-import { serverConfig } from '~/config/server.config';
+import { exit } from 'node:process';
 import { App } from './App';
 
-function wrapper() {
-	if (serverConfig.NODE_ENV === 'development') {
-		return new App().listen();
+async function main(): Promise<void> {
+	try {
+		const arg: string = process.argv[2];
+
+		if (arg === '--cluster') {
+			App.initAsCluster();
+			return;
+		}
+
+		new App().listen();
+	} catch (error) {
+		console.error(error);
+		exit(1);
 	}
-	
-	App.initCluster();
 }
 
-wrapper();
+main();

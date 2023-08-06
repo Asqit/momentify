@@ -6,7 +6,9 @@
 	"scripts": {
 		"dev:prepare": "yarn && yarn prisma generate",
 		"dev": "nodemon ./src/index.ts",
+		"dev-cluster": "nodemon ./src/index.ts --cluster",
 		"prod": "node ./dist/index.js",
+		"prod-cluster": "node ./dist/index.js --cluster",
 		"build": "tsc --build && yarn format",
 		"format": "yarn prettier --write ."
 	},

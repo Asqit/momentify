@@ -35,7 +35,7 @@ export function Slideshow(props: SlideshowProps) {
 				{images.map((filename) => {
 					return (
 						<LazyImage
-							className="h-full aspect-square object-cover inline-block dark:brightness-75"
+							className="w-full h-auto object-cover inline-block dark:brightness-75"
 							src={filename}
 							key={filename}
 							alt={filename}

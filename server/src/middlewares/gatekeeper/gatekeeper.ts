@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { exit } from 'process';
-import { logger } from '~/utils/logger';
+import { Email } from '../../utils/Email';
+import { logger } from '../../utils/logger';
 
-interface Attempt {
+export interface Attempt {
 	/** unix timestamp of each attempt */
 	timestamp: number;
 
@@ -20,7 +21,6 @@ interface BlackListRecord {
 
 const heap: string[] = [];
 
-// RAM-like blacklist. (Once out-of-juice it's empty)
 const blackList: Map<string, BlackListRecord> = new Map();
 
 /** Middleware serving as gatekeeper for login endpoint.
@@ -64,6 +64,8 @@ export async function gatekeeper(req: Request, res: Response, next: NextFunction
 				res.status(403).json({
 					message: 'Too many attempts. Try again in 1 hour.',
 				});
+
+				await Email.sendLoginWarning(req.body.email, attempt);
 
 				return;
 			}

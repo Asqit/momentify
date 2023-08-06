@@ -1,21 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { SignOptions, TokenExpiredError } from 'jsonwebtoken';
 import { JwtPayload } from 'jsonwebtoken';
-import { serverConfig } from '~/config/server.config';
 import { HttpException } from './HttpException';
 import { PrismaConnector } from './PrismaConnector';
 import asyncHandler from 'express-async-handler';
+import { env } from './env';
 
 /** An `interface` describing our token */
 interface MomentifyToken extends JwtPayload {
 	userId: string;
 }
 
-/**
- * Class for Jwt manipulation
- *
- * **Note**: class is not instantiable, just contains static methods.
- */
+/** Static class for json-web-token manipulation */
 export class Jwt {
 	/**
 	 * Method used for getting a new access token
@@ -24,7 +20,7 @@ export class Jwt {
 	 * @returns A newly generated Jwt token used as access token. (It lasts 15 minutes)
 	 */
 	public static createAccessToken(userId: string, opts?: SignOptions) {
-		return jwt.sign({ userId }, serverConfig.ACCESS_TOKEN_SECRET, {
+		return jwt.sign({ userId }, env('ACCESS_TOKEN_SECRET'), {
 			...opts,
 			expiresIn: '15min',
 		});
@@ -36,7 +32,7 @@ export class Jwt {
 	 * @returns A newly generated JWT token used as refresh token. (It lasts 30 days)
 	 */
 	public static createRefreshToken(userId: string) {
-		return jwt.sign({ userId }, serverConfig.REFRESH_TOKEN_SECRET, {
+		return jwt.sign({ userId }, env('REFRESH_TOKEN_SECRET'), {
 			expiresIn: '30d',
 		});
 	}
@@ -47,7 +43,7 @@ export class Jwt {
 	 * @returns A newly generated Jwt token used as email token. (It lasts 1 hour)
 	 */
 	public static createEmailToken(userId: string) {
-		return jwt.sign({ userId }, serverConfig.EMAIL_TOKEN_SECRET, {
+		return jwt.sign({ userId }, env('EMAIL_TOKEN_SECRET'), {
 			expiresIn: '1h',
 		});
 	}
@@ -78,7 +74,7 @@ export class Jwt {
 				throw new HttpException(401, 'Missing authorization token');
 			}
 
-			const SECRET = serverConfig.ACCESS_TOKEN_SECRET;
+			const SECRET = env('ACCESS_TOKEN_SECRET');
 
 			if (!SECRET) {
 				throw new HttpException(500, 'Server did not provided a dependency');
@@ -110,9 +106,14 @@ export class Jwt {
 		});
 	}
 
+	/**
+	 * method used for checking if unknown token is ours
+	 * @param token the unknown token which is to be tested
+	 * @returns parsed token defined as our `MomentifyToken` interfaces
+	 */
 	public static verifyRefreshToken(token: string): MomentifyToken {
 		try {
-			const data = jwt.verify(token, serverConfig.REFRESH_TOKEN_SECRET);
+			const data = jwt.verify(token, env('REFRESH_TOKEN_SECRET'));
 
 			if (!this.isMomentifyToken(data)) {
 				throw new Error('Is not our token');
