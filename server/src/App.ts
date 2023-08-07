@@ -33,15 +33,6 @@ export class App {
 		router.use(express.static('public'));
 		router.use(express.static(this.PUBLIC_PATH));
 
-		if (env('NODE_ENV') === 'production') {
-			router.use(express.static(path.join(__dirname, '../../client/build')));
-			router.get('*', (req, res) =>
-				res.sendFile(path.resolve(__dirname, '../', '../', 'client', 'dist', 'index.html')),
-			);
-		} else {
-			router.use('/', express.static(path.join(__dirname, '/public')));
-		}
-
 		router.use('/api/auth', routes.authRoutes);
 		router.use('/api/posts', routes.postRoutes);
 		router.use('/api/users', routes.userRoutes);
