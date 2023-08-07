@@ -5,12 +5,8 @@ import path from 'node:path';
 // https://vitejs.dev/config/
 export default defineConfig({
 	server: {
-		// cors: false,
 		proxy: {
-			'/api': {
-				target: 'https://momentify-server.onrender.com/api/',
-				changeOrigin: true,
-			},
+			'/api': 'https://momentify-server.onrender.com/api',
 		},
 	},
 	resolve: {
