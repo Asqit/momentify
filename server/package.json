@@ -9,7 +9,7 @@
 		"dev-cluster": "nodemon ./src/index.ts --cluster",
 		"prod": "node ./dist/index.js",
 		"prod-cluster": "node ./dist/index.js --cluster",
-		"build": "tsc --build && yarn format",
+		"build": "tsc --build && yarn format && cd ../client && yarn build",
 		"format": "yarn prettier --write ."
 	},
 	"devDependencies": {

@@ -6,11 +6,13 @@ import cluster from 'cluster';
 import compression from 'compression';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 
 import { PrismaConnector } from './utils/PrismaConnector';
 import { logger } from './utils/logger';
 import * as middleware from './middlewares';
 import * as routes from './routes';
+import { env } from './utils/env';
 
 export class App {
 	private readonly router: express.Application;
@@ -31,6 +33,15 @@ export class App {
 		router.use(express.static('public'));
 		router.use(express.static(this.PUBLIC_PATH));
 
+		if (env('NODE_ENV') === 'production') {
+			router.use(express.static(path.join(__dirname, '../../client/build')));
+			router.get('*', (req, res) =>
+				res.sendFile(path.resolve(__dirname, '../', '../', 'client', 'dist', 'index.html')),
+			);
+		} else {
+			router.use('/', express.static(path.join(__dirname, '/public')));
+		}
+
 		router.use('/api/auth', routes.authRoutes);
 		router.use('/api/posts', routes.postRoutes);
 		router.use('/api/users', routes.userRoutes);
@@ -49,7 +60,7 @@ export class App {
 		router.use(express.urlencoded({ extended: true, limit: '12mb' }));
 		router.use(express.json());
 		router.use(cookieParser());
-		router.use(cors({ origin: ['http://localhost:8080', 'http://localhost:5173'] }));
+		router.use(cors({ origin: ['http://localhost', 'https://localhost'] }));
 		router.use(middleware.gatekeeper);
 		router.use(middleware.requestLogger);
 
