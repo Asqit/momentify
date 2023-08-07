@@ -21,6 +21,8 @@ export class Email {
 	 */
 	public static async sendVerification(emailTo: string, token: string) {
 		try {
+			const baseUrl = env('BASE_URL');
+
 			const opts: SendMailOptions = {
 				from: env('SMTP_USER'),
 				to: emailTo,
@@ -30,9 +32,7 @@ export class Email {
                     <br/>
                     <p>To continue, please click the following link to verify your email address.</p>
                     <br/>
-                    <a href="http://localhost:${env(
-											'PORT',
-										)}/api/auth/verify/email/${token}">click me</a>
+                    <a href="${baseUrl}/api/auth/verify/email/${token}"click me</a>
                     <br/>
                     <i>Please note, that this email was automatically generated and thus responding to it makes no sense.<i>
                 `,
