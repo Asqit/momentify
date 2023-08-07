@@ -8,8 +8,8 @@ export default defineConfig({
 		// cors: false,
 		proxy: {
 			'/api': {
-				target: 'https://momentify-server.onrender.com:8080/api/',
-				// changeOrigin: true,
+				target: 'https://momentify-server.onrender.com/api/',
+				changeOrigin: true,
 			},
 		},
 	},
