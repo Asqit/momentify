@@ -6,7 +6,10 @@ import path from 'node:path';
 export default defineConfig({
 	server: {
 		proxy: {
-			'/api': 'http://localhost:8080/api',
+			'/api': {
+				target: 'http://localhost:8080',
+				changeOrigin: true,
+			},
 		},
 	},
 	resolve: {
