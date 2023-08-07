@@ -6,7 +6,7 @@ import path from 'node:path';
 export default defineConfig({
 	server: {
 		proxy: {
-			'/api': 'https://momentify-server.onrender.com/api',
+			'/api': 'http://localhost:8080/api',
 		},
 	},
 	resolve: {

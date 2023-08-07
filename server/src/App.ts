@@ -27,6 +27,7 @@ export class App {
 		this.initMiddleware();
 	}
 
+	// Routes --------------------------------------------------------------------------------->
 	private initRoutes() {
 		const router = this.router;
 
@@ -37,8 +38,18 @@ export class App {
 		router.use('/api/posts', routes.postRoutes);
 		router.use('/api/users', routes.userRoutes);
 		router.use('/api/comments', routes.commentRoutes);
+
+		if (env('NODE_ENV') === 'production') {
+			router.use(express.static(path.join(__dirname, '../../client/dist')));
+			router.get('*', (req, res) =>
+				res.sendFile(path.resolve(__dirname, '../', '../', 'client', 'dist', 'index.html')),
+			);
+		} else {
+			router.use('/', express.static(path.join(__dirname, '/public')));
+		}
 	}
 
+	// Middleware ----------------------------------------------------------------------------->
 	private async initMiddleware() {
 		const router = this.router;
 
@@ -51,7 +62,7 @@ export class App {
 		router.use(express.urlencoded({ extended: true, limit: '12mb' }));
 		router.use(express.json());
 		router.use(cookieParser());
-		router.use(cors({ origin: ['http://localhost', 'https://localhost'] }));
+		router.use(cors({ origin: '*' }));
 		router.use(middleware.gatekeeper);
 		router.use(middleware.requestLogger);
 
@@ -61,6 +72,7 @@ export class App {
 		router.use(middleware.errorHandler);
 	}
 
+	// listen ----------------------------------------------------------------------------->
 	public listen() {
 		logger.info(
 			`A new momentify API has now started 🚀\n\tLocal Machine: http://localhost:8080`,
@@ -68,6 +80,7 @@ export class App {
 		this.server.listen(process.env.PORT || 8080);
 	}
 
+	// Cluster ----------------------------------------------------------------------------->
 	public static initAsCluster() {
 		if (cluster.isPrimary) {
 			const CPUS = cpus().length;
