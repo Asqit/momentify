@@ -40,7 +40,7 @@ export function ProfilePicture(props: ProfilePictureProps) {
 			}
 		>
 			<img
-				src={pictureSource ? `http://localhost:8080/${pictureSource}` : userPhoto}
+				src={pictureSource ? `/api/${pictureSource}` : userPhoto}
 				alt="User photography"
 				className="object-cover rounded-full w-full aspect-square bg-white dark:bg-slate-800"
 			/>
