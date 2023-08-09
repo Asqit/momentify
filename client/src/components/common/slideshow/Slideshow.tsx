@@ -40,7 +40,6 @@ export function Slideshow(props: SlideshowProps) {
 							key={filename}
 							alt={filename}
 							loading="eager"
-							crossOrigin="anonymous"
 						/>
 					);
 				})}

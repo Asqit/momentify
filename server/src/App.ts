@@ -34,7 +34,7 @@ export class App {
 	}
 
 	// Routes --------------------------------------------------------------------------------->
-	private initRoutes() {
+	private initRoutes(): void {
 		const router = this.router;
 
 		router.use(express.static('public'));
@@ -56,7 +56,7 @@ export class App {
 	}
 
 	// Middleware ----------------------------------------------------------------------------->
-	private async initMiddleware() {
+	private async initMiddleware(): Promise<void> {
 		const router = this.router;
 
 		await PrismaConnector.connect();

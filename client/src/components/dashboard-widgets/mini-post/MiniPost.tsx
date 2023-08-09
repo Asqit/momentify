@@ -54,7 +54,6 @@ export function MiniPost(props: MiniPostProps) {
 					/>
 				) : (
 					<LazyImage
-						crossOrigin="anonymous"
 						className={'object-cover rounded-md cursor-pointer'}
 						src={`http://localhost:8080/${body}`}
 						alt=""

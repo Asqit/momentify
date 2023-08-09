@@ -42,7 +42,6 @@ export function ProfilePicture(props: ProfilePictureProps) {
 			<img
 				src={pictureSource ? `http://localhost:8080/${pictureSource}` : userPhoto}
 				alt="User photography"
-				crossOrigin="anonymous"
 				className="object-cover rounded-full w-full aspect-square bg-white dark:bg-slate-800"
 			/>
 			<span className="hidden group-hover:block absolute top-full left-0 w-full bg-black rounded-md text-white text-center">

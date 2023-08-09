@@ -62,7 +62,6 @@ export function ProfileDetails(props: ProfileDetailsProps) {
 					<img
 						src={profilePicture ? `http://localhost:8080/${profilePicture}` : userPhoto}
 						alt="User photography"
-						crossOrigin="anonymous"
 						className="object-cover rounded-full w-[200px] h-[200px]"
 					/>
 				) : (
