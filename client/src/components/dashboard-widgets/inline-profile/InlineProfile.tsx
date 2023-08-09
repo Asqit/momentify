@@ -13,7 +13,7 @@ export function InlineProfile(props: InlineProfileProps) {
 	return (
 		<Link to={`/account/${id}`} className={'flex gap-x-4 items-center dark:text-gray-200'}>
 			<img
-				src={profilePicture ? `/api/${profilePicture}` : sampleUser}
+				src={profilePicture ? `/${profilePicture}` : sampleUser}
 				alt={'User photo'}
 				className="rounded-full aspect-square outline-dashed outline-1 outline-offset-2 outline-sky-500"
 				crossOrigin="anonymous"

@@ -50,12 +50,12 @@ export function MiniPost(props: MiniPostProps) {
 				{Array.isArray(body) && body.length > 1 ? (
 					<MemoizedSlideshow
 						callback={navigateToPost}
-						images={body.map((filename) => `/api/${filename}`)}
+						images={body.map((filename) => `/${filename}`)}
 					/>
 				) : (
 					<LazyImage
 						className={'object-cover rounded-md cursor-pointer'}
-						src={`/api/${body}`}
+						src={`/${body}`}
 						alt=""
 						onClick={navigateToPost}
 						loading="eager"
