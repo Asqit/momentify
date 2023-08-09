@@ -22,7 +22,7 @@ export class App {
 	private readonly ALLOWED_ORIGINS: string[] = [
 		'http://localhost:8080',
 		'http://localhost:5173',
-		'https://momentify-server.onrender.com/',
+		'https://momentify-server.onrender.com',
 	];
 
 	constructor() {
