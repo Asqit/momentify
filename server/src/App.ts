@@ -18,6 +18,12 @@ export class App {
 	private readonly router: express.Application;
 	private readonly PUBLIC_PATH: string;
 	private readonly server: http.Server;
+	private readonly CORS_METHODS: string[] = ['GET', 'POST', 'PUT', 'DELETE'];
+	private readonly ALLOWED_ORIGINS: string[] = [
+		'http://localhost:8080',
+		'http://localhost:5173',
+		'https://momentify-server.onrender.com/',
+	];
 
 	constructor() {
 		this.router = express();
@@ -62,7 +68,7 @@ export class App {
 		router.use(express.urlencoded({ extended: true, limit: '12mb' }));
 		router.use(express.json());
 		router.use(cookieParser());
-		router.use(cors({ origin: '*' }));
+		router.use(cors({ origin: this.ALLOWED_ORIGINS, methods: this.CORS_METHODS }));
 		router.use(middleware.gatekeeper);
 		router.use(middleware.requestLogger);
 
