@@ -1,5 +1,7 @@
 # Momentify
 
+**Warning:** I pushed the app to `render.com` and in free tier they kill the process unless there is trafic and so you may experience very long loading, because the server has to spin up. If you know how to make this faster or better, create an issue.
+
 Momentify is a platform for sharing your moments with others. This is `MERN` stack application made for learning purposes, it is not meant to be production level application.
 Application supports: dark/light theme, mobile friendly, caching data, localization and uses `JWT` for authentication.
 
