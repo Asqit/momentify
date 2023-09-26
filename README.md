@@ -1,7 +1,6 @@
 # Momentify
 
-**Changing provider:** I would like to announce, that I am changing provider of this service and so for a while it will be unavailable. 
-
+**Changing provider:** I would like to announce, that I am changing provider of this service and so for a while it will be unavailable.
 
 Momentify is a platform for sharing your moments with others. This is `MERN` stack application made for learning purposes, it is not meant to be production level application.
 Application supports: dark/light theme, mobile friendly, caching data, localization and uses `JWT` for authentication.
@@ -70,5 +69,9 @@ Application supports: dark/light theme, mobile friendly, caching data, localizat
 ![application](./repo/desktop_register.png)
 ![application](./repo/mobile_account.png)
 ![application](./repo/mobile_home.png)
+
+<video width="800" height="600" controls>
+  <source src="./repo/repo.webm" type="video/webm">
+</video>
 
 </details>

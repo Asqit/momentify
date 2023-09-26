@@ -12,7 +12,7 @@ interface ProfilePictureProps {
 
 export function ProfilePicture(props: ProfilePictureProps) {
 	const { userId, pictureSource } = props;
-	const [changeProfilePicture, { isLoading, isError }] = useChangeProfilePictureMutation();
+	const [changeProfilePicture] = useChangeProfilePictureMutation();
 	const dispatch = useAppDispatch();
 
 	const handleFileDrop = async (files: FileList) => {
@@ -40,7 +40,8 @@ export function ProfilePicture(props: ProfilePictureProps) {
 			}
 		>
 			<img
-				src={pictureSource ? `/${pictureSource}` : userPhoto}
+				src={pictureSource ? `http://localhost:8080/${pictureSource}` : userPhoto}
+				crossOrigin="anonymous"
 				alt="User photography"
 				className="object-cover rounded-full w-full aspect-square bg-white dark:bg-slate-800"
 			/>

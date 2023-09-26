@@ -39,7 +39,7 @@ export function Navbar() {
 						<IoIosSettings />
 					</Link>
 					<Link
-						to={`/account/${user.id}`}
+						to={`/account/${user ? user.id : ''}`}
 						className="font-semibold text-lg  transition-colors hover:text-sky-500"
 					>
 						<FaUserAlt />

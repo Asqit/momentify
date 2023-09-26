@@ -135,12 +135,14 @@ export function Post(props: PostProps) {
 									className={
 										'h-full aspect-square object-cover rounded-md dark:brightness-75'
 									}
-									src={`/${data.body[0]}`}
+									src={`http://localhost:8080/${data.body[0]}`}
 									alt=""
 									loading="eager"
 								/>
 							) : (
-								<Slideshow images={data.body.map((filename) => `/${filename}`)} />
+								<Slideshow
+									images={data.body.map((filename) => `http://localhost:8080/${filename}`)}
+								/>
 							)}
 						</figure>
 						<div className="flex justify-between items-center my-4">

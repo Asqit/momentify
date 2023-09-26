@@ -50,7 +50,7 @@ export function MiniPost(props: MiniPostProps) {
 				{Array.isArray(body) && body.length > 1 ? (
 					<MemoizedSlideshow
 						callback={navigateToPost}
-						images={body.map((filename) => `/${filename}`)}
+						images={body.map((filename) => `http://localhost:8080/${filename}`)}
 					/>
 				) : (
 					<LazyImage

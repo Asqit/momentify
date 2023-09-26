@@ -15,10 +15,9 @@ export function LanguageSwitcher() {
 					<option
 						key={lang.id}
 						className="disabled:opacity-50"
-						disabled={i18n.resolvedLanguage === lang.shortCut}
 						onClick={() => i18n.changeLanguage(lang.shortCut)}
 					>
-						{lang.name}
+						{lang.emoji}
 					</option>
 				);
 			})}

@@ -99,7 +99,6 @@ export async function gatekeeper(req: Request, res: Response, next: NextFunction
 		next();
 	} catch (error) {
 		logger.error(`An error occurred: ${error}`);
-		res.sendStatus(500);
 		exit(1);
 	}
 }
